@@ -1,0 +1,6 @@
+src
+scripts
+wp-plugin
+tsconfig.json
+gulpfile.mjs
+.eslintrc.js

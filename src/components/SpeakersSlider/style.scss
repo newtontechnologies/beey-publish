@@ -1,0 +1,139 @@
+.speakers {
+  position: relative;
+  overflow: hidden;
+
+  & span {
+    position: absolute;
+    height: 0.6rem;
+    width: 2rem;
+  }
+
+  .tooltip .tooltip__text {
+    visibility: hidden;
+    position: absolute;
+    top: 1rem;
+    left: 0.5rem;
+    z-index: 1;
+    padding: 0.2rem 0.4rem;
+    min-width: 7.5rem;
+    background-color: white;
+    border: solid 1px #1a60b0;
+    border-radius: 10px;
+    border-top-left-radius: 0px;
+    box-shadow: 0px 10px 13px -7px #303030, 5px 5px 15px 5px rgba(48, 48, 48, 0);
+    color: black;
+
+    .tooltip__time {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      margin-bottom: 2px;
+    }
+
+    .tooltip__speaker {
+      font-size: 14px;
+      font-weight: bold;
+    }
+  }
+
+  .speaker-icon {
+    color: rgba(255, 255, 255, 0.822);
+    font-size: 13px;
+    border-radius: 100%;
+    padding: 3px;
+  }
+
+  .tooltip:hover .tooltip__text {
+    visibility: visible;
+  }
+
+  &.seekbar__background {
+    background-color: white;
+    border: solid 0.5px #999;
+  }
+
+  &.seekbar__background.hidden {
+    overflow: visible;
+    background-color: transparent;
+    border: none;
+    bottom: 1rem;
+  }
+}
+
+.seekbar__time-numbers {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  color: #999;
+  font-size: 0.9rem;
+  line-height: 0.9rem;
+}
+
+.speaker-color0 {
+  background-color: #4986e7;
+}
+
+.speaker-color1 {
+  background-color: #ffad46;
+}
+
+.speaker-color2 {
+  background-color: #2da2bb;
+}
+
+.speaker-color3 {
+  background-color: #b99aff;
+}
+
+.speaker-color4 {
+  background-color: #fb4c2f;
+}
+
+.speaker-color5 {
+  background-color: #16a765;
+}
+
+.speaker-color6 {
+  background-color: #ff1744;
+}
+
+.speaker-color7 {
+  background-color: #6a1b9a;
+}
+
+.speaker-color8 {
+  background-color: #015151;
+}
+
+.speaker-color9 {
+  background-color: #ab214a;
+}
+
+.speaker-color10 {
+  background-color: #f4ff25;
+}
+
+.speaker-color11 {
+  background-color: #49bb3c;
+}
+
+.speaker-color12 {
+  background-color: #c2c2c2;
+}
+
+.speaker-color13 {
+  background-color: #4432ce;
+}
+
+.speaker-color14 {
+  background-color: #ffca8a;
+}
+
+.speaker-color15 {
+  background-color: #84ffff;
+}
+
+.speaker-color16 {
+  background-color: #5d4c05;
+}

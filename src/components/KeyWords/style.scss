@@ -1,0 +1,49 @@
+.wedge {
+  fill: $accent-color-darken;
+}
+
+.key-words {
+  position: relative;
+  margin-left: 1rem;
+  width: 100%;
+
+  &__mark {
+    position: absolute;
+    bottom: 0.2rem;
+  }
+
+  .tooltip {
+    cursor: pointer;
+    &__text {
+      visibility: hidden;
+      position: absolute;
+      bottom: 1rem;
+      z-index: 1;
+      padding: 0.2rem 0.4rem;
+      min-width: 3rem;
+      background-color: white;
+      border: solid 1px #1a60b0;
+      border-radius: 10px;
+      border-bottom-left-radius: 0px;
+      box-shadow: 0px 10px 13px -7px #303030, 5px 5px 15px 5px rgba(48, 48, 48, 0);
+      color: black;
+    }
+
+    &__time {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      margin-bottom: 2px;
+    }
+
+    &__word {
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    &:hover .tooltip__text {
+      visibility: visible;
+    }
+  }
+}

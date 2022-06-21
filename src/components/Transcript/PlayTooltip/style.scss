@@ -1,0 +1,36 @@
+.play-tooltip {
+  position: absolute;
+  display: flex;
+  justify-content: space-evenly;
+  padding: 0;
+  border-radius: 0.3rem;
+  box-shadow: 0 1.5px 10px rgba(0, 0, 0, 0.2);
+  background-color: $accent-color;
+  transform: translate(-45%, -130%);
+  cursor: pointer;
+  
+  &::after {
+    content: ' ';
+    position: absolute;
+    top: 99%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: $accent-color transparent transparent transparent;
+  }
+  
+  & button {
+    margin: 0;
+    padding: 0.5rem 0.8rem;
+    border: none;
+    border-radius: 0.3rem;
+    background-color: transparent;
+    color: white;
+    font-weight: 400;
+    cursor: pointer;
+    &:hover {
+      background-color: $accent-color-darken;
+    }
+  }
+}

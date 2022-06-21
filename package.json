@@ -1,0 +1,59 @@
+{
+  "name": "@beey/publish",
+  "version": "1.6.0",
+  "description": "",
+  "main": "cjs/index.js",
+  "scripts": {
+    "clean": "rimraf dist lib",
+    "build:styles": "gulp buildStyles",
+    "build:js": "tsc",
+    "build:umd": "node scripts/build-prod.mjs",
+    "build": "npm run clean && npm run build:js && npm run build:styles",
+    "dev:styles": "gulp",
+    "dev:js": "tsc -w",
+    "dev": "concurrently npm:dev:*",
+    "publish": "npm run build && npm publish"
+  },
+  "author": "Newton Technologies",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "devDependencies": {
+    "@tsconfig/node14": "^1.0.1",
+    "@typescript-eslint/eslint-plugin": "^5.9.0",
+    "@typescript-eslint/parser": "^5.9.0",
+    "concurrently": "^7.2.0",
+    "esbuild": "^0.13.8",
+    "esbuild-node-externals": "^1.4.1",
+    "esbuild-sass-plugin": "^2.2.3",
+    "eslint": "^8.6.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.25.4",
+    "gulp": "^4.0.2",
+    "gulp-change-file-content": "^1.0.1",
+    "gulp-cli": "^2.3.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-sass": "^5.1.0",
+    "node-sass": "^7.0.1",
+    "rimraf": "^3.0.2",
+    "sass": "^1.52.0",
+    "typescript": "^4.5.4"
+  },
+  "dependencies": {
+    "redom": "^3.27.1"
+  },
+  "contributors": [
+    {
+      "name": "Eva Machová",
+      "email": "eva.machova@newtontech.cz"
+    },
+    {
+      "name": "Martin Podloucký",
+      "email": "martin.podloucky@newtontech.cz"
+    },
+    {
+      "name": "Barbora Skálová",
+      "email": "barbora.skalova@newtontech.cz"
+    }
+  ]
+}
