@@ -1,3 +1,7 @@
+## 1.6.1 (2022-06-22)
+
+- 🐞 Fix: information in package.json
+
 ## 1.6.0 (2022-06-22)
 
 - ⚠️ Breaking: changed `type` in keywords to `group`. It can also be an array now.

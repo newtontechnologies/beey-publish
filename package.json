@@ -14,7 +14,16 @@
     "dev": "concurrently npm:dev:*",
     "publish": "npm run build && npm publish"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/newtontechnologies/beey-publish.git"
+  },
   "author": "Newton Technologies",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/newtontechnologies/beey-publish/issues"
+  },
+  "homepage": "https://github.com/newtontechnologies/beey-publish#readme",
   "engines": {
     "node": ">=14.0.0"
   },
