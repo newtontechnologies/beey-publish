@@ -7,6 +7,7 @@ import { Transcript, TranscriptConfig } from './components/Transcript';
 export interface BeeyPublishConfig {
   media: MediaConfig
   transcript?: TranscriptConfig;
+  subtitlesUrl?: string;
 }
 
 export interface PublishSplitSlot {
@@ -48,6 +49,9 @@ class BeeyPublish {
     this.trsx = await new TrsxFile(trsxSource).parse();
     this.transcript.updateTrsx(this.trsx);
     this.player.updateTrsx(this.trsx);
+    if (this.config.subtitlesUrl !== undefined) {
+      this.player.attachSubtitles(this.config.subtitlesUrl);
+    }
   }
 
   public attachKeywords(keywords: Keyword[]) {

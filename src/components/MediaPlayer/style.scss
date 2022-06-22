@@ -137,6 +137,10 @@
   }
 }
 
+.player-toolbar {
+  margin-top: 0.5rem;
+}
+
 .speed {
   display: flex;
   position: absolute;
@@ -159,6 +163,13 @@
   color: #999;
   font-size: 2rem;
   cursor: pointer;
+}
+
+.subtitlesButton {
+  color: #999;
+  font-size: 2rem;
+  cursor: pointer;
+  margin-left: 0.8rem;
 }
 
 .speed-slider {

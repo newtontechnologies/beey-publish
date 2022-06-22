@@ -93,6 +93,29 @@ export class MediaPlayer implements RedomComponent {
     mount(sliders, this.keyWords, seekbar);
   };
 
+  public attachSubtitles = async (subtitlesUrl: string) => {
+    const captions = await (await fetch(subtitlesUrl)).text();
+    const blob = new Blob([captions], {
+      type: 'text/vtt',
+    });
+    const subtitlesVTT = h('track.subtitles', {
+      label: 'Titulky',
+      kind: 'captions',
+      srcLang: 'cz',
+      src: URL.createObjectURL(blob),
+    });
+    mount(this.nativePlayerElement, subtitlesVTT);
+    const tracks = this.nativePlayerElement.textTracks[0];
+    tracks.mode = 'hidden';
+  };
+
+  private toggleSubtitles = () => {
+    const tracks = this.nativePlayerElement.textTracks[0];
+    tracks.mode = tracks.mode === 'showing' ? 'hidden' : 'showing';
+    const subtitlesButton = this.el.querySelector('.subtitlesButton') as HTMLElement;
+    subtitlesButton.textContent = tracks.mode === 'showing' ? 'subtitles' : 'subtitles_off';
+  };
+
   private updateButtons = () => {
     const playButton = this.el.querySelector('.player-button') as HTMLElement;
     const muteButton = this.el.querySelector('.mute-icon') as HTMLElement;
@@ -220,33 +243,40 @@ export class MediaPlayer implements RedomComponent {
           ),
         ),
         h(
-          'div.speed',
-          h('i.speed-icon.material-icons', 'speed', {
-            onpointerdown: this.onPointerDown,
-          }),
+          'div.player-toolbar',
           h(
-            'div.speed-slider',
-            h('p.speed-slider__text', 'Rychlost přehrávání'),
-            h('input.speed-slider__track', {
-              type: 'range',
-              min: 50,
-              max: 200,
-              value: 100,
-              step: 25,
-              oninput: this.handleSpeedChange,
+            'div.speed',
+            h('i.speed-icon.material-icons', 'speed', {
+              onpointerdown: this.onPointerDown,
             }),
             h(
-              'div.speed-slider__numbers',
-              h('span', '0.5x'),
-              h('span', '0.75x'),
-              h('span', '1x'),
-              h('span', '1.25x'),
-              h('span', '1.5x'),
-              h('span', '1.75x'),
-              h('span', '2x'),
+              'div.speed-slider',
+              h('p.speed-slider__text', 'Rychlost přehrávání'),
+              h('input.speed-slider__track', {
+                type: 'range',
+                min: 50,
+                max: 200,
+                value: 100,
+                step: 25,
+                oninput: this.handleSpeedChange,
+              }),
+              h(
+                'div.speed-slider__numbers',
+                h('span', '0.5x'),
+                h('span', '0.75x'),
+                h('span', '1x'),
+                h('span', '1.25x'),
+                h('span', '1.5x'),
+                h('span', '1.75x'),
+                h('span', '2x'),
+              ),
             ),
           ),
+          h('i.subtitlesButton.material-icons', 'subtitles_off', {
+            onclick: this.toggleSubtitles,
+          }),
         ),
+
       ),
       h(
         'svg',
