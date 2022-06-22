@@ -4,7 +4,7 @@
   "description": "",
   "main": "cjs/index.js",
   "scripts": {
-    "clean": "rimraf dist lib",
+    "clean": "rimraf dist cjs",
     "build:styles": "gulp buildStyles",
     "build:js": "tsc",
     "build:umd": "node scripts/build-prod.mjs",
