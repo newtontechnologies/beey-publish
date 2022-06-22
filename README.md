@@ -1,19 +1,61 @@
 # Beey Publish
 
-JavaScript library for publishing Beey transcriptions with recordings on third-party web pages.
+JavaScript library for publishing [Beey](https://www.beey.io/en/) transcriptions with recordings on third-party web pages.
 
-## How to use Beey Publish library
+## 📦 Install
 
-1) TRSX as string:
-trsxSrc: { url: 'adresa' }
-2) TRSX as XML:
-trsxSrc: { content: '<?xml atd atd...' }
+```
+npm install @beey/publish
+```
+
+or 
+
+```
+yarn add @beey/publish
+```
+
+## 🔨 Usage
+
+This library uses the TRSX format for transcriptions.
+
+```js
+import BeeyPublish from '@beey/publish';
+import '@beey/publish/dist/style.css';
+
+const container = document.querySelector('#publish-container');
+
+const publish = new BeeyPublish(container, {
+  media: {
+    url: '<url of audio/vidoe file>',
+    hasVideo: true, // or false for audio
+  },
+});
+
+await publish.loadTrsx({
+  url: '<url of TRSX file>',
+});
+```
+
+You can also load TRSX as string:
+
+```js
+await publish.loadTrsx({
+  content: '<?xml ...',
+});
+```
 
 If you want to use player and transcription separately:
 
-```
-new BeeyPublish({
-  playerParent: container for player,
-  transcriptParent: container for transcription,
-}, ...
+```js
+new BeeyPublish(
+  {
+    playerParent: playerContainer,
+    transcriptParent: transcriptContainer,
+  }, 
+  {
+    media: {
+      // ...
+    },
+  },
+);
 ```
