@@ -155,13 +155,6 @@ export class MediaPlayer implements RedomComponent {
     this.nativePlayerElement.playbackRate = Number(speedSlider.value) / 100;
   };
 
-  private finishSpeedChange = () => {
-    const sliderContainer = this.el.querySelector('.speed-slider') as HTMLElement;
-    setTimeout(() => {
-      sliderContainer.classList.remove('speed-slider--show');
-    }, 1000);
-  };
-
   private handleMoveSlider = (e: PointerEvent) => {
     const seekBar = this.el.querySelector('.seekbar__background') as HTMLInputElement;
     const rect = seekBar.getBoundingClientRect();
@@ -274,7 +267,6 @@ export class MediaPlayer implements RedomComponent {
                 value: 100,
                 step: 25,
                 oninput: this.handleSpeedChange,
-                onpointerup: this.finishSpeedChange,
               }),
               h(
                 'div.speed-slider__numbers',
