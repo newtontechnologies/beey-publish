@@ -200,11 +200,6 @@ export class MediaPlayer implements RedomComponent {
     }, 2000);
   };
 
-  public hideSpeedslider = () => {
-    const speedSlider = this.el.querySelector('.speed-slider') as HTMLElement;
-    speedSlider.classList.remove('speed-slider--show');
-  };
-
   private render(): HTMLElement {
     return h(
       `div.media-player ${this.mediaConfig.hasVideo ? 'media-player__video' : ''}`,
