@@ -12,7 +12,7 @@
     "dev:styles": "gulp",
     "dev:js": "tsc -w",
     "dev": "concurrently npm:dev:*",
-    "publish": "npm run build && npm publish"
+    "prepublishOnly": "npm run build"
   },
   "repository": {
     "type": "git",
