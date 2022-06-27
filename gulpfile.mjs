@@ -21,4 +21,8 @@ export const buildStyles = () => gulp
   .pipe(concat('style.css'))
   .pipe(gulp.dest('./dist'));
 
-export default () => gulp.watch('./src/**/*.scss', buildStyles);
+export default () => gulp.watch(
+  './src/**/*.scss',
+  { ignoreInitial: false },
+  buildStyles,
+);
