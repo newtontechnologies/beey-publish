@@ -152,6 +152,9 @@
       position: absolute;
       top: 1.7rem;
       right: 0.1rem;
+      &:hover {
+        display:block;
+      }
     }
 
     .speed-slider--show {
