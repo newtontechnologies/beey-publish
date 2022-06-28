@@ -192,6 +192,11 @@ export class MediaPlayer implements RedomComponent {
     this.draggingKnob = false;
   };
 
+  public onMouseLeave = () => {
+    const speedSlider = this.el.querySelector('.speed-slider') as HTMLElement;
+    speedSlider.classList.remove('speed-slider--show');
+  };
+
   public onPointerDown = () => {
     const speedSlider = this.el.querySelector('.speed-slider') as HTMLElement;
     speedSlider.classList.toggle('speed-slider--show');
@@ -254,6 +259,9 @@ export class MediaPlayer implements RedomComponent {
             }),
             h(
               'div.speed-slider',
+              {
+                onmouseleave: this.onMouseLeave,
+              },
               h('p.speed-slider__text', 'Rychlost přehrávání'),
               h('input.speed-slider__track', {
                 type: 'range',
