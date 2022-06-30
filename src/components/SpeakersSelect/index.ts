@@ -42,7 +42,7 @@ export class SpeakersSelect implements RedomComponent {
   };
 
   private handleDropdown = (e: PointerEvent) => {
-    e.stopPropagation();
+    e.preventDefault();
     this.el.classList.toggle('visible');
   };
 
