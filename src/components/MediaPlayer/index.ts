@@ -197,16 +197,15 @@ export class MediaPlayer implements RedomComponent {
     this.draggingKnob = false;
   };
 
-  public onMouseLeave = () => {
-    const speedSlider = this.el.querySelector('.speed-slider') as HTMLElement;
-    speedSlider.classList.remove('speed-slider--show');
+  private hideSpeedSlider = () => {
+    this.speedSlider.classList.remove('speed-slider--show');
   };
 
-  public showSpeedSlider = () => {
+  private showSpeedSlider = () => {
     this.speedSlider.classList.add('speed-slider--show');
   };
 
-  public onPointerDown = (e: PointerEvent) => {
+  private toggleSpeedSlider = (e: PointerEvent) => {
     e.preventDefault();
     this.speedSlider.classList.toggle('speed-slider--show');
   };
@@ -261,13 +260,13 @@ export class MediaPlayer implements RedomComponent {
           h(
             'div.speed',
             h('i.speed-icon.material-icons', 'speed', {
-              onmouseover: this.showSpeedSlider,
-              onpointerdown: this.onPointerDown,
+              onmouseenter: this.showSpeedSlider,
+              onpointerdown: this.toggleSpeedSlider,
             }),
             h(
               'div.speed-slider',
               {
-                onmouseleave: this.onMouseLeave,
+                onmouseleave: this.hideSpeedSlider,
               },
               h('p.speed-slider__text', 'Rychlost přehrávání'),
               h('input.speed-slider__track', {
