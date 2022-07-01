@@ -100,8 +100,6 @@
 }
 
 .seekbar {
-  cursor: pointer;
-
   &__background {
     display: flex;
     position: relative;
@@ -110,6 +108,7 @@
     margin-bottom: 0.5rem;
     border-radius: 3rem;
     background-color: #999;
+    cursor: pointer;
   }
 
   &__progress-bar {
