@@ -12,8 +12,28 @@ export class SpeakersSelect implements RedomComponent {
 
   private handleSpeakersSelection = () => {
     const speakers = this.el.querySelectorAll('input');
+    const checkAll = this.el.querySelector('.check-all') as HTMLInputElement;
     const selectedIds = [] as string[];
-    speakers.forEach((speaker) => (speaker.checked ? selectedIds.push(speaker.value) : null));
+    speakers.forEach((speaker) => {
+      if (speaker.checked) {
+        selectedIds.push(speaker.value);
+      }
+      checkAll.checked = false;
+    });
+    this.onSelectedSpeakers(selectedIds);
+  };
+
+  private handleCheckAll = () => {
+    const speakers = this.el.querySelectorAll('input');
+    const checkAll = this.el.querySelector('.check-all') as HTMLInputElement;
+    const selectedIds = [] as string[];
+    speakers.forEach((speaker) => {
+      // eslint-disable-next-line no-param-reassign
+      speaker.checked = checkAll.checked;
+      if (checkAll.checked) {
+        selectedIds.push(speaker.value);
+      }
+    });
     this.onSelectedSpeakers(selectedIds);
   };
 
@@ -21,19 +41,34 @@ export class SpeakersSelect implements RedomComponent {
     if (speakers.isMachineSpeakers) {
       this.el.style.display = 'none';
     }
-    const options = Object.values(speakers.speakerMap).map((coloredSpeaker) => h(
-      'label',
-      h('input', {
-        type: 'checkbox',
-        checked: true,
-        value: coloredSpeaker.id,
-        onchange: this.handleSpeakersSelection,
-      }),
-      `${coloredSpeaker.firstname} ${coloredSpeaker.surname}`,
-      h(`div.speaker-color${coloredSpeaker.id}.dropdown__color`, {
-        style: 'width: 10px; height: 10px;',
-      }),
-    ));
+    const options: HTMLElement[] = [];
+    options.push(
+      h(
+        'div',
+        h(
+          'label',
+          h('input.check-all', {
+            type: 'checkbox',
+            checked: true,
+            onchange: this.handleCheckAll,
+          }),
+          'Vybrat všechny',
+        ),
+        Object.values(speakers.speakerMap).map((coloredSpeaker) => h(
+          'label',
+          h('input.speaker', {
+            type: 'checkbox',
+            checked: true,
+            value: coloredSpeaker.id,
+            onchange: this.handleSpeakersSelection,
+          }),
+          `${coloredSpeaker.firstname} ${coloredSpeaker.surname}`,
+          h(`div.speaker-color${coloredSpeaker.id}.dropdown__color`, {
+            style: 'width: 10px; height: 10px;',
+          }),
+        )),
+      ),
+    );
     const dropdown = this.el.querySelector(
       '.dropdown__items',
     ) as HTMLInputElement;
@@ -50,7 +85,9 @@ export class SpeakersSelect implements RedomComponent {
       h('span.dropdown__anchor', 'Vyznačit mluvčí: ', {
         onclick: this.handleDropdown,
       }),
-      h('div.dropdown__items'),
+      h(
+        'div.dropdown__items',
+      ),
     );
   }
 }
