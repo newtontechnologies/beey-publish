@@ -32,7 +32,7 @@ export class MediaPlayer implements RedomComponent {
     this.seekKnobElement = this.el.querySelector('.seekbar__knob') as HTMLInputElement;
     this.seekProgressElement = this.el.querySelector('.seekbar__progress-bar') as HTMLInputElement;
     document.body.addEventListener('mousedown', () => {
-      this.speedSlider.classList.remove('speed-slider--show');
+      this.hideSpeedSlider();
     });
   }
 
