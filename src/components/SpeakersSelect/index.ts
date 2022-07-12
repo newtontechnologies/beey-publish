@@ -8,6 +8,7 @@ export class SpeakersSelect implements RedomComponent {
   public constructor(onSelectedSpeakers: (speakerIds: string[]) => void) {
     this.el = this.render();
     this.onSelectedSpeakers = onSelectedSpeakers;
+    document.body.addEventListener('click', () => this.el.classList.remove('visible'));
   }
 
   private handleSpeakersSelection = () => {
@@ -40,7 +41,8 @@ export class SpeakersSelect implements RedomComponent {
     setChildren(dropdown, options);
   };
 
-  private handleDropdown = () => {
+  private handleDropdown = (e: PointerEvent) => {
+    e.preventDefault();
     this.el.classList.toggle('visible');
   };
 
@@ -51,6 +53,9 @@ export class SpeakersSelect implements RedomComponent {
         onclick: this.handleDropdown,
       }),
       h('div.dropdown__items'),
+      {
+        onclick: (e: PointerEvent) => e.stopPropagation(),
+      },
     );
   }
 }

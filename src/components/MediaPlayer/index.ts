@@ -19,6 +19,7 @@ export class MediaPlayer implements RedomComponent {
   private nativePlayerElement: HTMLMediaElement;
   private seekKnobElement: HTMLInputElement;
   private seekProgressElement: HTMLInputElement;
+  private speedSlider: HTMLElement;
   private mediaConfig: MediaConfig;
   private draggingKnob: boolean;
 
@@ -26,9 +27,13 @@ export class MediaPlayer implements RedomComponent {
     this.mediaConfig = mediaConfig;
     this.draggingKnob = false;
     this.el = this.render();
+    this.speedSlider = this.el.querySelector('.speed-slider') as HTMLElement;
     this.nativePlayerElement = this.el.querySelector('.native-player') as HTMLMediaElement;
     this.seekKnobElement = this.el.querySelector('.seekbar__knob') as HTMLInputElement;
     this.seekProgressElement = this.el.querySelector('.seekbar__progress-bar') as HTMLInputElement;
+    document.body.addEventListener('mousedown', () => {
+      this.hideSpeedSlider();
+    });
   }
 
   public addEventListener(event: MediaPlayerEvent, listener: MediaListener) {
@@ -192,9 +197,17 @@ export class MediaPlayer implements RedomComponent {
     this.draggingKnob = false;
   };
 
-  public onPointerDown = () => {
-    const speedSlider = this.el.querySelector('.speed-slider') as HTMLElement;
-    speedSlider.classList.toggle('speed-slider--show');
+  private hideSpeedSlider = () => {
+    this.speedSlider.classList.remove('speed-slider--show');
+  };
+
+  private showSpeedSlider = () => {
+    this.speedSlider.classList.add('speed-slider--show');
+  };
+
+  private toggleSpeedSlider = (e: PointerEvent) => {
+    e.preventDefault();
+    this.speedSlider.classList.toggle('speed-slider--show');
   };
 
   private render(): HTMLElement {
@@ -247,10 +260,14 @@ export class MediaPlayer implements RedomComponent {
           h(
             'div.speed',
             h('i.speed-icon.material-icons', 'speed', {
-              onpointerdown: this.onPointerDown,
+              onmouseenter: this.showSpeedSlider,
+              onpointerdown: this.toggleSpeedSlider,
             }),
             h(
               'div.speed-slider',
+              {
+                onmouseleave: this.hideSpeedSlider,
+              },
               h('p.speed-slider__text', 'Rychlost přehrávání'),
               h('input.speed-slider__track', {
                 type: 'range',

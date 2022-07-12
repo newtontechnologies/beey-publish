@@ -116,7 +116,7 @@ export class Transcript implements RedomComponent {
             h('p', 'Automatický přepis zajišťuje'),
             h(
               'a',
-              { href: 'https://www.beey.io/cs/' },
+              { href: 'https://www.beey.io/cs/', target: '_blank' },
               h(
                 'img.beey-ad__logo',
                 { src: 'https://www.beey.io/wp-content/uploads/2022/04/beey-logo.svg' },
