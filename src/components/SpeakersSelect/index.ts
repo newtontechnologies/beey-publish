@@ -11,30 +11,63 @@ export class SpeakersSelect implements RedomComponent {
     document.body.addEventListener('click', () => this.el.classList.remove('visible'));
   }
 
-  private handleSpeakersSelection = () => {
-    const speakers = this.el.querySelectorAll('input');
+  private reportSelectedSpeakers = () => {
     const selectedIds = [] as string[];
-    speakers.forEach((speaker) => (speaker.checked ? selectedIds.push(speaker.value) : null));
+    const speakers = this.el.querySelectorAll('.speaker') as NodeListOf<HTMLInputElement>;
+    speakers.forEach((speaker) => {
+      if (speaker.checked) {
+        selectedIds.push(speaker.value);
+      }
+    });
     this.onSelectedSpeakers(selectedIds);
+  };
+
+  private handleSpeakersSelection = () => {
+    const speakers = Array.from(this.el.querySelectorAll('.speaker') as NodeListOf<HTMLInputElement>);
+    const checkAll = this.el.querySelector('.check-all__checkbox') as HTMLInputElement;
+    checkAll.checked = speakers.every((speaker) => speaker.checked === true);
+    this.reportSelectedSpeakers();
+  };
+
+  private handleSelectAll = (e: Event) => {
+    const speakers = this.el.querySelectorAll('.speaker') as NodeListOf<HTMLInputElement>;
+    for (let i = 0; i < speakers.length; i += 1) {
+      speakers[i].checked = (e.target as HTMLInputElement).checked;
+    }
+    this.reportSelectedSpeakers();
   };
 
   public updateSpeakers = (speakers: Speakers) => {
     if (speakers.isMachineSpeakers) {
       this.el.style.display = 'none';
     }
-    const options = Object.values(speakers.speakerMap).map((coloredSpeaker) => h(
-      'label',
-      h('input', {
-        type: 'checkbox',
-        checked: true,
-        value: coloredSpeaker.id,
-        onchange: this.handleSpeakersSelection,
-      }),
-      `${coloredSpeaker.firstname} ${coloredSpeaker.surname}`,
-      h(`div.speaker-color${coloredSpeaker.id}.dropdown__color`, {
-        style: 'width: 10px; height: 10px;',
-      }),
-    ));
+    const options = [
+      h(
+        'div',
+        h(
+          'label.check-all__label',
+          h('input.check-all__checkbox', {
+            type: 'checkbox',
+            checked: true,
+            onchange: this.handleSelectAll,
+          }),
+          'Vybrat všechny',
+        ),
+        Object.values(speakers.speakerMap).map((coloredSpeaker) => h(
+          'label',
+          h('input.speaker', {
+            type: 'checkbox',
+            checked: true,
+            value: coloredSpeaker.id,
+            onchange: this.handleSpeakersSelection,
+          }),
+          `${coloredSpeaker.firstname} ${coloredSpeaker.surname}`,
+          h(`div.speaker-color${coloredSpeaker.id}.dropdown__color`, {
+            style: 'width: 10px; height: 10px;',
+          }),
+        )),
+      )];
+
     const dropdown = this.el.querySelector(
       '.dropdown__items',
     ) as HTMLInputElement;

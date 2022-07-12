@@ -48,6 +48,12 @@
       margin: 5px 8px 5px 5px;
       cursor: pointer;
     }
+    & input {
+      cursor: pointer;
+    }
+    & .check-all__label {      
+      background-color: rgb(231, 231, 231);
+    } 
   }
 
   &.visible &__anchor {
