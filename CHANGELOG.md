@@ -1,3 +1,8 @@
+## 1.6.3 (2022-07-12)
+
+- ✨ Feature: option to select/remove all speakers 
+- 🛠 Improvement: behaviour of dropdowns and forms
+
 ## 1.6.2 (2022-06-22)
 
 - ✨ Feature: option to load and switch on/off VTT subtitles in video player
