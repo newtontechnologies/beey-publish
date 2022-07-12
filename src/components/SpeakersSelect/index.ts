@@ -10,7 +10,7 @@ export class SpeakersSelect implements RedomComponent {
     this.onSelectedSpeakers = onSelectedSpeakers;
   }
 
-  private displaySpeakers = () => {
+  private reportSelectedSpeakers = () => {
     const selectedIds = [] as string[];
     const speakers = this.el.querySelectorAll('.speaker') as NodeListOf<HTMLInputElement>;
     speakers.forEach((speaker) => {
@@ -21,17 +21,19 @@ export class SpeakersSelect implements RedomComponent {
     this.onSelectedSpeakers(selectedIds);
   };
 
-  private handleSpeakersSelection = (e: Event) => {
-    const speakers = this.el.querySelectorAll('.speaker') as NodeListOf<HTMLInputElement>;
+  private handleSpeakersSelection = () => {
+    const speakers = Array.from(this.el.querySelectorAll('.speaker') as NodeListOf<HTMLInputElement>);
     const checkAll = this.el.querySelector('.check-all__checkbox') as HTMLInputElement;
+    checkAll.checked = speakers.every((speaker) => speaker.checked === true);
+    this.reportSelectedSpeakers();
+  };
+
+  private handleSelectAll = (e: Event) => {
+    const speakers = this.el.querySelectorAll('.speaker') as NodeListOf<HTMLInputElement>;
     for (let i = 0; i < speakers.length; i += 1) {
-      if (e.target as HTMLInputElement === checkAll) {
-        speakers[i].checked = checkAll.checked;
-      } else {
-        checkAll.checked = false;
-      }
+      speakers[i].checked = (e.target as HTMLInputElement).checked;
     }
-    this.displaySpeakers();
+    this.reportSelectedSpeakers();
   };
 
   public updateSpeakers = (speakers: Speakers) => {
@@ -47,7 +49,7 @@ export class SpeakersSelect implements RedomComponent {
           h('input.check-all__checkbox', {
             type: 'checkbox',
             checked: true,
-            onchange: this.handleSpeakersSelection,
+            onchange: this.handleSelectAll,
           }),
           'Vybrat všechny',
         ),
