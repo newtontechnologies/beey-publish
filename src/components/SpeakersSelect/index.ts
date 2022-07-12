@@ -40,8 +40,7 @@ export class SpeakersSelect implements RedomComponent {
     if (speakers.isMachineSpeakers) {
       this.el.style.display = 'none';
     }
-    const options: HTMLElement[] = [];
-    options.push(
+    const options = [
       h(
         'div',
         h(
@@ -66,8 +65,8 @@ export class SpeakersSelect implements RedomComponent {
             style: 'width: 10px; height: 10px;',
           }),
         )),
-      ),
-    );
+      )];
+
     const dropdown = this.el.querySelector(
       '.dropdown__items',
     ) as HTMLInputElement;
