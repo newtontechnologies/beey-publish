@@ -37,6 +37,16 @@ export class SpeakersSelect implements RedomComponent {
     this.reportSelectedSpeakers();
   };
 
+  public colorCode = (id : string) => {
+    let code = '';
+    if (Number(id) <= 16) {
+      code = id;
+    } else {
+      code = String(Number(id) - 16);
+    }
+    return code;
+  };
+
   public updateSpeakers = (speakers: Speakers) => {
     if (speakers.isMachineSpeakers) {
       this.el.style.display = 'none';
@@ -62,7 +72,7 @@ export class SpeakersSelect implements RedomComponent {
             onchange: this.handleSpeakersSelection,
           }),
           `${coloredSpeaker.firstname} ${coloredSpeaker.surname}`,
-          h(`div.speaker-color${coloredSpeaker.id}.dropdown__color`, {
+          h(`div.speaker-color${this.colorCode(coloredSpeaker.id)}.dropdown__color`, {
             style: 'width: 10px; height: 10px;',
           }),
         )),
