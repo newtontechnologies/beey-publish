@@ -23,7 +23,7 @@ export class SpeakersSelect implements RedomComponent {
 
   private handleSpeakersSelection = (e: Event) => {
     const speakers = this.el.querySelectorAll('.speaker') as NodeListOf<HTMLInputElement>;
-    const checkAll = this.el.querySelector('.check-all') as HTMLInputElement;
+    const checkAll = this.el.querySelector('.check-all__checkbox') as HTMLInputElement;
     for (let i = 0; i < speakers.length; i += 1) {
       if (e.target as HTMLInputElement === checkAll) {
         speakers[i].checked = checkAll.checked;
@@ -43,8 +43,8 @@ export class SpeakersSelect implements RedomComponent {
       h(
         'div',
         h(
-          'label',
-          h('input.check-all', {
+          'label.check-all__label',
+          h('input.check-all__checkbox', {
             type: 'checkbox',
             checked: true,
             onchange: this.handleSpeakersSelection,
