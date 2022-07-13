@@ -1,4 +1,5 @@
 import { h, RedomComponent } from 'redom';
+import { colorCode } from '../SpeakersSelect';
 import { Trsx } from '../../trsx';
 
 export const formatTime = (secs: number | null): string | null => {
@@ -77,7 +78,7 @@ export class SpeakersSlider implements RedomComponent {
               'div.tooltip__time',
               h('div', `${formatTime(begin)} - ${formatTime(end)}`),
               h(
-                `div.material-icons.speaker-icon.speaker-color${speaker.id}`,
+                `div.material-icons.speaker-icon.speaker-color${colorCode(speaker.id)}`,
                 'record_voice_over',
               ),
             ),
@@ -88,7 +89,7 @@ export class SpeakersSlider implements RedomComponent {
 
       speakerSpans.push(
         h(
-          `span.speaker-color${speaker.id} tooltip`,
+          `span.speaker-color${colorCode(speaker.id)} tooltip`,
           {
             style: `left:${chunkPosition}%; 
             width: ${chunkLength}%`,
