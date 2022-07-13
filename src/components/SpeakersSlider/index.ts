@@ -1,4 +1,5 @@
 import { h, RedomComponent } from 'redom';
+import { colorCode } from '../SpeakersSelect';
 import { Trsx } from '../../trsx';
 
 export const formatTime = (secs: number | null): string | null => {
@@ -53,16 +54,6 @@ export class SpeakersSlider implements RedomComponent {
     this.onPlaySpeaker(paragraphs[spanIndex].begin);
   };
 
-  public colorCode = (id : string) => {
-    let code = '';
-    if (Number(id) <= 16) {
-      code = id;
-    } else {
-      code = String(Number(id) - 16);
-    }
-    return code;
-  };
-
   private render(): HTMLElement {
     const { paragraphs, recordingDuration } = this.trsx;
     const tooltips: HTMLElement[] = [];
@@ -87,7 +78,7 @@ export class SpeakersSlider implements RedomComponent {
               'div.tooltip__time',
               h('div', `${formatTime(begin)} - ${formatTime(end)}`),
               h(
-                `div.material-icons.speaker-icon.speaker-color${this.colorCode(speaker.id)}`,
+                `div.material-icons.speaker-icon.speaker-color${colorCode(speaker.id)}`,
                 'record_voice_over',
               ),
             ),
@@ -98,7 +89,7 @@ export class SpeakersSlider implements RedomComponent {
 
       speakerSpans.push(
         h(
-          `span.speaker-color${this.colorCode(speaker.id)} tooltip`,
+          `span.speaker-color${colorCode(speaker.id)} tooltip`,
           {
             style: `left:${chunkPosition}%; 
             width: ${chunkLength}%`,
