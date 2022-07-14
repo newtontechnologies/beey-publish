@@ -6,6 +6,11 @@
     padding-bottom: 0.5rem;
     background-color: rgb(255, 255, 255);
   }
+  .native-player {
+    display: none;
+    width: 80%;
+    margin: 0 auto;
+  }
   &__video {
     background: linear-gradient(
       180deg,
@@ -15,14 +20,12 @@
     );
     border-radius: 5px;
     margin-top: 1rem;
+    .native-player {
+      display: flex;
+    }
   }
 }
 
-.native-player {
-  display: none;
-  width: 80%;
-  margin: 0 auto;
-}
 
 .player-button {
   flex-basis: 1rem;

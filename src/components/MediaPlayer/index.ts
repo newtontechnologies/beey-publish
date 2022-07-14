@@ -8,7 +8,6 @@ export type MediaListener = (this: HTMLMediaElement, ev: Event) => unknown;
 
 export interface MediaConfig {
   url: string;
-  hasVideo: boolean;
 }
 
 const PLAYER_SPEED = 'beey-publish-speed';
@@ -148,7 +147,6 @@ export class MediaPlayer implements RedomComponent {
     this.speakersSlider?.updateDuration(formatTime(this.nativePlayerElement.duration));
     const mediaPlayer = document.querySelector('.media-player') as HTMLElement;
     if (this.nativePlayerElement.videoHeight > 0) {
-      this.nativePlayerElement.style.display = 'flex';
       mediaPlayer.classList.add('media-player__video');
     }
   };
