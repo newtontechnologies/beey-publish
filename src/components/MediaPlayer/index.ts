@@ -11,6 +11,8 @@ export interface MediaConfig {
   hasVideo: boolean;
 }
 
+const PLAYER_SPEED = 'beey-publish-speed';
+
 export class MediaPlayer implements RedomComponent {
   public el: HTMLElement;
 
@@ -163,6 +165,7 @@ export class MediaPlayer implements RedomComponent {
   private handleSpeedChange = (e: Event) => {
     const speedSlider = e.target as HTMLInputElement;
     this.nativePlayerElement.playbackRate = Number(speedSlider.value) / 100;
+    window.localStorage.setItem(PLAYER_SPEED, String(this.nativePlayerElement.playbackRate));
   };
 
   private handleMoveSlider = (e: PointerEvent) => {
@@ -216,6 +219,7 @@ export class MediaPlayer implements RedomComponent {
   };
 
   private render(): HTMLElement {
+    const savedSpeed = window.localStorage.getItem(PLAYER_SPEED);
     return h(
       'div.media-player',
       h('video.native-player', {
@@ -225,6 +229,9 @@ export class MediaPlayer implements RedomComponent {
         onplay: this.updateButtons,
         onpause: this.updateButtons,
         onvolumechange: this.updateButtons,
+        playbackRate: savedSpeed === null
+          ? 1
+          : Number(savedSpeed),
       }),
       h(
         'div.media-player__controls',
@@ -277,7 +284,9 @@ export class MediaPlayer implements RedomComponent {
                 type: 'range',
                 min: 50,
                 max: 200,
-                value: 100,
+                value: savedSpeed === null
+                  ? 100
+                  : Number(savedSpeed) * 100,
                 step: 25,
                 oninput: this.handleSpeedChange,
               }),
