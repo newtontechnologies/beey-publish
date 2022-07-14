@@ -212,6 +212,7 @@ export class MediaPlayer implements RedomComponent {
   };
 
   private render(): HTMLElement {
+    const savedSpeed = window.localStorage.getItem('speed');
     return h(
       `div.media-player ${this.mediaConfig.hasVideo ? 'media-player__video' : ''}`,
       h('video.native-player', {
@@ -222,7 +223,9 @@ export class MediaPlayer implements RedomComponent {
         onpause: this.updateButtons,
         onvolumechange: this.updateButtons,
         style: this.mediaConfig.hasVideo ? 'display: flex' : 'display: none',
-        playbackRate: Number(window.localStorage.getItem('speed')),
+        playbackRate: savedSpeed === null
+          ? 1
+          : Number(savedSpeed),
       }),
       h(
         'div.media-player__controls',
@@ -275,9 +278,9 @@ export class MediaPlayer implements RedomComponent {
                 type: 'range',
                 min: 50,
                 max: 200,
-                value: window.localStorage.getItem('speed') === null
+                value: savedSpeed === null
                   ? 100
-                  : Number(window.localStorage.getItem('speed')) * 100,
+                  : Number(savedSpeed) * 100,
                 step: 25,
                 oninput: this.handleSpeedChange,
               }),
