@@ -275,7 +275,9 @@ export class MediaPlayer implements RedomComponent {
                 type: 'range',
                 min: 50,
                 max: 200,
-                value: Number(window.localStorage.getItem('speed')) * 100,
+                value: window.localStorage.getItem('speed') === null
+                  ? 100
+                  : Number(window.localStorage.getItem('speed')) * 100,
                 step: 25,
                 oninput: this.handleSpeedChange,
               }),
