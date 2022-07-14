@@ -158,6 +158,7 @@ export class MediaPlayer implements RedomComponent {
   private handleSpeedChange = (e: Event) => {
     const speedSlider = e.target as HTMLInputElement;
     this.nativePlayerElement.playbackRate = Number(speedSlider.value) / 100;
+    window.localStorage.setItem('speed', String(Number(speedSlider.value) / 100));
   };
 
   private handleMoveSlider = (e: PointerEvent) => {
@@ -221,6 +222,7 @@ export class MediaPlayer implements RedomComponent {
         onpause: this.updateButtons,
         onvolumechange: this.updateButtons,
         style: this.mediaConfig.hasVideo ? 'display: flex' : 'display: none',
+        playbackRate: Number(window.localStorage.getItem('speed')),
       }),
       h(
         'div.media-player__controls',
@@ -273,7 +275,7 @@ export class MediaPlayer implements RedomComponent {
                 type: 'range',
                 min: 50,
                 max: 200,
-                value: 100,
+                value: Number(window.localStorage.getItem('speed')) * 100,
                 step: 25,
                 oninput: this.handleSpeedChange,
               }),
