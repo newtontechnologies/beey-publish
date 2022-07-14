@@ -2,6 +2,7 @@ import { h, RedomComponent } from 'redom';
 import type { TranscriptConfig } from '.';
 import { Paragraph } from '../../trsx';
 import { PhraseElement } from './PhraseElm';
+import { colorCode } from '../SpeakersSelect';
 
 const secoondsToTime = (seconds: number): string => {
   const secs = Math.floor(seconds % 60).toString().padStart(2, '0');
@@ -99,9 +100,14 @@ export class TranscriptSection implements RedomComponent {
         'div.transcript-section__text',
         this.trancriptConfig.showSpeakers
           ? h(
-            `span.speaker ${this.paragraph.speaker.kwClasses.join(' ')}`,
-            speakerName,
-          ) : '',
+            'div.transcript-speaker',
+            h(
+              `span.transcript-speaker__name ${this.paragraph.speaker.kwClasses.join(' ')}`,
+              speakerName,
+            ),
+            h(`div.speaker-color${colorCode(this.paragraph.speaker.id)}.transcript-speaker__color`),
+          )
+          : '',
         h('p', this.phraseElements),
       ),
     );
