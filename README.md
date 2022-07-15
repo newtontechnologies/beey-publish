@@ -26,6 +26,7 @@ const container = document.querySelector('#publish-container');
 
 const publish = new BeeyPublish(container, {
   media: {
+    url: '<url of audio/video file>'
   },
 });
 
