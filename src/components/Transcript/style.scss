@@ -146,12 +146,24 @@ span.played {
   }
 }
 
-.speaker {
+.transcript-speaker{
   display: flex;
   align-items: center;
-  height: 1rem;
-  color: black;
-  font-weight: 600;
+  &__name {
+    display: flex;
+    align-items: center;
+    height: 1rem;
+    color: black;
+    font-weight: 600;
+    width: fit-content;
+    background-color: none;
+  }
+  &__color {
+    border-radius: 50%;
+    margin-left: 5px;
+    width: 0.7rem;
+    height: 0.7rem;
+  }
 }
 
 @media (min-width: 450px) {  
