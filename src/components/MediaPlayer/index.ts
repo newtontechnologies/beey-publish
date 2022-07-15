@@ -8,7 +8,6 @@ export type MediaListener = (this: HTMLMediaElement, ev: Event) => unknown;
 
 export interface MediaConfig {
   url: string;
-  hasVideo: boolean;
 }
 
 const PLAYER_SPEED = 'beey-publish-speed';
@@ -18,7 +17,7 @@ export class MediaPlayer implements RedomComponent {
 
   private speakersSlider: SpeakersSlider | null = null;
   private keyWords: KeyWords | null = null;
-  private nativePlayerElement: HTMLMediaElement;
+  private nativePlayerElement: HTMLVideoElement;
   private seekKnobElement: HTMLInputElement;
   private seekProgressElement: HTMLInputElement;
   private speedSlider: HTMLElement;
@@ -30,7 +29,7 @@ export class MediaPlayer implements RedomComponent {
     this.draggingKnob = false;
     this.el = this.render();
     this.speedSlider = this.el.querySelector('.speed-slider') as HTMLElement;
-    this.nativePlayerElement = this.el.querySelector('.native-player') as HTMLMediaElement;
+    this.nativePlayerElement = this.el.querySelector('.native-player') as HTMLVideoElement;
     this.seekKnobElement = this.el.querySelector('.seekbar__knob') as HTMLInputElement;
     this.seekProgressElement = this.el.querySelector('.seekbar__progress-bar') as HTMLInputElement;
     document.body.addEventListener('mousedown', () => {
@@ -146,6 +145,10 @@ export class MediaPlayer implements RedomComponent {
 
   private handleLoadedMetadata = () => {
     this.speakersSlider?.updateDuration(formatTime(this.nativePlayerElement.duration));
+    const mediaPlayer = document.querySelector('.media-player') as HTMLElement;
+    if (this.nativePlayerElement.videoHeight > 0) {
+      mediaPlayer.classList.add('media-player__video');
+    }
   };
 
   private handleToggleMute = () => {
@@ -216,7 +219,7 @@ export class MediaPlayer implements RedomComponent {
   private render(): HTMLElement {
     const savedSpeed = window.localStorage.getItem(PLAYER_SPEED);
     return h(
-      `div.media-player ${this.mediaConfig.hasVideo ? 'media-player__video' : ''}`,
+      'div.media-player',
       h('video.native-player', {
         src: this.mediaConfig.url,
         onloadedmetadata: this.handleLoadedMetadata,
@@ -224,7 +227,6 @@ export class MediaPlayer implements RedomComponent {
         onplay: this.updateButtons,
         onpause: this.updateButtons,
         onvolumechange: this.updateButtons,
-        style: this.mediaConfig.hasVideo ? 'display: flex' : 'display: none',
         playbackRate: savedSpeed === null
           ? 1
           : Number(savedSpeed),

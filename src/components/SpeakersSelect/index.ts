@@ -1,7 +1,7 @@
 import { h, RedomComponent, setChildren } from 'redom';
 import { Speakers } from '../../trsx';
 
-export const colorCode = (id : string) => (Number(id) <= 16 ? id : String(Number(id) - 16));
+export const colorCode = (id : string) => (Number(id) <= 16 ? id : String(Number(id) % 16));
 
 export class SpeakersSelect implements RedomComponent {
   public el: HTMLElement;
