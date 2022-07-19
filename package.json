@@ -33,8 +33,6 @@
     "@typescript-eslint/parser": "^5.9.0",
     "concurrently": "^7.2.0",
     "esbuild": "^0.13.8",
-    "esbuild-node-externals": "^1.4.1",
-    "esbuild-sass-plugin": "^2.2.3",
     "eslint": "^8.6.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.25.4",
