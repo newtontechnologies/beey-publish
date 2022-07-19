@@ -12,7 +12,8 @@
     "dev:styles": "gulp",
     "dev:js": "tsc -w",
     "dev": "concurrently npm:dev:*",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -32,6 +33,7 @@
     "@typescript-eslint/eslint-plugin": "^5.9.0",
     "@typescript-eslint/parser": "^5.9.0",
     "concurrently": "^7.2.0",
+    "cross-fetch": "^3.1.5",
     "esbuild": "^0.13.8",
     "esbuild-node-externals": "^1.4.1",
     "esbuild-sass-plugin": "^2.2.3",
@@ -43,13 +45,17 @@
     "gulp-cli": "^2.3.0",
     "gulp-concat": "^2.6.1",
     "gulp-sass": "^5.1.0",
+    "isomorphic-fetch": "^3.0.0",
+    "jsdom": "^20.0.0",
     "node-sass": "^7.0.1",
     "rimraf": "^3.0.2",
     "sass": "^1.52.0",
     "typescript": "^4.5.4"
   },
   "dependencies": {
-    "redom": "^3.27.1"
+    "mocha": "^10.0.0",
+    "redom": "^3.27.1",
+    "remove": "^0.1.5"
   },
   "contributors": [
     {
