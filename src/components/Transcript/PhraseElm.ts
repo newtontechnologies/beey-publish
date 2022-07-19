@@ -25,6 +25,27 @@ export class PhraseElement implements RedomComponent {
   }
 
   public updateTime(currentTime: number) {
+    if (this.phrase.begin < currentTime && this.phrase.end > currentTime) {
+      const playingPhraseRect = this.el.getBoundingClientRect();
+      const container = document.querySelector('.transcript-container') as HTMLElement;
+      const containerRect = container.getBoundingClientRect();
+      let fixedMargin = 60;
+      if (containerRect.height < 60) {
+        fixedMargin = 0;
+      }
+      const upperLimit = containerRect.top + fixedMargin;
+      const lowerLimit = containerRect.bottom - fixedMargin;
+      if (playingPhraseRect.bottom <= lowerLimit
+      && playingPhraseRect.bottom > upperLimit
+      ) {
+        return;
+      }
+      if (playingPhraseRect.bottom > lowerLimit) {
+        container.scrollBy(0, playingPhraseRect.bottom - lowerLimit);
+      } else if (playingPhraseRect.top < upperLimit) {
+        container.scrollBy(0, playingPhraseRect.bottom - upperLimit);
+      }
+    }
     if (currentTime > this.phrase.begin) {
       this.el.classList.add('played');
     } else {
