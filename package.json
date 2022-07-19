@@ -45,7 +45,6 @@
     "gulp-cli": "^2.3.0",
     "gulp-concat": "^2.6.1",
     "gulp-sass": "^5.1.0",
-    "isomorphic-fetch": "^3.0.0",
     "jsdom": "^20.0.0",
     "node-sass": "^7.0.1",
     "rimraf": "^3.0.2",
