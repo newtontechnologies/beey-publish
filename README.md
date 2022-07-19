@@ -22,11 +22,11 @@ or use CDN (see below)
 https://unpkg.com/@beey/publish@latest
 ```
 
-Using NPM or Yarn
+Include using NPM or Yarn
 
 ```js
 import BeeyPublish from '@beey/publish';
-import '@beey/publish/dist/style.css';
+import '@beey/publish/dist/beey-publish.css';
 ```
 
 or CDN
