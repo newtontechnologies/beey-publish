@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<transcription version="3.0">
+  <ch name="">
+    <se name="">
+      <pa s="1" b="PT1.05S" e="PT4.8S" scribeForceLabel="true">
+        <p b="PT1.05S" e="PT1.725S">Habitant </p>
+        <p b="PT1.725S" e="PT2.325S">tempor, </p>
+        <p b="PT2.325S" e="PT2.85S">Petrus </p>
+        <p b="PT2.85S" e="PT3.525S">Rogelius </p>
+        <p b="PT3.525S" e="PT3.975S">massa </p>
+        <p b="PT3.975S" e="PT4.35S">diam </p>
+        <p b="PT4.35S" e="PT4.8S">curae.</p>
+      </pa>
+      <pa s="2" b="PT4.8S" e="PT7.125S" scribeForceLabel="true">
+        <p b="PT4.8S" e="PT5.55S">Phasellus </p>
+        <p b="PT5.55S" e="PT6S">massa </p>
+        <p b="PT6S" e="PT6.525S">Petrus </p>
+        <p b="PT6.525S" e="PT7.125S">dapibus?</p>
+      </pa>
+      <pa s="1" b="PT7.125S" e="PT7.725S" scribeForceLabel="true">
+        <p b="PT7.125S" e="PT7.725S">Libero! </p>
+      </pa>
+      <pa s="2" b="PT7.725S" e="PT9.75S" scribeForceLabel="true">
+        <p b="PT7.725S" e="PT8.175S">Nulla </p>
+        <p b="PT8.175S" e="PT8.85S">Rogelius </p>
+        <p b="PT8.85S" e="PT9.75S">ullamcorper.</p>
+      </pa>
+    </se>
+  </ch>
+
+  <sp>
+    <s id="1" surname="Thompson" firstname="Alice" diarization="S0021" dbtype="file" sex="x" lang="en-US">
+    </s>
+    <s id="2" surname="Hansen" firstname="Bob" diarization="S0067" dbtype="file" sex="x" lang="en-US">
+    </s>
+  </sp>
+</transcription>
