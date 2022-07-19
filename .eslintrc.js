@@ -3,7 +3,7 @@ module.exports = {
     browser: true,
     es6: true,
   },
-  ignorePatterns: ['cjs', 'dist', 'umd'],
+  ignorePatterns: ['cjs', 'dist'],
   extends: [
     'airbnb-base',
     'plugin:@typescript-eslint/eslint-recommended',
