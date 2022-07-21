@@ -2,7 +2,9 @@
 
 JavaScript library for publishing [Beey](https://www.beey.io/en/) transcriptions with recordings on third-party web pages.
 
-## 📦 Install
+## 🔌 Include in your project 
+
+Install with
 
 ```
 npm install @beey/publish
@@ -14,14 +16,36 @@ or
 yarn add @beey/publish
 ```
 
+or use CDN (see below)
+
+```
+https://unpkg.com/@beey/publish@latest
+```
+
+Include using NPM or Yarn
+
+```js
+import BeeyPublish from '@beey/publish';
+import '@beey/publish/dist/beey-publish.css';
+```
+
+or CDN
+
+```html
+<link rel="stylesheet" href="https://unpkg.com/@beey/publish@latest/dist/beey-publish.min.css" />
+
+<script type="module">
+  import BeeyPublish from 'https://unpkg.com/@beey/publish@latest/dist/beey-publish.min.js';
+  
+  // ...
+</script>
+```
+
 ## 🔨 Usage
 
 This library uses the TRSX format for transcriptions.
 
 ```js
-import BeeyPublish from '@beey/publish';
-import '@beey/publish/dist/style.css';
-
 const container = document.querySelector('#publish-container');
 
 const publish = new BeeyPublish(container, {
@@ -35,7 +59,7 @@ await publish.loadTrsx({
 });
 ```
 
-You can also load TRSX as string:
+You can also load TRSX as a string:
 
 ```js
 await publish.loadTrsx({
@@ -43,7 +67,7 @@ await publish.loadTrsx({
 });
 ```
 
-If you want to use player and transcription separately:
+If you want to use player and transcription separately, specify two containers:
 
 ```js
 new BeeyPublish(
