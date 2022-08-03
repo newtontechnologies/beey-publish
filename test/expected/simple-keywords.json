@@ -1,0 +1,25 @@
+[
+  {
+    "text": "Petrus Rogelius",
+    "group": {
+      "id": "entity-person",
+      "label": "Person"
+    },
+    "mentions": [
+      { "indices": [2, 3] },
+      { "indices": [9] },
+      { "indices": [13] }
+    ]
+  },
+  {
+    "text": "Petrus",
+    "group": {
+      "id": "entity-name",
+      "label": "Name"
+    },
+    "mentions": [
+      { "indices": [2] },
+      { "indices": [9] }
+    ]
+  }
+]
