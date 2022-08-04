@@ -4,7 +4,7 @@ import { Paragraph } from '../../trsx';
 import { PhraseElement } from './PhraseElm';
 import { colorCode } from '../SpeakersSelect';
 
-const secoondsToTime = (seconds: number): string => {
+const secondsToTime = (seconds: number): string => {
   const secs = Math.floor(seconds % 60).toString().padStart(2, '0');
   const mins = Math.floor((seconds / 60) % 60).toString().padStart(2, '0');
   const hrs = Math.floor((seconds / 60 / 60) % 60).toString().padStart(2, '0');
@@ -62,6 +62,11 @@ export class TranscriptSection implements RedomComponent {
     this.phraseElements.forEach((phraseElement) => phraseElement.updateTime(currentTime));
   }
 
+  public onSeek(currentTime: number) {
+    this.phraseElements.forEach((phraseElement, index, phraseElements) => phraseElement
+      .handleSeek(currentTime, phraseElements[index + 1]));
+  }
+
   private handlePlayButtonClick = () => {
     if (this.isPlaying) {
       this.onPause();
@@ -93,7 +98,7 @@ export class TranscriptSection implements RedomComponent {
             },
             'play_arrow',
           ),
-          h('p', secoondsToTime(this.paragraph.begin)),
+          h('p', secondsToTime(this.paragraph.begin)),
         ] : '',
       ),
       h(

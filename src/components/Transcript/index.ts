@@ -39,6 +39,7 @@ export class Transcript implements RedomComponent {
     this.speakersSelect = new SpeakersSelect(onSelectedSpeakers);
 
     this.player.addEventListener('seeked', this.handleTimeUpdate);
+    this.player.addEventListener('seeked', this.handleSeek);
     this.player.addEventListener('timeupdate', this.handleTimeUpdate);
     this.el = this.render();
   }
@@ -81,6 +82,10 @@ export class Transcript implements RedomComponent {
       this.player.currentTime,
       this.player.paused,
     ));
+  };
+
+  private handleSeek = () => {
+    this.sections.forEach((section) => section.onSeek(this.player.currentTime));
   };
 
   private render(): HTMLElement {
