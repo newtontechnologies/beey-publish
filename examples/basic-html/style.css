@@ -1,0 +1,9 @@
+html {
+  font-family: sans-serif;
+}
+
+.container {
+  max-width: 46rem;
+  margin: 0 auto 0 auto;
+  padding: 0 2rem 0 2rem;
+}
