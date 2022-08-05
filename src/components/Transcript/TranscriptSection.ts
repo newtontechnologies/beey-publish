@@ -14,15 +14,15 @@ const secondsToTime = (seconds: number): string => {
 export class TranscriptSection implements RedomComponent {
   public el: HTMLElement;
 
-  public paragraph: Paragraph;
+  private paragraph: Paragraph;
   private trancriptConfig: TranscriptConfig;
   private onPlayFrom: (begin: number) => void;
   private onPause: () => void;
   private onScrollTo: (offSet: number) => void;
 
   private phraseElements: PhraseElement[] = [];
-  private begin: number;
-  private end: number;
+  public readonly begin: number;
+  public readonly end: number;
   private isPlaying = false;
 
   constructor(
@@ -68,11 +68,11 @@ export class TranscriptSection implements RedomComponent {
   public onSeek(currentTime: number) {
     let i = 1;
     for (; i < this.phraseElements.length; i += 1) {
-      if (this.phraseElements[i].phrase.begin > currentTime) {
+      if (this.phraseElements[i].begin > currentTime) {
         break;
       }
     }
-    this.onScrollTo(this.phraseElements[i - 1].el.offsetTop);
+    this.onScrollTo(this.phraseElements[i - 1].offSetTop);
   }
 
   private handlePlayButtonClick = () => {

@@ -9,7 +9,7 @@ export class PhraseElement implements RedomComponent {
 
   private static playTooltip: PlayTooltip | null;
 
-  public phrase: Phrase;
+  private phrase: Phrase;
   private transcriptConfig: TranscriptConfig;
   private onPlay: (begin: number) => void;
 
@@ -22,6 +22,14 @@ export class PhraseElement implements RedomComponent {
     this.transcriptConfig = transcriptConfig;
     this.onPlay = onPlay;
     this.el = this.render();
+  }
+
+  public get offSetTop(): number {
+    return this.el.offsetTop;
+  }
+
+  public get begin(): number {
+    return this.phrase.begin;
   }
 
   public updateTime(currentTime: number) {

@@ -86,16 +86,13 @@ export class Transcript implements RedomComponent {
   };
 
   private handleSeek = () => {
-    let i = 0;
-    for (; i < this.sections.length; i += 1) {
-      if (this.sections[i].paragraph.begin > this.player.currentTime) {
-        break;
-      }
-    }
-    if (i === 0) {
+    const seekedSection = this.sections.find((section) => (
+      section.begin <= this.player.currentTime && this.player.currentTime <= section.end
+    ));
+    if (seekedSection === undefined) {
       this.scrollTo('begin');
     } else {
-      this.sections[i - 1].onSeek(this.player.currentTime);
+      seekedSection.onSeek(this.player.currentTime);
     }
   };
 
