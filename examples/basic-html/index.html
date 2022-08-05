@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://unpkg.com/@beey/publish@latest/dist/beey-publish.min.css" />
+  <link rel="stylesheet" href="style.css" />
+  <title>Basic HTML</title>
+</head>
+<body>
+  <div id="pubish-container" class="container"></div>
+
+  <script type="module">
+    import BeeyPublish from 'https://unpkg.com/@beey/publish@latest/dist/beey-publish.min.js';
+    
+    const container = document.querySelector('#pubish-container');
+    const publish = new BeeyPublish(container, {
+      media: {
+        url: 'https://www.beey.io/wp-content/uploads/2022/07/job-interview.mp4',
+      },
+    });
+
+    await publish.loadTrsx({
+      url: 'https://www.beey.io/wp-content/uploads/2022/07/job-interview.trsx',
+    });
+  </script>
+</body>
+</html>
