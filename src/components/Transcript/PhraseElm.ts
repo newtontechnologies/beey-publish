@@ -24,6 +24,14 @@ export class PhraseElement implements RedomComponent {
     this.el = this.render();
   }
 
+  public get offSetTop(): number {
+    return this.el.offsetTop;
+  }
+
+  public get begin(): number {
+    return this.phrase.begin;
+  }
+
   public updateTime(currentTime: number) {
     if (currentTime > this.phrase.begin) {
       this.el.classList.add('played');
