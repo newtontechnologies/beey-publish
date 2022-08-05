@@ -9,7 +9,7 @@ export class PhraseElement implements RedomComponent {
 
   private static playTooltip: PlayTooltip | null;
 
-  private phrase: Phrase;
+  public phrase: Phrase;
   private transcriptConfig: TranscriptConfig;
   private onPlay: (begin: number) => void;
 
@@ -29,20 +29,6 @@ export class PhraseElement implements RedomComponent {
       this.el.classList.add('played');
     } else {
       this.el.classList.remove('played');
-    }
-  }
-
-  public handleSeek(
-    currentTime: number,
-    nextPhrase: PhraseElement,
-  ) {
-    const container = document.querySelector('.transcript-container') as HTMLElement;
-    if (this.phrase.begin < currentTime
-      && (nextPhrase?.phrase.begin > currentTime || nextPhrase?.phrase.begin === undefined)) {
-      container.scrollTo(0, this.el.offsetTop - container.offsetTop);
-    }
-    if (this.phrase.index === 0 && currentTime < this.phrase.begin) {
-      container.scrollTo(0, 0);
     }
   }
 

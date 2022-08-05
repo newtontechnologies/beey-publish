@@ -53,6 +53,7 @@ export class Transcript implements RedomComponent {
         this.config,
         this.handlePlayParagraph,
         this.handlePauseParagraph,
+        this.scrollTo,
       ),
     );
 
@@ -85,7 +86,22 @@ export class Transcript implements RedomComponent {
   };
 
   private handleSeek = () => {
-    this.sections.forEach((section) => section.onSeek(this.player.currentTime));
+    let i = 0;
+    for (; i < this.sections.length; i += 1) {
+      if (this.sections[i].paragraph.begin > this.player.currentTime) {
+        break;
+      }
+    }
+    if (i === 0) {
+      this.scrollTo('begin');
+    } else {
+      this.sections[i - 1].onSeek(this.player.currentTime);
+    }
+  };
+
+  private scrollTo = (offSet: number | 'begin') => {
+    const container = this.el.querySelector('.transcript-container') as HTMLElement;
+    container.scrollTo(0, offSet === 'begin' ? 0 : offSet - container.offsetTop);
   };
 
   private render(): HTMLElement {
