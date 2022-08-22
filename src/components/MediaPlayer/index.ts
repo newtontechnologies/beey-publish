@@ -1,4 +1,6 @@
-import { h, RedomComponent, mount } from 'redom';
+import {
+  h, RedomComponent, mount, unmount,
+} from 'redom';
 import { Trsx } from '../../trsx';
 import { SpeakersSlider, formatTime } from '../SpeakersSlider';
 import { KeyWords } from '../KeyWords';
@@ -92,6 +94,10 @@ export class MediaPlayer implements RedomComponent {
   public displayKeywords = (trsx: Trsx) => {
     const sliders = this.el.querySelector('.sliders') as HTMLElement;
     const seekbar = this.el.querySelector('.seekbar') as HTMLElement;
+    const keyWords = this.el.querySelector('.key-words');
+    if (keyWords !== null) {
+      unmount(sliders, keyWords);
+    }
     this.keyWords = new KeyWords(
       trsx,
       (time) => { this.currentTime = time; },
