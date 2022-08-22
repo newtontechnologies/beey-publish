@@ -26,7 +26,7 @@ class BeeyPublish {
   public constructor(slot: PublishSlot, config: BeeyPublishConfig) {
     this.slot = slot;
     this.config = config;
-    this.player = new MediaPlayer(this.config.media, this.config.subtitlesUrl);
+    this.player = new MediaPlayer(this.config.media, this.config.subtitlesUrl !== undefined);
     this.transcript = new Transcript(
       this.player,
       this.config.transcript ?? {},

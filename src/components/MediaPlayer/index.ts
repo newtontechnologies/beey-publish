@@ -22,12 +22,12 @@ export class MediaPlayer implements RedomComponent {
   private seekProgressElement: HTMLInputElement;
   private speedSlider: HTMLElement;
   private mediaConfig: MediaConfig;
-  private subtitlesConfig: string | undefined;
+  private hasSubtitles: boolean;
   private draggingKnob: boolean;
 
-  public constructor(mediaConfig: MediaConfig, subtitlesConfig: string | undefined) {
+  public constructor(mediaConfig: MediaConfig, hasSubtitles: boolean) {
     this.mediaConfig = mediaConfig;
-    this.subtitlesConfig = subtitlesConfig;
+    this.hasSubtitles = hasSubtitles;
     this.draggingKnob = false;
     this.el = this.render();
     this.speedSlider = this.el.querySelector('.speed-slider') as HTMLElement;
@@ -303,7 +303,7 @@ export class MediaPlayer implements RedomComponent {
             ),
           ),
           h('i.subtitlesButton.material-icons', 'subtitles_off', {
-            style: { visibility: this.subtitlesConfig === undefined ? 'hidden' : 'visible' },
+            style: { visibility: this.hasSubtitles ? 'visible' : 'hidden' },
             onclick: this.toggleSubtitles,
           }),
         ),
