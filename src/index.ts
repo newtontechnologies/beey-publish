@@ -66,6 +66,10 @@ class BeeyPublish {
   private handleSelectedSpeakers = (speakerIds: string[]) => {
     this.player.updateSelectedSpeakers(speakerIds);
   };
+
+  public handleVolume = (volume: number) => {
+    this.player.handleVolumeProgrammatically(volume);
+  };
 }
 
 export default BeeyPublish;
