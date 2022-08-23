@@ -45,6 +45,10 @@ class BeeyPublish {
     }
   }
 
+  public get mediaPlayer(): MediaPlayer {
+    return this.player;
+  }
+
   public async loadTrsx(trsxSource: TrsxSource): Promise<void> {
     this.trsx = await new TrsxFile(trsxSource).parse();
     this.transcript.updateTrsx(this.trsx);
@@ -66,10 +70,6 @@ class BeeyPublish {
 
   private handleSelectedSpeakers = (speakerIds: string[]) => {
     this.player.updateSelectedSpeakers(speakerIds);
-  };
-
-  public handleVolume = (volume: number) => {
-    this.player.handleVolumeProgrammatically(volume);
   };
 }
 

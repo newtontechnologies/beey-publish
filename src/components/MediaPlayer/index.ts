@@ -65,6 +65,16 @@ export class MediaPlayer implements RedomComponent {
     return this.nativePlayerElement.paused;
   }
 
+  public get volume(): number {
+    return this.nativePlayerElement.volume;
+  }
+
+  public set volume(volume: number) {
+    this.nativePlayerElement.volume = volume;
+    const volumeSlider = this.el.querySelector('input.volume-slider') as HTMLInputElement;
+    volumeSlider.value = String(volume * 100);
+  }
+
   public play(): void {
     this.nativePlayerElement.play();
   }
@@ -163,15 +173,9 @@ export class MediaPlayer implements RedomComponent {
     this.nativePlayerElement.muted = !this.nativePlayerElement.muted;
   };
 
-  private handleVolumeManually = (e: Event) => {
+  private handleVolumeChange = (e: Event) => {
     const volumeSlider = e.target as HTMLInputElement;
     this.nativePlayerElement.volume = Number(volumeSlider.value) / 100;
-  };
-
-  public handleVolumeProgrammatically = (volume: number) => {
-    this.nativePlayerElement.volume = volume;
-    const volumeSlider = this.el.querySelector('input.volume-slider') as HTMLInputElement;
-    volumeSlider.value = String(volume * 100);
   };
 
   private handleSpeedChange = (e: Event) => {
@@ -259,7 +263,7 @@ export class MediaPlayer implements RedomComponent {
             type: 'range',
             max: 100,
             value: 50,
-            oninput: this.handleVolumeManually,
+            oninput: this.handleVolumeChange,
           }),
         ),
         h(
