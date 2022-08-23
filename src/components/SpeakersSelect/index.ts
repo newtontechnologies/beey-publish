@@ -64,14 +64,14 @@ export class SpeakersSelect implements RedomComponent {
             onchange: this.handleSpeakersSelection,
           }),
           `${coloredSpeaker.firstname} ${coloredSpeaker.surname}`,
-          h(`div.speaker-color${colorCode(coloredSpeaker.id)}.dropdown__color`, {
+          h(`div.speaker-color${colorCode(coloredSpeaker.id)}.speaker-dropdown__color`, {
             style: 'width: 10px; height: 10px;',
           }),
         )),
       )];
 
     const dropdown = this.el.querySelector(
-      '.dropdown__items',
+      '.speaker-dropdown__items',
     ) as HTMLInputElement;
     setChildren(dropdown, options);
   };
@@ -83,11 +83,11 @@ export class SpeakersSelect implements RedomComponent {
 
   private render(): HTMLElement {
     return h(
-      'div.dropdown',
-      h('span.dropdown__anchor', 'Vyznačit mluvčí: ', {
+      'div.speaker-dropdown',
+      h('span.speaker-dropdown__anchor', 'Vyznačit mluvčí: ', {
         onclick: this.handleDropdown,
       }),
-      h('div.dropdown__items'),
+      h('div.speaker-dropdown__items'),
       {
         onclick: (e: PointerEvent) => e.stopPropagation(),
       },
