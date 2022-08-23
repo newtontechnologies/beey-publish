@@ -82,3 +82,10 @@ new BeeyPublish(
   },
 );
 ```
+
+If you want to change volume programmatically:
+(number in unit interval [0,1])
+
+```js
+publish.mediaPlayer.volume = 0.3
+```
