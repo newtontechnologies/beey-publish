@@ -20,7 +20,7 @@ export class PlayTooltip implements RedomComponent {
   public open(startTime: number, posX: number, posY: number) {
     this.startTime = startTime;
     this.el.style.left = `${posX}px`;
-    this.el.style.top = `${posY}px`;
+    this.el.style.top = `${posY - 100}px`;
 
     this.closeTimer = window.setTimeout(this.close, AUTO_CLOSE_TIME);
   }

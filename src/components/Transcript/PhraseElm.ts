@@ -42,8 +42,14 @@ export class PhraseElement implements RedomComponent {
 
   private handleClick = (e: MouseEvent) => {
     e.stopPropagation();
+    const containerCoordinates = (this.el.parentElement as HTMLElement)
+      .getBoundingClientRect();
     playTooltip.onPlay = this.onPlay;
-    playTooltip.open(this.phrase.begin, e.pageX, e.pageY);
+    playTooltip.open(
+      this.phrase.begin,
+      e.clientX - containerCoordinates.left,
+      e.screenY - containerCoordinates.top,
+    );
     this.el.appendChild(playTooltip.el);
   };
 
