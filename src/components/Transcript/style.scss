@@ -124,6 +124,7 @@ span.played {
   &__text {
     margin: 0 0.5rem 0 1rem;
     p {
+      position: relative; 
       margin-top: 0.3rem;
     }
   }
