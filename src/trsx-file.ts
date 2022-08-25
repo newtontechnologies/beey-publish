@@ -48,7 +48,7 @@ const extractPhrases = (paragraphElement: Element, offset: number): Phrase[] => 
         begin: parseTimeStamp(phraseElement.getAttribute('b')),
         end: parseTimeStamp(phraseElement.getAttribute('e')),
         text: (phraseElement.textContent ?? '').replace(/\[\S*::\S*\]/g, ''),
-        kwClasses: [],
+        keywordInstances: [],
       }))
   );
 };
@@ -64,7 +64,7 @@ const extractSpeakers = (xmlDoc: XMLDocument): Speakers => {
       firstname: speakerElement.getAttribute('firstname') as string,
       surname: speakerElement.getAttribute('surname') as string,
       unknown: isSpeakerUknown(speakerElement),
-      kwClasses: [],
+      keywordInstances: [],
     };
   });
   const isMachineSpeakers = Object.values(speakerMap).some((speaker) => speaker.firstname === '' && speaker.surname.startsWith('S0'));

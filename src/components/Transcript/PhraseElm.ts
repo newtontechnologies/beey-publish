@@ -1,7 +1,9 @@
 import { h, RedomComponent } from 'redom';
 import type { TranscriptConfig } from '.';
-import { Phrase } from '../../trsx';
+import { extractKeywordsClassNames, Phrase } from '../../trsx';
 import { PlayTooltip } from './PlayTooltip';
+
+const PHRASE_KW_PREFIX = 'pkw';
 
 const playTooltip: PlayTooltip = new PlayTooltip();
 export class PhraseElement implements RedomComponent {
@@ -62,8 +64,9 @@ export class PhraseElement implements RedomComponent {
       'data-idx': this.phrase.index,
     };
 
-    if (this.phrase.kwClasses.length > 0) {
-      attributes.className += ` kw ${this.phrase.kwClasses.join(' ')}`;
+    const classNames = extractKeywordsClassNames(PHRASE_KW_PREFIX, this.phrase.keywordInstances);
+    if (classNames.length > 0) {
+      attributes.className += ` ${PHRASE_KW_PREFIX} ${classNames.join(' ')}`;
     }
 
     return h(

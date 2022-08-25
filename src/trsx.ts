@@ -30,14 +30,14 @@ export interface Phrase {
   begin: number;
   end: number;
   text: string;
-  kwClasses: string[];
+  keywordInstances: KeywordInstance[],
 }
 export interface Speaker {
   firstname: string | null;
   surname: string;
   unknown: boolean;
   id: string;
-  kwClasses: string[];
+  keywordInstances: KeywordInstance[],
 }
 export interface Paragraph {
   speaker: Speaker;
@@ -67,27 +67,33 @@ const clearKeywords = (paragraphs: Paragraph[]): void => paragraphs.forEach(
   (paragraph) => {
     const { phrases } = paragraph;
     const { speaker } = paragraph;
-    speaker.kwClasses = [];
+    speaker.keywordInstances = [];
+
     for (let i = 0; i < phrases.length; i += 1) {
       const phrase = phrases[i] as Phrase;
-      if (phrase.kwClasses.length > 0) {
-        phrase.kwClasses = [];
+      if (phrase.keywordInstances.length > 0) {
+        phrase.keywordInstances = [];
       }
     }
   },
 );
 
-export const extractClassNames = (keyword: Keyword): string[] => {
-  if (Array.isArray(keyword.group)) {
-    return keyword.group.map((group) => `kw-${group.id}`);
+export const extractKeywordsClassNames = (
+  prefix: string,
+  instances: KeywordInstance[],
+): string[] => instances.flatMap((instance): string[] => {
+  const { group } = instance.keyword;
+
+  if (Array.isArray(group)) {
+    return group.map((g) => `${prefix}-${g.id}`);
   }
 
-  if (keyword.group === undefined) {
+  if (group === undefined) {
     return [];
   }
 
-  return [`kw-${keyword.group.id}`];
-};
+  return [`${prefix}-${group.id}`];
+});
 
 export const attachKeywords = (keywords: Keyword[], trsx: Trsx) => {
   const { paragraphs } = trsx;
@@ -95,32 +101,34 @@ export const attachKeywords = (keywords: Keyword[], trsx: Trsx) => {
   clearKeywords(paragraphs);
 
   keywords.forEach((keyword: Keyword) => {
-    const classNames = extractClassNames(keyword);
-
     keyword.mentions.forEach((mention) => {
       if (isSpeakerMention(mention)) {
         paragraphs.forEach((paragraph) => {
           const { speaker } = paragraph;
           if (Number(speaker.id) === mention.speakerId) {
-            trsx.keywordInstances.push({
+            const instance = {
               keyword,
               begin: paragraph.begin,
-            });
+            };
+            trsx.keywordInstances.push(instance);
+            speaker.keywordInstances.push(instance);
           }
-
-          speaker.kwClasses.push(...classNames);
         });
       } else {
-        let begin = -1;
+        const instance = {
+          keyword,
+          begin: -1,
+        };
+
         mention.indices.forEach((phraseIndex) => {
           const phrase = trsx.phrases[phraseIndex];
-          if (begin === -1) {
-            begin = phrase.begin;
+          if (instance.begin === -1) {
+            instance.begin = phrase.begin;
           }
-          phrase.kwClasses.push(...classNames);
+          phrase.keywordInstances.push(instance);
         });
 
-        trsx.keywordInstances.push({ keyword, begin });
+        trsx.keywordInstances.push(instance);
       }
     });
   });

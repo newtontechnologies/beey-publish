@@ -1,6 +1,6 @@
 import { h, RedomComponent } from 'redom';
 import type { TranscriptConfig } from '.';
-import { Paragraph } from '../../trsx';
+import { extractKeywordsClassNames, Paragraph } from '../../trsx';
 import { PhraseElement } from './PhraseElm';
 import { colorCode } from '../SpeakersSelect';
 
@@ -10,6 +10,8 @@ const secondsToTime = (seconds: number): string => {
   const hrs = Math.floor((seconds / 60 / 60) % 60).toString().padStart(2, '0');
   return `${hrs}:${mins}:${secs}`;
 };
+
+const SPEAKER_KW_PREFIX = 'skw';
 
 export class TranscriptSection implements RedomComponent {
   public el: HTMLElement;
@@ -90,9 +92,15 @@ export class TranscriptSection implements RedomComponent {
         (phrase) => new PhraseElement(phrase, this.trancriptConfig, this.onPlayFrom),
       );
 
-    const speakerName = this.paragraph.speaker.unknown
+    const { speaker } = this.paragraph;
+    const speakerName = speaker.unknown
       ? 'Mluvčí'
-      : `${this.paragraph.speaker.firstname ?? ''} ${this.paragraph.speaker.surname}`;
+      : `${speaker.firstname ?? ''} ${speaker.surname}`;
+
+    const keywordClassNames = extractKeywordsClassNames(
+      SPEAKER_KW_PREFIX,
+      speaker.keywordInstances,
+    );
 
     return h(
       'div.transcript-section',
@@ -115,10 +123,10 @@ export class TranscriptSection implements RedomComponent {
           ? h(
             'div.transcript-speaker',
             h(
-              `span.transcript-speaker__name ${this.paragraph.speaker.kwClasses.join(' ')}`,
+              `span.transcript-speaker__name ${SPEAKER_KW_PREFIX} ${keywordClassNames.join(' ')}`,
               speakerName,
             ),
-            h(`div.speaker-color${colorCode(this.paragraph.speaker.id)}.transcript-speaker__color`),
+            h(`div.speaker-color${colorCode(speaker.id)}.transcript-speaker__color`),
           )
           : '',
         h('p', this.phraseElements),
