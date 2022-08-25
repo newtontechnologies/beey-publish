@@ -1,3 +1,11 @@
+## 1.8.0 (2022-08-25)
+- ⚠️ Breaking: keyword CSS classes have new: prefixes `pkw-` for phrases, `skw-` for speakers and `tkw-` for timeline.
+- ✨ Feature: text autoscrolling when playing media
+- 🛠 Improvement: allow programmatic access to media player instance (see readme)
+- 🛠 Improvement: hide subtitles button when there are no subtitles
+- 🐞 Fix: all keywords are properly cleared before every call to `attachKeywords`
+- 🐞 Fix: correctly position 'play from' tooltip when container does not start at the left edge of the page
+
 ## 1.7.0 (2022-07-21)
 - ⚠️ Breaking: the unminifed CSS file is now called `dist/beey-publish.css` instead of `dist/styles.css`
 - ✨ Feature: speakers are marked with colors in transcript

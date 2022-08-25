@@ -70,7 +70,7 @@ await publish.loadTrsx({
 If you want to use player and transcription separately, specify two containers:
 
 ```js
-new BeeyPublish(
+const publish = new BeeyPublish(
   {
     playerParent: playerContainer,
     transcriptParent: transcriptContainer,
@@ -83,8 +83,9 @@ new BeeyPublish(
 );
 ```
 
-If you want to change volume programmatically:
-(number in unit interval [0,1])
+Accessing the media player for programmatic control.
+
+E.g. change volume programmatically (number in unit interval [0,1]):
 
 ```js
 publish.mediaPlayer.volume = 0.3
