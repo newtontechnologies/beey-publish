@@ -1,6 +1,8 @@
-import { h, svg, RedomComponent } from 'redom';
-import { Trsx } from '../../trsx';
+import { h, RedomComponent } from 'redom';
+import { extractKeywordsClassNames, Trsx } from '../../trsx';
 import { formatTime } from '../SpeakersSlider';
+
+const TIMELINE_KW_PREFIX = 'tkw';
 
 export class TimelineKeyWords implements RedomComponent {
   public el: HTMLElement;
@@ -17,20 +19,15 @@ export class TimelineKeyWords implements RedomComponent {
     const { recordingDuration } = this.trsx;
     const keyWordsArray = this.trsx.keywordInstances.map((instance) => {
       const wordPosition = (instance.begin / recordingDuration) * 100;
+      const kwClassNames = extractKeywordsClassNames(TIMELINE_KW_PREFIX, [instance]);
+
       return h(
         'div.key-words__mark.tooltip',
         {
           style: `left:${wordPosition}%`,
           onclick: () => this.onSeek(instance.begin),
         },
-        svg(
-          'svg',
-          {
-            width: '3.5px',
-            height: '15px',
-          },
-          svg('use', { xlink: { href: '#kw-mark' } }),
-        ),
+        h('div', { className: `wedge ${TIMELINE_KW_PREFIX} ${kwClassNames}` }),
         h(
           'div.tooltip__text',
           h(
@@ -44,23 +41,6 @@ export class TimelineKeyWords implements RedomComponent {
 
     return h(
       'div.key-words',
-      svg(
-        'svg',
-        {
-          width: '0',
-          height: '0',
-          xmlns: 'http://www.w3.org/2000/svg',
-        },
-        svg(
-          'symbol#kw-mark',
-          {
-            width: '3.5px',
-            height: '15px',
-            viewbox: '0 0 3.5 15',
-          },
-          svg('path.wedge', { d: 'M0,0 H3.5 L1.75,15 Z' }),
-        ),
-      ),
       keyWordsArray,
     );
   }

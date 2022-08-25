@@ -79,19 +79,20 @@ const clearKeywords = (paragraphs: Paragraph[]): void => paragraphs.forEach(
 );
 
 export const extractKeywordsClassNames = (
+  prefix: string,
   instances: KeywordInstance[],
 ): string[] => instances.flatMap((instance): string[] => {
   const { group } = instance.keyword;
 
   if (Array.isArray(group)) {
-    return group.map((g) => `kw-${g.id}`);
+    return group.map((g) => `${prefix}-${g.id}`);
   }
 
   if (group === undefined) {
     return [];
   }
 
-  return [`kw-${group.id}`];
+  return [`${prefix}-${group.id}`];
 });
 
 export const attachKeywords = (keywords: Keyword[], trsx: Trsx) => {

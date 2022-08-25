@@ -3,6 +3,8 @@ import type { TranscriptConfig } from '.';
 import { extractKeywordsClassNames, Phrase } from '../../trsx';
 import { PlayTooltip } from './PlayTooltip';
 
+const PHRASE_KW_PREFIX = 'pkw';
+
 const playTooltip: PlayTooltip = new PlayTooltip();
 export class PhraseElement implements RedomComponent {
   public el: HTMLElement;
@@ -56,9 +58,9 @@ export class PhraseElement implements RedomComponent {
       'data-idx': this.phrase.index,
     };
 
-    const classNames = extractKeywordsClassNames(this.phrase.keywordInstances);
+    const classNames = extractKeywordsClassNames(PHRASE_KW_PREFIX, this.phrase.keywordInstances);
     if (classNames.length > 0) {
-      attributes.className += ` kw ${classNames.join(' ')}`;
+      attributes.className += ` ${PHRASE_KW_PREFIX} ${classNames.join(' ')}`;
     }
 
     return h(

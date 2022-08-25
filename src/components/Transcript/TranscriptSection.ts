@@ -11,6 +11,8 @@ const secondsToTime = (seconds: number): string => {
   return `${hrs}:${mins}:${secs}`;
 };
 
+const SPEAKER_KW_PREFIX = 'skw';
+
 export class TranscriptSection implements RedomComponent {
   public el: HTMLElement;
 
@@ -95,7 +97,10 @@ export class TranscriptSection implements RedomComponent {
       ? 'Mluvčí'
       : `${speaker.firstname ?? ''} ${speaker.surname}`;
 
-    const keywordClassNames = extractKeywordsClassNames(speaker.keywordInstances);
+    const keywordClassNames = extractKeywordsClassNames(
+      SPEAKER_KW_PREFIX,
+      speaker.keywordInstances,
+    );
 
     return h(
       'div.transcript-section',
@@ -118,7 +123,7 @@ export class TranscriptSection implements RedomComponent {
           ? h(
             'div.transcript-speaker',
             h(
-              `span.transcript-speaker__name ${keywordClassNames.join(' ')}`,
+              `span.transcript-speaker__name ${SPEAKER_KW_PREFIX} ${keywordClassNames.join(' ')}`,
               speakerName,
             ),
             h(`div.speaker-color${colorCode(speaker.id)}.transcript-speaker__color`),
