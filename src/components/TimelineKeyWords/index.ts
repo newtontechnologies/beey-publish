@@ -2,7 +2,7 @@ import { h, svg, RedomComponent } from 'redom';
 import { Trsx } from '../../trsx';
 import { formatTime } from '../SpeakersSlider';
 
-export class KeyWords implements RedomComponent {
+export class TimelineKeyWords implements RedomComponent {
   public el: HTMLElement;
   private trsx: Trsx;
   private onSeek: (time: number) => void;

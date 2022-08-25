@@ -3,7 +3,7 @@ import {
 } from 'redom';
 import { Trsx } from '../../trsx';
 import { SpeakersSlider, formatTime } from '../SpeakersSlider';
-import { KeyWords } from '../KeyWords';
+import { TimelineKeyWords } from '../TimelineKeyWords';
 
 export type MediaPlayerEvent = 'play' | 'pause' | 'seeked' | 'timeupdate';
 export type MediaListener = (this: HTMLMediaElement, ev: Event) => unknown;
@@ -18,7 +18,7 @@ export class MediaPlayer implements RedomComponent {
   public el: HTMLElement;
 
   private speakersSlider: SpeakersSlider | null = null;
-  private keyWords: KeyWords | null = null;
+  private keyWords: TimelineKeyWords | null = null;
   private nativePlayerElement: HTMLVideoElement;
   private seekKnobElement: HTMLInputElement;
   private seekProgressElement: HTMLInputElement;
@@ -100,7 +100,7 @@ export class MediaPlayer implements RedomComponent {
     if (keyWords !== null) {
       unmount(sliders, keyWords);
     }
-    this.keyWords = new KeyWords(
+    this.keyWords = new TimelineKeyWords(
       trsx,
       (time) => { this.currentTime = time; },
     );
