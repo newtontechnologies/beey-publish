@@ -5,6 +5,7 @@
 - 🛠 Improvement: hide subtitles button when there are no subtitles
 - 🐞 Fix: all keywords are properly cleared before every call to `attachKeywords`
 - 🐞 Fix: correctly position 'play from' tooltip when container does not start at the left edge of the page
+- 🐞 Fix: CSS class `dropdown` renamed to `speaker-dropdown` to avoid name clashes with frameworks like Bootstrap
 
 ## 1.7.0 (2022-07-21)
 - ⚠️ Breaking: the unminifed CSS file is now called `dist/beey-publish.css` instead of `dist/styles.css`
