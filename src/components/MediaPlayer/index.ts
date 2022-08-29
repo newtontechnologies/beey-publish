@@ -272,22 +272,6 @@ export class MediaPlayer implements RedomComponent {
           }),
         ),
         h(
-          'div.sliders',
-          h(
-            'div.seekbar',
-            h(
-              'div.seekbar__background',
-              h('div.seekbar__progress-bar'),
-              h('div.seekbar__knob'),
-              {
-                onpointerdown: this.handlePointerDown,
-                onpointermove: this.handlePointerMove,
-                onpointerup: this.handlePointerUp,
-              },
-            ),
-          ),
-        ),
-        h(
           'div.player-toolbar',
           h(
             'div.speed',
@@ -328,7 +312,22 @@ export class MediaPlayer implements RedomComponent {
             onclick: this.toggleSubtitles,
           }),
         ),
-
+        h(
+          'div.sliders',
+          h(
+            'div.seekbar',
+            h(
+              'div.seekbar__background',
+              h('div.seekbar__progress-bar'),
+              h('div.seekbar__knob'),
+              {
+                onpointerdown: this.handlePointerDown,
+                onpointermove: this.handlePointerMove,
+                onpointerup: this.handlePointerUp,
+              },
+            ),
+          ),
+        ),
       ),
       h(
         'svg',
