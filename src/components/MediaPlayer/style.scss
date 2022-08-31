@@ -7,7 +7,7 @@
     position: relative;
     padding: 0 0.5rem;
     background-color: $dark-gray;
-    border-radius: 0 0 0.8rem 0.8rem;
+    border-radius: 0.8rem;
   }
   .native-player {
     display: none;
@@ -15,17 +15,14 @@
     margin: 0 auto;
   }
   &__video {
-    // background: linear-gradient(
-    //   180deg,
-    //   rgba(0, 0, 0, 1) 0%,
-    //   rgba(71, 71, 71, 1) 87%,
-    //   rgba(255, 255, 255, 1) 89%
-    // );
     background-color: #141414;
     border-radius: 0.8rem;
     margin-top: 1rem;
     .native-player {
       display: flex;
+    }
+    .media-player__controls {
+      border-radius: 0 0 0.8rem 0.8rem;
     }
   }
 }
@@ -56,6 +53,12 @@
       padding: 1px 7px;
       right: 2rem;
     }
+  }
+}
+
+.player-time {
+  &__divider {
+   margin: 0 2px; 
   }
 }
 
@@ -179,11 +182,6 @@
     &:hover {
       background-color: $primary-color-darken;
     }
-
-    &__time-numbers {
-      font-size: 0.8rem;
-    }
-
   }
 }
 

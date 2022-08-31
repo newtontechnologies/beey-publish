@@ -25,7 +25,7 @@ export class SpeakersSlider implements RedomComponent {
 
   public updateDuration = (duration: string | null) => {
     const totalDurationElement = this.el.querySelector(
-      '.seekbar__duration',
+      '.player-time__duration',
     ) as HTMLInputElement;
     totalDurationElement.textContent = duration;
   };

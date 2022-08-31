@@ -149,11 +149,11 @@ export class MediaPlayer implements RedomComponent {
   };
 
   private updateTime = () => {
-    const totalDurationElement = this.el.querySelector('.seekbar__duration') as HTMLInputElement;
+    const totalDurationElement = this.el.querySelector('.player-time__duration') as HTMLInputElement;
     const knobPosition = (this.currentTime / this.duration) * 100;
     this.seekKnobElement.style.left = `${knobPosition}%`;
     this.seekProgressElement.style.width = `${knobPosition}%`;
-    const currentTimeElm = this.el.querySelector('.seekbar__current-time') as HTMLElement;
+    const currentTimeElm = this.el.querySelector('.player-time__current-time') as HTMLElement;
     currentTimeElm.textContent = formatTime(this.currentTime);
     totalDurationElement.textContent = formatTime(this.duration);
   };
@@ -290,10 +290,10 @@ export class MediaPlayer implements RedomComponent {
               onclick: this.handleTogglePlay,
             }, 'play_arrow'),
             h(
-              'div.seekbar__time-numbers',
-              h('span.seekbar__current-time', '0:00'),
-              h('span.seekbar__divider', '-'),
-              h('span.seekbar__duration', '0:00'),
+              'div.player-time',
+              h('span.player-time__current-time', '0:00'),
+              h('span.player-time__divider', '-'),
+              h('span.player-time__duration', '0:00'),
             ),
           ),
           h(
