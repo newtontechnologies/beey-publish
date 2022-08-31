@@ -239,6 +239,17 @@ export class MediaPlayer implements RedomComponent {
     this.speedSlider.classList.toggle('speed-slider--show');
   };
 
+  private toggleMoreButtons = (e: PointerEvent) => {
+    e.preventDefault();
+    const hiddenToolbar = this.el.querySelector('.player-toolbar__other-controls') as HTMLElement;
+    hiddenToolbar.classList.toggle('player-toolbar__other-controls--show');
+  };
+
+  private hideMoreButtons = () => {
+    const hiddenToolbar = this.el.querySelector('.player-toolbar__other-controls') as HTMLElement;
+    hiddenToolbar.classList.remove('player-toolbar__other-controls--show');
+  };
+
   private render(): HTMLElement {
     const savedSpeed = window.localStorage.getItem(PLAYER_SPEED);
     return h(
@@ -256,6 +267,9 @@ export class MediaPlayer implements RedomComponent {
       }),
       h(
         'div.media-player__controls',
+        {
+          onmouseleave: this.hideMoreButtons,
+        },
         h(
           'div.player-toolbar',
           h(
@@ -271,61 +285,66 @@ export class MediaPlayer implements RedomComponent {
             ),
           ),
           h(
-            'div.player-toolbar__other-controls',
+            'div.player-toolbar__more',
             h(
-              'div.volume',
-              h('i.mute-icon.icon.material-icons', {
-                onclick: this.handleToggleMute,
-              }, 'volume_up'),
-              h('input.volume__slider', {
-                type: 'range',
-                max: 100,
-                value: 50,
-                oninput: this.handleVolumeChange,
-              }),
+              'i.more-icon.icon.material-icons',
+              'more_vert',
+              {
+                onclick: this.toggleMoreButtons,
+              },
             ),
             h(
-              'div.speed',
-              h('i.speed-icon.icon.material-icons', 'speed', {
-                onmouseenter: this.showSpeedSlider,
-                onpointerdown: this.toggleSpeedSlider,
-              }),
+              'div.player-toolbar__other-controls',
               h(
-                'div.speed-slider',
-                {
-                  onmouseleave: this.hideSpeedSlider,
-                },
-                h('p.speed-slider__text', 'Rychlost přehrávání'),
-                h('input.speed-slider__track', {
+                'div.volume',
+                h('i.mute-icon.icon.material-icons', {
+                  onclick: this.handleToggleMute,
+                  onmouseenter: this.hideSpeedSlider,
+                }, 'volume_up'),
+                h('input.volume-slider', {
                   type: 'range',
-                  min: 50,
-                  max: 200,
-                  value: savedSpeed === null
-                    ? 100
-                    : Number(savedSpeed) * 100,
-                  step: 25,
-                  oninput: this.handleSpeedChange,
+                  max: 100,
+                  value: 50,
+                  oninput: this.handleVolumeChange,
+                }),
+              ),
+              h(
+                'div.speed',
+                h('i.speed-icon.icon.material-icons', 'speed', {
+                  onmouseenter: this.showSpeedSlider,
+                  onpointerdown: this.toggleSpeedSlider,
                 }),
                 h(
-                  'div.speed-slider__numbers',
-                  h('span', '0.5x'),
-                  h('span', '0.75x'),
-                  h('span', '1x'),
-                  h('span', '1.25x'),
-                  h('span', '1.5x'),
-                  h('span', '1.75x'),
-                  h('span', '2x'),
+                  'div.speed-slider',
+                  {
+                    onmouseleave: this.hideSpeedSlider,
+                  },
+                  h('p.speed-slider__text', 'Rychlost přehrávání'),
+                  h('input.speed-slider__track', {
+                    type: 'range',
+                    min: 50,
+                    max: 200,
+                    value: savedSpeed === null
+                      ? 100
+                      : Number(savedSpeed) * 100,
+                    step: 25,
+                    oninput: this.handleSpeedChange,
+                  }),
+                  h(
+                    'div.speed-slider__numbers',
+                    h('span', '0.5x'),
+                    h('span', '0.75x'),
+                    h('span', '1x'),
+                    h('span', '1.25x'),
+                    h('span', '1.5x'),
+                    h('span', '1.75x'),
+                    h('span', '2x'),
+                  ),
                 ),
-              ),
-            ),
-            h(
-              'div.player-toolbar__more',
-              h(
-                'i.more-icon.icon.material-icons',
-                'more_vert',
               ),
               h(`i.subtitlesButton.material-icons.icon ${this.hasSubtitles ? 'visible' : 'hidden'}`, 'subtitles_off', {
                 onclick: this.toggleSubtitles,
+                onmouseenter: this.hideSpeedSlider,
               }),
             ),
           ),
