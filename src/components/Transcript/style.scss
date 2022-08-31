@@ -55,10 +55,10 @@
     height: 0;
     opacity: 0;
     &:checked + .switch__slider {
-      background-color: $accent-color;
+      background-color: $primary-color;
     }
     &:focus + .switch__slider {
-      box-shadow: 0 0 1px $accent-color;
+      box-shadow: 0 0 1px $primary-color;
     }
     &:checked + .switch__slider:before {
       -webkit-transform: translateX(13px);
@@ -140,10 +140,10 @@ span.played {
   transition: 0.5s ease all;
   cursor: pointer;
   &:hover {
-    color: $accent-color-darken;
+    color: $primary-color-darken;
   }
   &:active {
-    color: $accent-color-darken;
+    color: $primary-color-darken;
   }
 }
 

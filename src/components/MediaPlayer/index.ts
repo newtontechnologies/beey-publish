@@ -23,6 +23,7 @@ export class MediaPlayer implements RedomComponent {
   private seekKnobElement: HTMLInputElement;
   private seekProgressElement: HTMLInputElement;
   private speedSlider: HTMLElement;
+  private volumeSlider: HTMLElement;
   private mediaConfig: MediaConfig;
   private hasSubtitles: boolean;
   private draggingKnob: boolean;
@@ -33,11 +34,13 @@ export class MediaPlayer implements RedomComponent {
     this.draggingKnob = false;
     this.el = this.render();
     this.speedSlider = this.el.querySelector('.speed-slider') as HTMLElement;
+    this.volumeSlider = this.el.querySelector('.volume-slider') as HTMLElement;
     this.nativePlayerElement = this.el.querySelector('.native-player') as HTMLVideoElement;
     this.seekKnobElement = this.el.querySelector('.seekbar__knob') as HTMLInputElement;
     this.seekProgressElement = this.el.querySelector('.seekbar__progress-bar') as HTMLInputElement;
     document.body.addEventListener('mousedown', () => {
       this.hideSpeedSlider();
+      this.hideVolumeSlider();
     });
   }
 
@@ -167,7 +170,8 @@ export class MediaPlayer implements RedomComponent {
     }
   };
 
-  private handleToggleMute = () => {
+  private handleToggleMute = (e: PointerEvent) => {
+    e.preventDefault();
     this.nativePlayerElement.muted = !this.nativePlayerElement.muted;
   };
 
@@ -239,6 +243,14 @@ export class MediaPlayer implements RedomComponent {
     this.speedSlider.classList.toggle('speed-slider--show');
   };
 
+  private showVolumeSlider = () => {
+    this.volumeSlider.classList.add('volume-slider--show');
+  };
+
+  private hideVolumeSlider = () => {
+    this.volumeSlider.classList.remove('volume-slider--show');
+  };
+
   private toggleMoreButtons = (e: PointerEvent) => {
     e.preventDefault();
     const hiddenToolbar = this.el.querySelector('.player-toolbar__other-controls') as HTMLElement;
@@ -299,19 +311,26 @@ export class MediaPlayer implements RedomComponent {
                 'div.volume',
                 h('i.mute-icon.icon.material-icons', {
                   onclick: this.handleToggleMute,
-                  onmouseenter: this.hideSpeedSlider,
+                  onmouseenter: () => {
+                    this.showVolumeSlider();
+                    this.hideSpeedSlider();
+                  },
                 }, 'volume_up'),
                 h('input.volume-slider', {
                   type: 'range',
                   max: 100,
                   value: 50,
                   oninput: this.handleVolumeChange,
+                  onmouseleave: this.hideVolumeSlider,
                 }),
               ),
               h(
                 'div.speed',
                 h('i.speed-icon.icon.material-icons', 'speed', {
-                  onmouseenter: this.showSpeedSlider,
+                  onmouseenter: () => {
+                    this.showSpeedSlider();
+                    this.hideVolumeSlider();
+                  },
                   onpointerdown: this.toggleSpeedSlider,
                 }),
                 h(
