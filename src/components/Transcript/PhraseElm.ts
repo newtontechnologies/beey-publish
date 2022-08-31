@@ -50,7 +50,7 @@ export class PhraseElement implements RedomComponent {
     playTooltip.open(
       this.phrase.begin,
       e.clientX - containerCoordinates.left,
-      e.screenY - containerCoordinates.top,
+      e.clientY - containerCoordinates.top,
     );
     this.el.appendChild(playTooltip.el);
   };
