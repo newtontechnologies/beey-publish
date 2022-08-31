@@ -1,11 +1,13 @@
 .media-player {
+  box-shadow: 0 1px 10px 0 rgba(204, 204, 204, 0.2),
+      0 6px 30px 0 rgba(204, 204, 204, 0.2);
   &__controls {
     display: flex;
     flex-direction: column-reverse;
-    align-items: center;
     position: relative;
-    padding-bottom: 0.5rem;
-    background-color: rgb(255, 255, 255);
+    padding: 0 0.5rem;
+    background-color: rgb(45 45 45);
+    border-radius: 0.8rem;
   }
   .native-player {
     display: none;
@@ -19,7 +21,7 @@
       rgba(71, 71, 71, 1) 87%,
       rgba(255, 255, 255, 1) 89%
     );
-    border-radius: 5px;
+    border-radius: 0.8rem;
     margin-top: 1rem;
     .native-player {
       display: flex;
@@ -27,51 +29,80 @@
   }
 }
 
+.player-toolbar {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.5rem 0;
+  &__main {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  &__other-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    background-color: rgb(45 45 45);
+  }
+}
+
+.icon {
+  color: #999;
+  font-size: 2rem;
+  cursor: pointer;
+}
 
 .player-button {
   flex-basis: 1rem;
-  padding: 0.5rem 0.5rem 0.5rem 0.6rem;
+  padding: 0.45rem 0.45rem 0.45rem 0.5rem;
   border-radius: 50%;
   background-color: $accent-color;
   color: white;
   font-size: 2rem;
   cursor: pointer;
-
   &:hover {
     background-color: $accent-color-darken;
   }
 }
 
 .volume {
-  position: absolute;
-  left: 30%;
-}
-
-.volume-slider {
-  -webkit-appearance: none;
   display: none;
+  &__slider {
+  -webkit-appearance: none;
+  -webkit-transform: rotate(90deg);
+  display: none;
+  position: absolute;
+  right: 3.6rem;
+  background-color: #414141fb;
+  z-index: 1;
+  padding: 0.4rem;
+  height: 1.5rem;
+  border-radius: 5px;
+  width: 6rem;
+  top: 8rem;
   margin: 0;
   cursor: pointer;
 
   &::-webkit-slider {
     &-runnable-track {
-      height: 0.5rem;
-      background: #414141db;
+      height: 0.3rem;
+      background: rgb(212, 212, 212);
       border-radius: 2rem;
     }
 
     &-thumb {
       -webkit-appearance: none;
       appearance: none;
-      margin-top: -0.15rem;
+      margin-top: -0.2rem;
       background-color: $accent-color;
-      height: 0.8rem;
-      width: 0.8rem;
+      height: 0.7rem;
+      width: 0.7rem;
       border-radius: 50%;
     }
   }
 
   &::-moz-range {
+    background-color: transparent;
     &-track {
       height: 0.5rem;
       margin: 0;
@@ -95,11 +126,6 @@
     }
   }
 }
-
-.mute-icon {
-  color: #999;
-  font-size: 2rem;
-  cursor: pointer;
 }
 
 .seekbar {
@@ -107,7 +133,7 @@
     display: flex;
     position: relative;
     width: 100%;
-    height: 0.6rem;
+    height: 0.45rem;
     margin-bottom: 0.5rem;
     border-radius: 3rem;
     background-color: #999;
@@ -117,7 +143,7 @@
   &__progress-bar {
     position: absolute;
     width: 0%;
-    height: 0.6rem;
+    height: 0.45rem;
     border-radius: 3rem;
     background-color: $accent-color;
   }
@@ -125,8 +151,8 @@
   &__knob {
     position: absolute;
     left: 0;
-    width: 1rem;
-    height: 1rem;
+    width: 0.8rem;
+    height: 0.8rem;
     margin-top: -0.2rem;
     margin-left: -0.5rem;
     border-radius: 50%;
@@ -136,22 +162,19 @@
     &:hover {
       background-color: $accent-color-darken;
     }
+
+    &__time-numbers {
+      font-size: 0.8rem;
+    }
+
   }
 }
 
-.player-toolbar {
-  display: flex;
-  position: absolute;
-  right: 0; 
-  width: 36%;
-  justify-content: space-between;
-}
-
 .speed {
+  display: none;
    .speed-slider {
       display: none;
       position: absolute;
-      top: 1.7rem;
       right: 0.1rem;
       &:hover {
         display:block;
@@ -163,20 +186,7 @@
     }
 }
 
-.speed-icon {
-  color: #999;
-  font-size: 2rem;
-  cursor: pointer;
-}
-
-.subtitlesButton {
-  color: #999;
-  font-size: 2rem;
-  cursor: pointer;
-}
-
 .speed-slider {
-  display: none;
   background-color: #414141fb;
   z-index: 1;
   padding: 0.4rem;
@@ -241,7 +251,7 @@
     justify-content: space-between;
     width: 100%;
     color: rgb(212, 212, 212);
-    font-size: 0.7rem;
+    font-size: 0.5rem;
     line-height: 0.9rem;
 
     span {
@@ -250,41 +260,58 @@
   }
 }
 
+.subtitlesButton.material-icons {
+  display: none;
+  .hidden {
+    display: none;
+  }
+}
+
 .sliders {
   width: 100%;
-  margin-top: 1.5rem;
+  height: 1.5rem;
+  margin-top: 1.4rem;
+}
+
+@media (min-width: 350px) {
+  .volume {
+    display: block;
+  }
+
+  .speed {
+    display: block;
+  }
+
+  .subtitlesButton.material-icons {
+    display: block;
+  }
+
+  .more-icon.material-icons {
+    display: none;
+  }
+
 }
 
 @media (min-width: 450px) {
   .media-player {
-    border-radius: 5rem;
-    box-shadow: 0 1px 10px 0 rgba(204, 204, 204, 0.2),
-      0 6px 30px 0 rgba(204, 204, 204, 0.2);
-
     &__controls {
-      flex-direction: row;
-      padding: 0.5rem 0.8rem;
-      border-radius: 5rem;
+      padding: 0.2rem 0.6rem;
+    }
+
+    .subtitlesButton.material-icons {
+      display: block;
+    }
+
+    .more-icon {
+      display: none;
     }
 
     &__video {
-      border-radius: 12px;
+      border-radius: 0.8rem;
 
       .media-player__controls {
-        border-radius: 0 0 12px 12px;
+        border-radius: 0 0 0.8rem 0.8rem;
       }
-    }
-
-    .volume {
-      position: static;
-    }
-
-    .speed {
-      position: relative;
-      right: 0;
-    }
-    .player-button {
-      margin-right: 1rem;
     }
 
     .native-player {
@@ -292,20 +319,9 @@
       margin: 0 auto;
     }
   }
-  .seekbar {
-    margin-left: 1rem;
-  }
-  .player-toolbar {
-    position: relative;
-    order: 1;
-    width: 3rem;
-    margin-left: 1rem;
-  }
-}
 
-@media (min-width: 768px) {
   .volume:hover {
-    .volume-slider {
+    .volume__slider {
       display: block;
     }
   }
