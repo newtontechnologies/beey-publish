@@ -371,7 +371,7 @@ export class MediaPlayer implements RedomComponent {
         h(
           'div.sliders',
           h(
-            'div.seekbar',
+            'div.seekbar.playback',
             h(
               'div.seekbar__background',
               h('div.seekbar__progress-bar'),
