@@ -1,31 +1,20 @@
 .media-player {
-  text-align: center;
-  background-color: $video-player-gray;
-  padding: 0rem;
   &__controls {
     display: flex;
     flex-direction: column-reverse;
     position: relative;
-    // padding: 0.5rem;
-    // background-color: $audio-player-gray;
     background-color: white;
-    // border-radius: 0.8rem;
   }
   .native-player {
-    // display: none;
+    display: none;
     width: 80%;
     margin: 0 auto;
   }
   &__video {
-    background-color: $video-player-gray;
-    // border-radius: 0.8rem;
-    margin-top: 1rem;
+    background-color: $dark-gray;
     .native-player {
       display: flex;
     }
-    // .media-player__controls {
-    //   border-radius: 0 0 0.8rem 0.8rem;
-    // }
   }
 }
 
@@ -36,29 +25,41 @@
   &__main {
     display: flex;
     align-items: center;
-    gap: 0.8rem;
+    gap: 0.5rem;
   }
   &__more {
     display: flex;
     align-items: center;
+    .more-icon {
+      width: 1rem;
+    }
   }
   &__other-controls {
     display: none;
-    align-items: center;
-    gap: 0.8rem;
+    gap: 0.5rem;
     transition: display 0.4s;
-    border-radius: 10px;
+    border-radius: 5px;
+    padding: 0;
     background-color: $bg-gray;
     &--show {
       display: flex;
       position: absolute;
-      padding: 1px 7px;
-      right: 2rem;
+      right: 1rem;
+      padding: 2px 0.5rem;
+    }
+    &>div,.icon {
+      height: 1.6rem;
     }
   }
 }
 
 .player-time {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  color: $light-gray;
+  font-size: 0.9rem;
+  line-height: 0.6rem;
   &__divider {
    margin: 0 2px; 
   }
@@ -66,7 +67,6 @@
 
 .icon {
   color: $light-gray;
-  font-size: 2rem;
   cursor: pointer;
   &:hover {
     color: $light-gray-lighten;
@@ -75,7 +75,7 @@
 
 .player-button {
   flex-basis: 1rem;
-  padding: 0.3rem;
+  padding: 0.2rem 0.2rem 0.2rem 0.25rem;
   border-radius: 25%;
   background-color: $primary-color;
   color: white;
@@ -97,7 +97,7 @@
   -webkit-transform: rotate(90deg);
   display: none;
   position: absolute;
-  right: 3rem;
+  right: 2.6rem;
   bottom: 4.3rem;
   z-index: 1;
   height: 1.5rem;
@@ -149,7 +149,6 @@
   }
 }
 
-
 .seekbar {
   height: 1rem;
   &__background {
@@ -173,7 +172,7 @@
 
   &__knob {
     position: absolute;
-    left: 0;
+    left: 0.5rem;
     width: 0.8rem;
     height: 0.8rem;
     margin-top: -0.2rem;
@@ -197,7 +196,7 @@
 .speed-slider {
   display: none;
   position: absolute;
-  right: 0.1rem;
+  right: 0rem;
   bottom: 2.2rem;
   z-index: 1;
   padding: 0.4rem;
@@ -208,7 +207,7 @@
     margin: 0;
     font-size: 0.8rem;
     font-weight: 600;
-    color: $video-player-gray;
+    color: $dark-gray;
   }
 
   &__track {
@@ -279,11 +278,11 @@
   width: 100%;
   height: 1.5rem;
   margin-top: 1rem;
+  .playback {
+    order: 1;
+  }
 }
 
-.playback {
-  order: 1;
-}
 
 @media (min-width: 350px) {
   .player-toolbar__other-controls {
@@ -296,38 +295,22 @@
   }
 
   .volume-slider {
-    bottom: 5rem;
+    bottom: 4.3rem;
+    right: 1.9rem;
   }
 
   .speed-slider {
-    bottom: 3rem;
+    bottom: 2.3rem;
   }
 }
 
 @media (min-width: 450px) {
-  .media-player {
-    &__controls {
-      // padding: 0.8rem;
-    }
+  .native-player {
+    width: 60%;
+    margin: 0 auto;
+  }
 
-    .native-player {
-      width: 60%;
-      margin: 0 auto;
-    }
-
-    .volume-slider {
-      right: 3.3rem;
-    }
-  } 
-}
-
-@media (min-width: 1000px) {
-  .media-player {
-    &__controls {
-      // padding: 0.9rem;
-    }
-    .volume-slider {
-      right: 3.5rem;
-    }
+  .player-button {
+    padding: 0.3rem 0.3rem 0.3rem 0.35rem;
   }
 }

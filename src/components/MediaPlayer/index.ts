@@ -280,7 +280,11 @@ export class MediaPlayer implements RedomComponent {
       h(
         'div.media-player__controls',
         {
-          onmouseleave: this.hideMoreButtons,
+          onmouseleave: () => {
+            this.hideMoreButtons();
+            this.hideSpeedSlider();
+            this.hideVolumeSlider();
+          },
         },
         h(
           'div.player-toolbar',
@@ -292,7 +296,7 @@ export class MediaPlayer implements RedomComponent {
             h(
               'div.player-time',
               h('span.player-time__current-time', '0:00'),
-              h('span.player-time__divider', '-'),
+              h('span.player-time__divider', '/'),
               h('span.player-time__duration', '0:00'),
             ),
           ),

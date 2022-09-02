@@ -33,7 +33,7 @@
     right: 0;
     bottom: 0;
     border-radius: 13px;
-    background-color: #ccc;
+    background-color: $light-gray-lighten;
     -webkit-transition: 0.4s;
     transition: 0.4s;
     cursor: pointer;
@@ -74,7 +74,7 @@
   p {
     display: none;
     margin: 0;
-    color: #3b3b3b;
+    color: $dark-gray;
   }  
   &__logo {
     height: 2rem;
@@ -102,10 +102,10 @@ span.played {
   width: 0.6rem;
   &-track {
     border-radius: 0.6rem;
-    background-color: rgb(240, 240, 240);
+    background-color: $bg-gray;
   }
   &-thumb {
-    background: rgb(184, 184, 184);
+    background: $light-gray;
     border-radius: 0.6rem;
   }
 }
@@ -118,7 +118,7 @@ span.played {
       display: none;
       margin: 0 0 0 0.5rem;
       height: 1rem;
-      color: #3b3b3b;
+      color: $dark-gray;
     }
   }
   &__text {
@@ -135,7 +135,7 @@ span.played {
   padding: 0;
   border: none;
   background-color: transparent;
-  color: #3b3b3b;
+  color: $dark-gray;
   line-height: 0rem;
   transition: 0.5s ease all;
   cursor: pointer;
