@@ -1,3 +1,6 @@
+## 1.8.0 (2022-09-06)
+- 🛠 Improvement: redesigned media player to handle width as small as 180px.
+
 ## 1.8.0 (2022-08-25)
 - ⚠️ Breaking: keyword CSS classes have new: prefixes `pkw-` for phrases, `skw-` for speakers and `tkw-` for timeline.
 - ✨ Feature: text autoscrolling when playing media
