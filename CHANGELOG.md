@@ -1,4 +1,4 @@
-## 1.8.0 (2022-09-06)
+## 1.8.1 (2022-09-06)
 - 🛠 Improvement: redesigned media player to handle width as small as 180px.
 
 ## 1.8.0 (2022-08-25)
