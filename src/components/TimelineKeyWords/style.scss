@@ -1,10 +1,10 @@
 .wedge {
-  width: 4px;
+  width: 2px;
   height: 5px;
-  color: $accent-color-darken;
-  border-left: 2px solid transparent;
-  border-right: 2px solid transparent;
-  border-top: 12px solid currentColor;
+  color: $primary-color-darken;
+  // border-left: 2px solid transparent;
+  // border-right: 2px solid transparent;
+  border-top: 10px solid currentColor;
 }
 
 .key-words {

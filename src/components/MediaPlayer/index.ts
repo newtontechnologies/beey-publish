@@ -23,6 +23,7 @@ export class MediaPlayer implements RedomComponent {
   private seekKnobElement: HTMLInputElement;
   private seekProgressElement: HTMLInputElement;
   private speedSlider: HTMLElement;
+  private volumeSlider: HTMLElement;
   private mediaConfig: MediaConfig;
   private hasSubtitles: boolean;
   private draggingKnob: boolean;
@@ -33,11 +34,13 @@ export class MediaPlayer implements RedomComponent {
     this.draggingKnob = false;
     this.el = this.render();
     this.speedSlider = this.el.querySelector('.speed-slider') as HTMLElement;
+    this.volumeSlider = this.el.querySelector('.volume-slider') as HTMLElement;
     this.nativePlayerElement = this.el.querySelector('.native-player') as HTMLVideoElement;
     this.seekKnobElement = this.el.querySelector('.seekbar__knob') as HTMLInputElement;
     this.seekProgressElement = this.el.querySelector('.seekbar__progress-bar') as HTMLInputElement;
     document.body.addEventListener('mousedown', () => {
       this.hideSpeedSlider();
+      this.hideVolumeSlider();
     });
   }
 
@@ -146,11 +149,11 @@ export class MediaPlayer implements RedomComponent {
   };
 
   private updateTime = () => {
-    const totalDurationElement = this.el.querySelector('.seekbar__duration') as HTMLInputElement;
+    const totalDurationElement = this.el.querySelector('.player-time__duration') as HTMLInputElement;
     const knobPosition = (this.currentTime / this.duration) * 100;
     this.seekKnobElement.style.left = `${knobPosition}%`;
     this.seekProgressElement.style.width = `${knobPosition}%`;
-    const currentTimeElm = this.el.querySelector('.seekbar__current-time') as HTMLElement;
+    const currentTimeElm = this.el.querySelector('.player-time__current-time') as HTMLElement;
     currentTimeElm.textContent = formatTime(this.currentTime);
     totalDurationElement.textContent = formatTime(this.duration);
   };
@@ -167,7 +170,8 @@ export class MediaPlayer implements RedomComponent {
     }
   };
 
-  private handleToggleMute = () => {
+  private handleToggleMute = (e: PointerEvent) => {
+    e.preventDefault();
     this.nativePlayerElement.muted = !this.nativePlayerElement.muted;
   };
 
@@ -239,6 +243,25 @@ export class MediaPlayer implements RedomComponent {
     this.speedSlider.classList.toggle('speed-slider--show');
   };
 
+  private showVolumeSlider = () => {
+    this.volumeSlider.classList.add('volume-slider--show');
+  };
+
+  private hideVolumeSlider = () => {
+    this.volumeSlider.classList.remove('volume-slider--show');
+  };
+
+  private toggleMoreButtons = (e: PointerEvent) => {
+    e.preventDefault();
+    const hiddenToolbar = this.el.querySelector('.player-toolbar__other-controls') as HTMLElement;
+    hiddenToolbar.classList.toggle('player-toolbar__other-controls--show');
+  };
+
+  private hideMoreButtons = () => {
+    const hiddenToolbar = this.el.querySelector('.player-toolbar__other-controls') as HTMLElement;
+    hiddenToolbar.classList.remove('player-toolbar__other-controls--show');
+  };
+
   private render(): HTMLElement {
     const savedSpeed = window.localStorage.getItem(PLAYER_SPEED);
     return h(
@@ -256,25 +279,103 @@ export class MediaPlayer implements RedomComponent {
       }),
       h(
         'div.media-player__controls',
-        h('i.player-button.material-icons', {
-          onclick: this.handleTogglePlay,
-        }, 'play_arrow'),
+        {
+          onmouseleave: () => {
+            this.hideMoreButtons();
+            this.hideSpeedSlider();
+            this.hideVolumeSlider();
+          },
+        },
         h(
-          'div.volume',
-          h('i.mute-icon.material-icons', {
-            onclick: this.handleToggleMute,
-          }, 'volume_up'),
-          h('input.volume-slider', {
-            type: 'range',
-            max: 100,
-            value: 50,
-            oninput: this.handleVolumeChange,
-          }),
+          'div.player-toolbar',
+          h(
+            'div.player-toolbar__main',
+            h('i.player-button.material-icons', {
+              onclick: this.handleTogglePlay,
+            }, 'play_arrow'),
+            h(
+              'div.player-time',
+              h('span.player-time__current-time', '0:00'),
+              h('span.player-time__divider', '/'),
+              h('span.player-time__duration', '0:00'),
+            ),
+          ),
+          h(
+            'div.player-toolbar__more',
+            h(
+              'i.more-icon.icon.material-icons',
+              'more_vert',
+              {
+                onclick: this.toggleMoreButtons,
+              },
+            ),
+            h(
+              'div.player-toolbar__other-controls',
+              h(
+                'div.volume',
+                h('i.mute-icon.icon.material-icons', {
+                  onclick: this.handleToggleMute,
+                  onmouseenter: () => {
+                    this.showVolumeSlider();
+                    this.hideSpeedSlider();
+                  },
+                }, 'volume_up'),
+                h('input.volume-slider', {
+                  type: 'range',
+                  max: 100,
+                  value: 50,
+                  oninput: this.handleVolumeChange,
+                  onmouseleave: this.hideVolumeSlider,
+                }),
+              ),
+              h(
+                'div.speed',
+                h('i.speed-icon.icon.material-icons', 'speed', {
+                  onmouseenter: () => {
+                    this.showSpeedSlider();
+                    this.hideVolumeSlider();
+                  },
+                  onpointerdown: this.toggleSpeedSlider,
+                }),
+                h(
+                  'div.speed-slider',
+                  {
+                    onmouseleave: this.hideSpeedSlider,
+                  },
+                  h('p.speed-slider__text', 'Rychlost přehrávání'),
+                  h('input.speed-slider__track', {
+                    type: 'range',
+                    min: 50,
+                    max: 200,
+                    value: savedSpeed === null
+                      ? 100
+                      : Number(savedSpeed) * 100,
+                    step: 25,
+                    oninput: this.handleSpeedChange,
+                  }),
+                  h(
+                    'div.speed-slider__numbers',
+                    h('span', '0.5x'),
+                    h('span', '0.75x'),
+                    h('span', '1x'),
+                    h('span', '1.25x'),
+                    h('span', '1.5x'),
+                    h('span', '1.75x'),
+                    h('span', '2x'),
+                  ),
+                ),
+              ),
+              h(`i.subtitlesButton.material-icons.icon ${this.hasSubtitles ? 'visible' : 'hidden'}`, 'subtitles_off', {
+                onclick: this.toggleSubtitles,
+                onmouseenter: this.hideSpeedSlider,
+              }),
+            ),
+          ),
         ),
         h(
           'div.sliders',
           h(
-            'div.seekbar',
+            'div.seekbar.playback',
             h(
               'div.seekbar__background',
               h('div.seekbar__progress-bar'),
@@ -287,48 +388,6 @@ export class MediaPlayer implements RedomComponent {
             ),
           ),
         ),
-        h(
-          'div.player-toolbar',
-          h(
-            'div.speed',
-            h('i.speed-icon.material-icons', 'speed', {
-              onmouseenter: this.showSpeedSlider,
-              onpointerdown: this.toggleSpeedSlider,
-            }),
-            h(
-              'div.speed-slider',
-              {
-                onmouseleave: this.hideSpeedSlider,
-              },
-              h('p.speed-slider__text', 'Rychlost přehrávání'),
-              h('input.speed-slider__track', {
-                type: 'range',
-                min: 50,
-                max: 200,
-                value: savedSpeed === null
-                  ? 100
-                  : Number(savedSpeed) * 100,
-                step: 25,
-                oninput: this.handleSpeedChange,
-              }),
-              h(
-                'div.speed-slider__numbers',
-                h('span', '0.5x'),
-                h('span', '0.75x'),
-                h('span', '1x'),
-                h('span', '1.25x'),
-                h('span', '1.5x'),
-                h('span', '1.75x'),
-                h('span', '2x'),
-              ),
-            ),
-          ),
-          h('i.subtitlesButton.material-icons', 'subtitles_off', {
-            style: { visibility: this.hasSubtitles ? 'visible' : 'hidden' },
-            onclick: this.toggleSubtitles,
-          }),
-        ),
-
       ),
       h(
         'svg',

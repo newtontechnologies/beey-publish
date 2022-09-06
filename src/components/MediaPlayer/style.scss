@@ -2,9 +2,8 @@
   &__controls {
     display: flex;
     flex-direction: column-reverse;
-    align-items: center;
-    padding-bottom: 0.5rem;
-    background-color: rgb(255, 255, 255);
+    position: relative;
+    background-color: white;
   }
   .native-player {
     display: none;
@@ -12,186 +11,203 @@
     margin: 0 auto;
   }
   &__video {
-    background: linear-gradient(
-      180deg,
-      rgba(0, 0, 0, 1) 0%,
-      rgba(71, 71, 71, 1) 87%,
-      rgba(255, 255, 255, 1) 89%
-    );
-    border-radius: 5px;
-    margin-top: 1rem;
+    background-color: $dark-gray;
     .native-player {
       display: flex;
     }
   }
 }
 
-
-.player-button {
-  flex-basis: 1rem;
-  padding: 0.5rem 0.5rem 0.5rem 0.6rem;
-  border-radius: 50%;
-  background-color: $accent-color;
-  color: white;
-  font-size: 2rem;
-  cursor: pointer;
-
-  &:hover {
-    background-color: $accent-color-darken;
+.player-toolbar {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+  &__main {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  &__more {
+    display: flex;
+    align-items: center;
+    .more-icon {
+      width: 1rem;
+    }
+  }
+  &__other-controls {
+    display: none;
+    gap: 0.5rem;
+    transition: display 0.4s;
+    border-radius: 5px;
+    padding: 0;
+    background-color: $bg-gray;
+    &--show {
+      display: flex;
+      position: absolute;
+      right: 1rem;
+      padding: 2px 0.5rem;
+    }
+    &>div,.icon {
+      height: 1.6rem;
+    }
   }
 }
 
-.volume {
+.player-time {
   display: flex;
-  position: absolute;
-  left: 30%;
-  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  color: $light-gray;
+  font-size: 0.9rem;
+  line-height: 0.6rem;
+  &__divider {
+   margin: 0 2px; 
+  }
+}
+
+.icon {
+  color: $light-gray;
+  cursor: pointer;
+  &:hover {
+    color: $light-gray-lighten;
+  }
+}
+
+.player-button {
+  flex-basis: 1rem;
+  padding: 0.2rem 0.2rem 0.2rem 0.25rem;
+  border-radius: 25%;
+  background-color: $primary-color;
+  color: white;
+  font-size: 2rem;
+  cursor: pointer;
+  &:hover {
+    background-color: $primary-color-darken;
+  }
+}
+
+.volume .volume-slider {
+  &:hover, &--show{
+    display: block;
+  }
 }
 
 .volume-slider {
   -webkit-appearance: none;
+  -webkit-transform: rotate(90deg);
   display: none;
-  margin: 0;
+  position: absolute;
+  right: 2.6rem;
+  bottom: 4.3rem;
+  z-index: 1;
+  height: 1.5rem;
+  width: 6rem;
+  padding: 0.4rem;
+  border-radius: 5px;
+  background-color: $bg-gray;
   cursor: pointer;
 
   &::-webkit-slider {
     &-runnable-track {
-      height: 0.5rem;
-      background: #414141db;
+      height: 0.3rem;
+      background: $light-gray;
       border-radius: 2rem;
     }
-
     &-thumb {
       -webkit-appearance: none;
       appearance: none;
-      margin-top: -0.15rem;
-      background-color: $accent-color;
-      height: 0.8rem;
-      width: 0.8rem;
+      margin-top: -0.2rem;
+      background-color: $primary-color;
+      height: 0.7rem;
+      width: 0.7rem;
       border-radius: 50%;
     }
   }
 
   &::-moz-range {
+    -moz-transform: rotate(90deg);
+    background-color: transparent;
     &-track {
-      height: 0.5rem;
+      height: 0.3rem;
       margin: 0;
       padding: 0;
       border-radius: 2rem;
       background-color: rgb(212, 212, 212);
     }
-
     &-progress {
-      height: 0.5rem;
+      height: 0.3rem;
       border-radius: 2rem;
-      background-color: $accent-color;
+      background-color: $primary-color;
     }
-
     &-thumb {
       height: 0.8rem;
       width: 0.8rem;
       border: none;
       border-radius: 50%;
-      background: $accent-color;
+      background: $primary-color;
     }
   }
 }
 
-.mute-icon {
-  color: #999;
-  font-size: 2rem;
-  cursor: pointer;
-}
-
 .seekbar {
+  height: 1rem;
   &__background {
     display: flex;
     position: relative;
     width: 100%;
-    height: 0.6rem;
+    height: 0.45rem;
     margin-bottom: 0.5rem;
     border-radius: 3rem;
-    background-color: #999;
+    background-color: $light-gray;
     cursor: pointer;
   }
 
   &__progress-bar {
     position: absolute;
     width: 0%;
-    height: 0.6rem;
+    height: 0.45rem;
     border-radius: 3rem;
-    background-color: $accent-color;
+    background-color: $primary-color;
   }
 
   &__knob {
     position: absolute;
-    left: 0;
-    width: 1rem;
-    height: 1rem;
+    left: 0.5rem;
+    width: 0.8rem;
+    height: 0.8rem;
     margin-top: -0.2rem;
     margin-left: -0.5rem;
     border-radius: 50%;
-    background-color: $accent-color;
+    background-color: $primary-color;
     cursor: pointer;
 
     &:hover {
-      background-color: $accent-color-darken;
+      background-color: $primary-color-darken;
     }
   }
 }
 
-.player-toolbar {
-  margin-top: 0.5rem;
-}
-
-.speed {
-  display: flex;
-  position: absolute;
-  right: 30%;
-  margin-left: 0.8rem;
-
-   .speed-slider {
-      display: none;
-      position: absolute;
-      top: 1.7rem;
-      right: 0.1rem;
-      &:hover {
-        display:block;
-      }
-    }
-
-    .speed-slider--show {
-      display: block;
-    }
-}
-
-.speed-icon {
-  color: #999;
-  font-size: 2rem;
-  cursor: pointer;
-}
-
-.subtitlesButton {
-  color: #999;
-  font-size: 2rem;
-  cursor: pointer;
-  margin-left: 0.8rem;
+.speed .speed-slider {
+  &:hover, &--show{
+    display: block;
+  }
 }
 
 .speed-slider {
   display: none;
-  background-color: #414141fb;
+  position: absolute;
+  right: 0rem;
+  bottom: 2.2rem;
   z-index: 1;
   padding: 0.4rem;
   border-radius: 5px;
-  box-shadow: 0 1px 10px 0 rgb(204 204 204 / 20%),
-    0 6px 30px 0 rgb(204 204 204 / 20%);
+  background-color: $bg-gray;
 
   &__text {
     margin: 0;
     font-size: 0.8rem;
     font-weight: 600;
-    color: rgb(212, 212, 212);
+    color: $dark-gray;
   }
 
   &__track {
@@ -202,16 +218,15 @@
 
     &::-webkit-slider {
       &-runnable-track {
-        background: rgb(212, 212, 212);
+        background: $light-gray;
         height: 0.3rem;
         border-radius: 2rem;
       }
-
       &-thumb {
         -webkit-appearance: none;
         appearance: none;
         margin-top: -0.2rem;
-        background-color: $accent-color;
+        background-color: $primary-color;
         height: 0.7rem;
         width: 0.7rem;
         border-radius: 50%;
@@ -220,21 +235,19 @@
 
     &::-moz-range {
       background-color: transparent;
-
       &-track {
         height: 0.3rem;
         margin: 0;
         padding: 0;
         border-radius: 2rem;
-        background-color: rgb(212, 212, 212);
+        background-color: $light-gray;
       }
-
       &-thumb {
         height: 0.8rem;
         width: 0.8rem;
         border: none;
         border-radius: 50%;
-        background: $accent-color;
+        background: $primary-color;
       }
     }
   }
@@ -243,8 +256,8 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
-    color: rgb(212, 212, 212);
-    font-size: 0.7rem;
+    color: $light-gray;
+    font-size: 0.5rem;
     line-height: 0.9rem;
 
     span {
@@ -253,57 +266,51 @@
   }
 }
 
+.subtitlesButton.material-icons {
+  .hidden {
+    display: none;
+  }
+}
+
 .sliders {
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  margin-top: 1.5rem;
+  height: 1.5rem;
+  margin-top: 1rem;
+  .playback {
+    order: 1;
+  }
+}
+
+
+@media (min-width: 350px) {
+  .player-toolbar__other-controls {
+    display: flex;
+    background-color: transparent;
+  }
+
+  .more-icon.material-icons {
+    display: none;
+  }
+
+  .volume-slider {
+    bottom: 4.3rem;
+    right: 1.9rem;
+  }
+
+  .speed-slider {
+    bottom: 2.3rem;
+  }
 }
 
 @media (min-width: 450px) {
-  .media-player {
-    border-radius: 5rem;
-    box-shadow: 0 1px 10px 0 rgba(204, 204, 204, 0.2),
-      0 6px 30px 0 rgba(204, 204, 204, 0.2);
-
-    &__controls {
-      flex-direction: row;
-      padding: 0.5rem 0.8rem;
-      border-radius: 5rem;
-    }
-
-    &__video {
-      border-radius: 12px;
-
-      .media-player__controls {
-        border-radius: 0 0 12px 12px;
-      }
-    }
-
-    .volume {
-      position: static;
-    }
-
-    .speed {
-      position: relative;
-      right: 0;
-    }
-    .player-button {
-      margin-right: 1rem;
-    }
-
-    .native-player {
-      width: 60%;
-      margin: 0 auto;
-    }
+  .native-player {
+    width: 60%;
+    margin: 0 auto;
   }
-  .seekbar {
-    margin-left: 1rem;
-  }
-}
 
-@media (min-width: 768px) {
-  .volume:hover {
-    .volume-slider {
-      display: block;
-    }
+  .player-button {
+    padding: 0.3rem 0.3rem 0.3rem 0.35rem;
   }
 }
