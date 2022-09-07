@@ -1,3 +1,6 @@
+## 1.8.2 (2022-09-07)
+- 🐞 Fix: video is displayed in media player  
+
 ## 1.8.1 (2022-09-06)
 - 🛠 Improvement: redesigned media player to handle width as small as 180px.
 
