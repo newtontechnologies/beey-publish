@@ -23,13 +23,6 @@ export class SpeakersSlider implements RedomComponent {
     this.el = this.render();
   }
 
-  public updateDuration = (duration: string | null) => {
-    const totalDurationElement = this.el.querySelector(
-      '.player-time__duration',
-    ) as HTMLInputElement;
-    totalDurationElement.textContent = duration;
-  };
-
   public updateSelectedSpeakers = (selectedSpeakersIds: string[]) => {
     const spans: NodeListOf<HTMLElement> = this.el.querySelectorAll('.speakers > span');
     spans.forEach((span) => {
