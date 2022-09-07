@@ -163,7 +163,6 @@ export class MediaPlayer implements RedomComponent {
   };
 
   private handleLoadedMetadata = () => {
-    this.speakersSlider?.updateDuration(formatTime(this.nativePlayerElement.duration));
     const mediaPlayer = document.querySelector('.media-player') as HTMLElement;
     if (this.nativePlayerElement.videoHeight > 0) {
       mediaPlayer.classList.add('media-player__video');
