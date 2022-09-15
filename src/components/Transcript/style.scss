@@ -85,9 +85,12 @@
   display: none !important;
 }
 
+span.highlightable {
+  color: #888;
+}
+
 span.seekable {
   cursor: pointer;
-  color: #888;
 }
 
 span.pkw {

@@ -1,26 +1,12 @@
 import { h, RedomComponent, setChildren } from 'redom';
 import { Trsx } from '../../trsx';
 import { TranscriptSection } from './TranscriptSection';
-import { MediaPlayer } from '../MediaPlayer';
+import { MediaPlayer, TranscriptConfig, defaultTranscriptConfig } from '../MediaPlayer';
 import { SpeakersSelect } from '../SpeakersSelect';
-
-export interface TranscriptConfig {
-  showParagraphButtons: boolean;
-  enablePhraseSeek: boolean;
-  keepTrackWithMedia: boolean;
-  showSpeakers: boolean;
-}
-
-export const defaultTranscriptConfig = {
-  showParagraphButtons: true,
-  enablePhraseSeek: true,
-  keepTrackWithMedia: true,
-  showSpeakers: true,
-};
 
 export class Transcript implements RedomComponent {
   public el: HTMLElement;
-  private config: TranscriptConfig;
+  private transcriptConfig: TranscriptConfig;
   private player: MediaPlayer;
   private speakersSelect: SpeakersSelect;
   private sections: TranscriptSection[] = [];
@@ -31,7 +17,7 @@ export class Transcript implements RedomComponent {
     onSelectedSpeakers: (speakerIds: string[]) => void,
   ) {
     this.player = player;
-    this.config = {
+    this.transcriptConfig = {
       ...defaultTranscriptConfig,
       ...config,
     };
@@ -50,7 +36,7 @@ export class Transcript implements RedomComponent {
       (paragraph, index) => new TranscriptSection(
         paragraph,
         trsx.paragraphs[index + 1],
-        this.config,
+        this.transcriptConfig,
         this.handlePlayParagraph,
         this.handlePauseParagraph,
         this.scrollTo,

@@ -1,5 +1,5 @@
 import { h, RedomComponent } from 'redom';
-import type { TranscriptConfig } from '.';
+import type { TranscriptConfig } from '../MediaPlayer';
 import { extractKeywordsClassNames, Phrase } from '../../trsx';
 import { PlayTooltip } from './PlayTooltip';
 
@@ -42,6 +42,17 @@ export class PhraseElement implements RedomComponent {
     }
   }
 
+  private generatePhraseStyles = () => {
+    const classes = [];
+    if (this.transcriptConfig.keepTrackWithMedia) {
+      classes.push('highlightable');
+    }
+    if (this.transcriptConfig.enablePhraseSeek) {
+      classes.push('seekable');
+    }
+    return classes.join(' ');
+  };
+
   private handleClick = (e: MouseEvent) => {
     e.stopPropagation();
     const containerCoordinates = (this.el.parentElement as HTMLElement)
@@ -59,8 +70,8 @@ export class PhraseElement implements RedomComponent {
     // Have to create classes separatelly to allow stupid characters
     // in keyword classes such as #.
     const attributes = {
-      className: this.transcriptConfig.enablePhraseSeek ? 'seekable' : '',
-      onclick: this.handleClick,
+      className: this.generatePhraseStyles(),
+      onclick: this.transcriptConfig.enablePhraseSeek ? this.handleClick : null,
       'data-idx': this.phrase.index,
     };
 
