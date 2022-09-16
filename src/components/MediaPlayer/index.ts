@@ -11,6 +11,7 @@ export type MediaListener = (this: HTMLMediaElement, ev: Event) => unknown;
 export interface MediaConfig {
   url: string;
   showVideo?: boolean;
+  showSpeakers?: boolean;
 }
 
 const PLAYER_SPEED = 'beey-publish-speed';
@@ -28,6 +29,7 @@ export class MediaPlayer implements RedomComponent {
   private mediaConfig: MediaConfig;
   private hasSubtitles: boolean;
   private draggingKnob: boolean;
+  private showSpeakers: boolean | undefined;
 
   public constructor(
     mediaConfig: MediaConfig,
@@ -35,6 +37,7 @@ export class MediaPlayer implements RedomComponent {
   ) {
     this.mediaConfig = mediaConfig;
     this.hasSubtitles = hasSubtitles;
+    this.showSpeakers = mediaConfig.showSpeakers;
     this.draggingKnob = false;
     this.el = this.render();
     this.speedSlider = this.el.querySelector('.speed-slider') as HTMLElement;
@@ -106,7 +109,7 @@ export class MediaPlayer implements RedomComponent {
       trsx,
       this.handlePlaySpeaker,
     );
-    if (trsx.speakers.isMachineSpeakers) {
+    if (trsx.speakers.isMachineSpeakers || this.mediaConfig.showSpeakers === false) {
       this.speakersSlider.hideSlider();
     }
     mount(sliders, this.speakersSlider);

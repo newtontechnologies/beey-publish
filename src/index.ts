@@ -33,6 +33,7 @@ class BeeyPublish {
     this.transcript = new Transcript(
       this.player,
       this.config.transcript ?? {},
+      this.config.media.showSpeakers,
       this.handleSelectedSpeakers,
     );
 
