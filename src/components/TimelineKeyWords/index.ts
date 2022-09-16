@@ -27,7 +27,7 @@ export class TimelineKeyWords implements RedomComponent {
           style: `left:${wordPosition}%`,
           onclick: () => this.onSeek(instance.begin),
         },
-        h('div', { className: `wedge ${TIMELINE_KW_PREFIX} ${kwClassNames}` }),
+        h('div', { className: `wedge ${TIMELINE_KW_PREFIX} ${kwClassNames.join(' ')}` }),
         h(
           'div.tooltip__text',
           h(
