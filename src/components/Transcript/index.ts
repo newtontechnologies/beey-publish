@@ -1,8 +1,24 @@
 import { h, RedomComponent, setChildren } from 'redom';
 import { Trsx } from '../../trsx';
 import { TranscriptSection } from './TranscriptSection';
-import { MediaPlayer, TranscriptConfig, defaultTranscriptConfig } from '../MediaPlayer';
+import { MediaPlayer } from '../MediaPlayer';
 import { SpeakersSelect } from '../SpeakersSelect';
+
+export interface TranscriptConfig {
+  showVideo: boolean;
+  showParagraphButtons: boolean;
+  enablePhraseSeek: boolean;
+  keepTrackWithMedia: boolean;
+  showSpeakers: boolean;
+}
+
+export const defaultTranscriptConfig = {
+  showVideo: true,
+  showParagraphButtons: true,
+  enablePhraseSeek: true,
+  keepTrackWithMedia: true,
+  showSpeakers: true,
+};
 
 export class Transcript implements RedomComponent {
   public el: HTMLElement;

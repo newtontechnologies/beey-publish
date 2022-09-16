@@ -1,8 +1,8 @@
 import { h, mount } from 'redom';
 import { Keyword, Trsx, attachKeywords } from './trsx';
-import { MediaPlayer, MediaConfig, TranscriptConfig } from './components/MediaPlayer';
+import { MediaPlayer, MediaConfig } from './components/MediaPlayer';
 import { TrsxFile, TrsxSource } from './trsx-file';
-import { Transcript } from './components/Transcript';
+import { Transcript, TranscriptConfig } from './components/Transcript';
 
 export interface BeeyPublishConfig {
   media: MediaConfig
@@ -29,7 +29,6 @@ class BeeyPublish {
     this.player = new MediaPlayer(
       this.config.media,
       this.config.subtitlesUrl !== undefined,
-      this.config.transcript ?? {},
     );
     this.transcript = new Transcript(
       this.player,

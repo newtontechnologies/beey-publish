@@ -10,23 +10,8 @@ export type MediaListener = (this: HTMLMediaElement, ev: Event) => unknown;
 
 export interface MediaConfig {
   url: string;
+  showVideo?: boolean;
 }
-
-export interface TranscriptConfig {
-  showVideo: boolean;
-  showParagraphButtons: boolean;
-  enablePhraseSeek: boolean;
-  keepTrackWithMedia: boolean;
-  showSpeakers: boolean;
-}
-
-export const defaultTranscriptConfig = {
-  showVideo: false,
-  showParagraphButtons: true,
-  enablePhraseSeek: true,
-  keepTrackWithMedia: true,
-  showSpeakers: true,
-};
 
 const PLAYER_SPEED = 'beey-publish-speed';
 
@@ -42,20 +27,14 @@ export class MediaPlayer implements RedomComponent {
   private volumeSlider: HTMLElement;
   private mediaConfig: MediaConfig;
   private hasSubtitles: boolean;
-  private transcriptConfig: TranscriptConfig;
   private draggingKnob: boolean;
 
   public constructor(
     mediaConfig: MediaConfig,
     hasSubtitles: boolean,
-    transcriptConfig?: Partial<TranscriptConfig>,
   ) {
     this.mediaConfig = mediaConfig;
     this.hasSubtitles = hasSubtitles;
-    this.transcriptConfig = {
-      ...defaultTranscriptConfig,
-      ...transcriptConfig,
-    };
     this.draggingKnob = false;
     this.el = this.render();
     this.speedSlider = this.el.querySelector('.speed-slider') as HTMLElement;
@@ -296,7 +275,7 @@ export class MediaPlayer implements RedomComponent {
     const savedSpeed = window.localStorage.getItem(PLAYER_SPEED);
     return h(
       'div.media-player',
-      this.transcriptConfig === undefined || this.transcriptConfig.showVideo ? [
+      this.mediaConfig.showVideo === undefined || this.mediaConfig.showVideo ? [
         h('video.native-player', {
           src: this.mediaConfig.url,
           onloadedmetadata: this.handleLoadedMetadata,

@@ -1,5 +1,5 @@
 import { h, RedomComponent } from 'redom';
-import type { TranscriptConfig } from '../MediaPlayer';
+import type { TranscriptConfig } from '.';
 import { extractKeywordsClassNames, Phrase } from '../../trsx';
 import { PlayTooltip } from './PlayTooltip';
 
