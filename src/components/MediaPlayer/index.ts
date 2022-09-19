@@ -10,6 +10,7 @@ export type MediaListener = (this: HTMLMediaElement, ev: Event) => unknown;
 
 export interface MediaConfig {
   url: string;
+  showVideo?: boolean;
 }
 
 const PLAYER_SPEED = 'beey-publish-speed';
@@ -27,10 +28,16 @@ export class MediaPlayer implements RedomComponent {
   private mediaConfig: MediaConfig;
   private hasSubtitles: boolean;
   private draggingKnob: boolean;
+  private showSpeakers: boolean;
 
-  public constructor(mediaConfig: MediaConfig, hasSubtitles: boolean) {
+  public constructor(
+    mediaConfig: MediaConfig,
+    showSpeakers: boolean,
+    hasSubtitles: boolean,
+  ) {
     this.mediaConfig = mediaConfig;
     this.hasSubtitles = hasSubtitles;
+    this.showSpeakers = showSpeakers;
     this.draggingKnob = false;
     this.el = this.render();
     this.speedSlider = this.el.querySelector('.speed-slider') as HTMLElement;
@@ -98,7 +105,7 @@ export class MediaPlayer implements RedomComponent {
       trsx,
       this.handlePlaySpeaker,
     );
-    if (trsx.speakers.isMachineSpeakers) {
+    if (trsx.speakers.isMachineSpeakers || this.showSpeakers === false) {
       this.speakersSlider.hideSlider();
     }
     mount(sliders, this.speakersSlider);
@@ -265,7 +272,7 @@ export class MediaPlayer implements RedomComponent {
     const savedSpeed = window.localStorage.getItem(PLAYER_SPEED);
     return h(
       'div.media-player',
-      h('video.native-player', {
+      h(`video.native-player ${this.mediaConfig.showVideo ? '' : '.no-display'}`, {
         src: this.mediaConfig.url,
         onloadedmetadata: this.handleLoadedMetadata,
         ontimeupdate: this.updateTime,
@@ -364,7 +371,7 @@ export class MediaPlayer implements RedomComponent {
                   ),
                 ),
               ),
-              h(`i.subtitlesButton.material-icons.icon ${this.hasSubtitles ? 'visible' : 'hidden'}`, 'subtitles_off', {
+              h(`i.subtitlesButton.material-icons.icon ${(this.hasSubtitles && this.mediaConfig.showVideo) ? 'visible' : 'hidden'}`, 'subtitles_off', {
                 onclick: this.toggleSubtitles,
                 onmouseenter: this.hideSpeedSlider,
               }),

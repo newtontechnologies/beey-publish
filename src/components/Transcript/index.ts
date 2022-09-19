@@ -5,37 +5,37 @@ import { MediaPlayer } from '../MediaPlayer';
 import { SpeakersSelect } from '../SpeakersSelect';
 
 export interface TranscriptConfig {
-  showParagraphButtons: boolean;
-  enablePhraseSeek: boolean;
-  keepTrackWithMedia: boolean;
-  showSpeakers: boolean;
+  showParagraphButtons?: boolean;
+  enablePhraseSeek?: boolean;
+  keepTrackWithMedia?: boolean;
 }
 
 export const defaultTranscriptConfig = {
   showParagraphButtons: true,
   enablePhraseSeek: true,
   keepTrackWithMedia: true,
-  showSpeakers: true,
 };
 
 export class Transcript implements RedomComponent {
   public el: HTMLElement;
-  private config: TranscriptConfig;
+  private transcriptConfig: TranscriptConfig;
+  private showSpeakers: boolean;
   private player: MediaPlayer;
   private speakersSelect: SpeakersSelect;
   private sections: TranscriptSection[] = [];
 
   public constructor(
     player: MediaPlayer,
-    config: Partial<TranscriptConfig>,
+    config: TranscriptConfig,
+    showSpeakers: boolean,
     onSelectedSpeakers: (speakerIds: string[]) => void,
   ) {
     this.player = player;
-    this.config = {
+    this.transcriptConfig = {
       ...defaultTranscriptConfig,
       ...config,
     };
-
+    this.showSpeakers = showSpeakers;
     this.speakersSelect = new SpeakersSelect(onSelectedSpeakers);
 
     this.player.addEventListener('seeked', this.handleTimeUpdate);
@@ -50,7 +50,8 @@ export class Transcript implements RedomComponent {
       (paragraph, index) => new TranscriptSection(
         paragraph,
         trsx.paragraphs[index + 1],
-        this.config,
+        this.transcriptConfig,
+        this.showSpeakers,
         this.handlePlayParagraph,
         this.handlePauseParagraph,
         this.scrollTo,
@@ -104,7 +105,7 @@ export class Transcript implements RedomComponent {
   private render(): HTMLElement {
     return h(
       'div',
-      this.speakersSelect,
+      this.showSpeakers || this.showSpeakers === undefined ? this.speakersSelect : '',
       h(
         'div.transcript-container',
         h(
