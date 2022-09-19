@@ -28,7 +28,7 @@ export class MediaPlayer implements RedomComponent {
   private mediaConfig: MediaConfig;
   private hasSubtitles: boolean;
   private draggingKnob: boolean;
-  private showSpeakers: boolean | undefined;
+  private showSpeakers: boolean;
 
   public constructor(
     mediaConfig: MediaConfig,
@@ -272,7 +272,7 @@ export class MediaPlayer implements RedomComponent {
     const savedSpeed = window.localStorage.getItem(PLAYER_SPEED);
     return h(
       'div.media-player',
-      h(`${this.mediaConfig.showVideo ? 'video.native-player' : 'video.native-player.no-display'}`, {
+      h(`video.native-player ${this.mediaConfig.showVideo ? '' : '.no-display'}`, {
         src: this.mediaConfig.url,
         onloadedmetadata: this.handleLoadedMetadata,
         ontimeupdate: this.updateTime,

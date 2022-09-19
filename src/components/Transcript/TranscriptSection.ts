@@ -18,7 +18,7 @@ export class TranscriptSection implements RedomComponent {
 
   private paragraph: Paragraph;
   private trancriptConfig: TranscriptConfig;
-  private showSpeakers: boolean | undefined;
+  private showSpeakers: boolean;
   private onPlayFrom: (begin: number) => void;
   private onPause: () => void;
   private onScrollTo: (offSet: number) => void;
@@ -32,7 +32,7 @@ export class TranscriptSection implements RedomComponent {
     paragraph: Paragraph,
     nextParagraph: Paragraph | undefined,
     trancriptConfig: TranscriptConfig,
-    showSpeakers: boolean | undefined,
+    showSpeakers: boolean,
     onPlayFrom: (begin: number) => void,
     onPause: () => void,
     onScrollTo: (offSet: number) => void,

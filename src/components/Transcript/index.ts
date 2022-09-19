@@ -19,7 +19,7 @@ export const defaultTranscriptConfig = {
 export class Transcript implements RedomComponent {
   public el: HTMLElement;
   private transcriptConfig: TranscriptConfig;
-  private showSpeakers: boolean | undefined;
+  private showSpeakers: boolean;
   private player: MediaPlayer;
   private speakersSelect: SpeakersSelect;
   private sections: TranscriptSection[] = [];
@@ -27,7 +27,7 @@ export class Transcript implements RedomComponent {
   public constructor(
     player: MediaPlayer,
     config: TranscriptConfig,
-    showSpeakers: boolean | undefined,
+    showSpeakers: boolean,
     onSelectedSpeakers: (speakerIds: string[]) => void,
   ) {
     this.player = player;
