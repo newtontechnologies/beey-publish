@@ -25,7 +25,8 @@ export class MediaPlayer implements RedomComponent {
   private seekProgressElement: HTMLInputElement;
   private speedSlider: HTMLElement;
   private volumeSlider: HTMLElement;
-  private mediaConfig: MediaConfig;
+  private url: string;
+  private showVideo: boolean;
   private hasSubtitles: boolean;
   private draggingKnob: boolean;
   private showSpeakers: boolean;
@@ -35,7 +36,8 @@ export class MediaPlayer implements RedomComponent {
     showSpeakers: boolean,
     hasSubtitles: boolean,
   ) {
-    this.mediaConfig = mediaConfig;
+    this.url = mediaConfig.url;
+    this.showVideo = mediaConfig.showVideo ?? true;
     this.hasSubtitles = hasSubtitles;
     this.showSpeakers = showSpeakers;
     this.draggingKnob = false;
@@ -272,8 +274,8 @@ export class MediaPlayer implements RedomComponent {
     const savedSpeed = window.localStorage.getItem(PLAYER_SPEED);
     return h(
       'div.media-player',
-      h(`video.native-player ${this.mediaConfig.showVideo ? '' : '.no-display'}`, {
-        src: this.mediaConfig.url,
+      h(`video.native-player ${this.showVideo ? '' : '.no-display'}`, {
+        src: this.url,
         onloadedmetadata: this.handleLoadedMetadata,
         ontimeupdate: this.updateTime,
         onplay: this.updateButtons,
@@ -371,7 +373,7 @@ export class MediaPlayer implements RedomComponent {
                   ),
                 ),
               ),
-              h(`i.subtitlesButton.material-icons.icon ${(this.hasSubtitles && this.mediaConfig.showVideo) ? 'visible' : 'hidden'}`, 'subtitles_off', {
+              h(`i.subtitlesButton.material-icons.icon ${(this.hasSubtitles && this.showVideo) ? 'visible' : 'hidden'}`, 'subtitles_off', {
                 onclick: this.toggleSubtitles,
                 onmouseenter: this.hideSpeedSlider,
               }),
