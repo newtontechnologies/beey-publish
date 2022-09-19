@@ -11,7 +11,6 @@ export type MediaListener = (this: HTMLMediaElement, ev: Event) => unknown;
 export interface MediaConfig {
   url: string;
   showVideo?: boolean;
-  showSpeakers?: boolean;
 }
 
 const PLAYER_SPEED = 'beey-publish-speed';
@@ -33,11 +32,12 @@ export class MediaPlayer implements RedomComponent {
 
   public constructor(
     mediaConfig: MediaConfig,
+    showSpeakers: boolean,
     hasSubtitles: boolean,
   ) {
     this.mediaConfig = mediaConfig;
     this.hasSubtitles = hasSubtitles;
-    this.showSpeakers = mediaConfig.showSpeakers;
+    this.showSpeakers = showSpeakers;
     this.draggingKnob = false;
     this.el = this.render();
     this.speedSlider = this.el.querySelector('.speed-slider') as HTMLElement;
@@ -52,15 +52,11 @@ export class MediaPlayer implements RedomComponent {
   }
 
   public addEventListener(event: MediaPlayerEvent, listener: MediaListener) {
-    if (this.nativePlayerElement) {
-      this.nativePlayerElement.addEventListener(event, listener);
-    }
+    this.nativePlayerElement.addEventListener(event, listener);
   }
 
   public removeEventListener(event: MediaPlayerEvent, listener: MediaListener) {
-    if (this.nativePlayerElement) {
-      this.nativePlayerElement.removeEventListener(event, listener);
-    }
+    this.nativePlayerElement.removeEventListener(event, listener);
   }
 
   public get currentTime(): number {
@@ -109,7 +105,7 @@ export class MediaPlayer implements RedomComponent {
       trsx,
       this.handlePlaySpeaker,
     );
-    if (trsx.speakers.isMachineSpeakers || this.mediaConfig.showSpeakers === false) {
+    if (trsx.speakers.isMachineSpeakers || this.showSpeakers === false) {
       this.speakersSlider.hideSlider();
     }
     mount(sliders, this.speakersSlider);
@@ -140,11 +136,9 @@ export class MediaPlayer implements RedomComponent {
       srcLang: 'cz',
       src: URL.createObjectURL(blob),
     });
-    if (this.nativePlayerElement) {
-      mount(this.nativePlayerElement, subtitlesVTT);
-      const tracks = this.nativePlayerElement.textTracks[0];
-      tracks.mode = 'hidden';
-    }
+    mount(this.nativePlayerElement, subtitlesVTT);
+    const tracks = this.nativePlayerElement.textTracks[0];
+    tracks.mode = 'hidden';
   };
 
   private toggleSubtitles = () => {
@@ -278,19 +272,17 @@ export class MediaPlayer implements RedomComponent {
     const savedSpeed = window.localStorage.getItem(PLAYER_SPEED);
     return h(
       'div.media-player',
-      this.mediaConfig.showVideo === undefined || this.mediaConfig.showVideo ? [
-        h('video.native-player', {
-          src: this.mediaConfig.url,
-          onloadedmetadata: this.handleLoadedMetadata,
-          ontimeupdate: this.updateTime,
-          onplay: this.updateButtons,
-          onpause: this.updateButtons,
-          onvolumechange: this.onVolumeChange,
-          playbackRate: savedSpeed === null
-            ? 1
-            : Number(savedSpeed),
-        }),
-      ] : '',
+      h(`${this.mediaConfig.showVideo ? 'video.native-player' : 'video.native-player.no-display'}`, {
+        src: this.mediaConfig.url,
+        onloadedmetadata: this.handleLoadedMetadata,
+        ontimeupdate: this.updateTime,
+        onplay: this.updateButtons,
+        onpause: this.updateButtons,
+        onvolumechange: this.onVolumeChange,
+        playbackRate: savedSpeed === null
+          ? 1
+          : Number(savedSpeed),
+      }),
       h(
         'div.media-player__controls',
         {
@@ -379,7 +371,7 @@ export class MediaPlayer implements RedomComponent {
                   ),
                 ),
               ),
-              h(`i.subtitlesButton.material-icons.icon ${this.hasSubtitles ? 'visible' : 'hidden'}`, 'subtitles_off', {
+              h(`i.subtitlesButton.material-icons.icon ${(this.hasSubtitles && this.mediaConfig.showVideo) ? 'visible' : 'hidden'}`, 'subtitles_off', {
                 onclick: this.toggleSubtitles,
                 onmouseenter: this.hideSpeedSlider,
               }),

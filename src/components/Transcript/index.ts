@@ -5,14 +5,12 @@ import { MediaPlayer } from '../MediaPlayer';
 import { SpeakersSelect } from '../SpeakersSelect';
 
 export interface TranscriptConfig {
-  showVideo: boolean;
-  showParagraphButtons: boolean;
-  enablePhraseSeek: boolean;
-  keepTrackWithMedia: boolean;
+  showParagraphButtons?: boolean;
+  enablePhraseSeek?: boolean;
+  keepTrackWithMedia?: boolean;
 }
 
 export const defaultTranscriptConfig = {
-  showVideo: true,
   showParagraphButtons: true,
   enablePhraseSeek: true,
   keepTrackWithMedia: true,
@@ -28,7 +26,7 @@ export class Transcript implements RedomComponent {
 
   public constructor(
     player: MediaPlayer,
-    config: Partial<TranscriptConfig>,
+    config: TranscriptConfig,
     showSpeakers: boolean | undefined,
     onSelectedSpeakers: (speakerIds: string[]) => void,
   ) {

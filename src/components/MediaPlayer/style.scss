@@ -9,6 +9,9 @@
     display: none;
     width: 80%;
     margin: 0 auto;
+    &.no-display {
+      display: none;
+    }
   }
   &__video {
     background-color: $dark-gray;
@@ -94,11 +97,10 @@
 
 .volume-slider {
   -webkit-appearance: none;
-  -webkit-transform: rotate(90deg);
   display: none;
   position: absolute;
   right: 2.6rem;
-  bottom: 4.3rem;
+  bottom: -1.1rem;
   z-index: 1;
   height: 1.5rem;
   width: 6rem;
@@ -125,7 +127,6 @@
   }
 
   &::-moz-range {
-    -moz-transform: rotate(90deg);
     background-color: transparent;
     &-track {
       height: 0.3rem;
@@ -267,7 +268,7 @@
 }
 
 .subtitlesButton.material-icons {
-  .hidden {
+  &.hidden {
     display: none;
   }
 }
@@ -295,7 +296,7 @@
   }
 
   .volume-slider {
-    bottom: 4.3rem;
+    bottom: -1.1rem;
     right: 1.9rem;
   }
 

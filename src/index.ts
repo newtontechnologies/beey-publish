@@ -5,9 +5,10 @@ import { TrsxFile, TrsxSource } from './trsx-file';
 import { Transcript, TranscriptConfig } from './components/Transcript';
 
 export interface BeeyPublishConfig {
-  media: MediaConfig
+  media: MediaConfig;
   transcript?: TranscriptConfig;
   subtitlesUrl?: string;
+  showSpeakers?: boolean;
 }
 
 export interface PublishSplitSlot {
@@ -28,12 +29,13 @@ class BeeyPublish {
     this.config = config;
     this.player = new MediaPlayer(
       this.config.media,
+      this.config.showSpeakers ?? true,
       this.config.subtitlesUrl !== undefined,
     );
     this.transcript = new Transcript(
       this.player,
       this.config.transcript ?? {},
-      this.config.media.showSpeakers,
+      this.config.showSpeakers ?? true,
       this.handleSelectedSpeakers,
     );
 
