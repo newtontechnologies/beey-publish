@@ -1,3 +1,8 @@
+## 1.8.3 (2022-09-19)
+- ✨ Feature: Change of configuration to enable use with Wordpress plugin
+- 🐞 Fix: no commas between keyword pins classnames
+- 🐞 Fix: keyword pins do not overflow the container    
+
 ## 1.8.2 (2022-09-07)
 - 🐞 Fix: video is displayed in media player  
 
