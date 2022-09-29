@@ -23,6 +23,7 @@ export class Transcript implements RedomComponent {
   private player: MediaPlayer;
   private speakersSelect: SpeakersSelect;
   private sections: TranscriptSection[] = [];
+  private scrollOnSeek: boolean;
 
   public constructor(
     player: MediaPlayer,
@@ -37,9 +38,15 @@ export class Transcript implements RedomComponent {
     };
     this.showSpeakers = showSpeakers;
     this.speakersSelect = new SpeakersSelect(onSelectedSpeakers);
+    this.scrollOnSeek = true;
 
     this.player.addEventListener('seeked', this.handleTimeUpdate);
-    this.player.addEventListener('seeked', this.handleSeek);
+    this.player.addEventListener('seeked', () => {
+      if (this.scrollOnSeek) {
+        this.handleSeek();
+      }
+      this.scrollOnSeek = true;
+    });
     this.player.addEventListener('timeupdate', this.handleTimeUpdate);
     this.el = this.render();
   }
@@ -73,6 +80,7 @@ export class Transcript implements RedomComponent {
   private handlePlayParagraph = (fromTime: number): void => {
     this.player.currentTime = fromTime;
     this.player.play();
+    this.scrollOnSeek = false;
   };
 
   private handlePauseParagraph = (): void => {
