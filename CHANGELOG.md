@@ -1,3 +1,5 @@
+## 1.8.5 (2022-10-03)
+- 🐞 Fix: fix non-functional autoscrolling and prevent autoscrolling when played from text
 ## 1.8.4 (2022-09-19)
 - ✨ Feature: Change of configuration to enable use with Wordpress plugin
 - 🐞 Fix: no commas between keyword pins classnames
