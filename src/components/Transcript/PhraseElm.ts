@@ -27,7 +27,8 @@ export class PhraseElement implements RedomComponent {
   }
 
   public get offSetTop(): number {
-    return this.el.offsetTop;
+    const parentElement = this.el.offsetParent as HTMLElement;
+    return parentElement.offsetTop + this.el.offsetTop;
   }
 
   public get begin(): number {
