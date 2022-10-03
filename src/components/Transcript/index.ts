@@ -43,7 +43,7 @@ export class Transcript implements RedomComponent {
     this.player.addEventListener('seeked', this.handleTimeUpdate);
     this.player.addEventListener('seeked', () => {
       if (this.scrollOnSeek) {
-        this.handleSeek();
+        this.handleScrollOnSeek();
       }
       this.scrollOnSeek = true;
     });
@@ -94,7 +94,7 @@ export class Transcript implements RedomComponent {
     ));
   };
 
-  private handleSeek = () => {
+  private handleScrollOnSeek = () => {
     const seekedSection = this.sections.find((section) => (
       section.begin <= this.player.currentTime && this.player.currentTime <= section.end
     ));
