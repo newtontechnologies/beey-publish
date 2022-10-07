@@ -4,6 +4,7 @@ import {
 import { Trsx } from '../../trsx';
 import { SpeakersSlider, formatTime } from '../SpeakersSlider';
 import { TimelineKeyWords } from '../TimelineKeyWords';
+import { txt } from '../../I18n/i18n';
 
 export type MediaPlayerEvent = 'play' | 'pause' | 'seeked' | 'timeupdate';
 export type MediaListener = (this: HTMLMediaElement, ev: Event) => unknown;
@@ -350,7 +351,7 @@ export class MediaPlayer implements RedomComponent {
                   {
                     onmouseleave: this.hideSpeedSlider,
                   },
-                  h('p.speed-slider__text', 'Rychlost přehrávání'),
+                  h('p.speed-slider__text', txt('speed')),
                   h('input.speed-slider__track', {
                     type: 'range',
                     min: 50,

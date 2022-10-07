@@ -1,4 +1,5 @@
 import { h, RedomComponent } from 'redom';
+import { txt } from '../../../I18n/i18n';
 
 const AUTO_CLOSE_TIME = 2000; // 2s
 
@@ -41,7 +42,7 @@ export class PlayTooltip implements RedomComponent {
       'div.play-tooltip',
       h(
         'button',
-        ' ▶ Přehrát od slova',
+        ` ▶ ${txt('playFromWord')}`,
         {
           onclick: this.playFrom,
         },
