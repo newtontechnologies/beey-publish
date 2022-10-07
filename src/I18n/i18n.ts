@@ -11,8 +11,9 @@ export const setLocale = (json: Translations) => {
 };
 
 export const txt = (key: string): string => {
+  const csLocale = cs as Translations;
   if (translations === undefined) {
-    return cs[key];
+    return csLocale[key];
   }
   return translations[key];
 };
