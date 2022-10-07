@@ -61,7 +61,6 @@ class BeeyPublish {
   }
 
   public async loadTrsx(trsxSource: TrsxSource): Promise<void> {
-    // setLocale(this.config.locale !== undefined ? this.config.locale : cs);
     this.trsx = await new TrsxFile(trsxSource).parse();
     this.transcript.updateTrsx(this.trsx);
     this.player.updateTrsx(this.trsx);
