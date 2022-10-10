@@ -1,4 +1,4 @@
-import cs from './locale/cs-CZ.json';
+import en from './locale/en-US.json';
 
 export interface Translations {
   [Key: string]: string
@@ -11,9 +11,9 @@ export const setLocale = (json: Translations) => {
 };
 
 export const txt = (key: string): string => {
-  const csLocale = cs as Translations;
+  const enLocale = en as Translations;
   if (translations === undefined) {
-    return csLocale[key];
+    return enLocale[key];
   }
   return translations[key];
 };

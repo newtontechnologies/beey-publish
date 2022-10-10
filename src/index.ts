@@ -4,7 +4,7 @@ import { MediaPlayer, MediaConfig } from './components/MediaPlayer';
 import { TrsxFile, TrsxSource } from './trsx-file';
 import { Transcript, TranscriptConfig } from './components/Transcript';
 import { setLocale, Translations } from './I18n/i18n';
-import cs from './I18n/locale/cs-CZ.json';
+import en from './I18n/locale/cs-CZ.json';
 
 export interface BeeyPublishConfig {
   media: MediaConfig;
@@ -31,7 +31,7 @@ class BeeyPublish {
   public constructor(slot: PublishSlot, config: BeeyPublishConfig) {
     this.slot = slot;
     this.config = config;
-    setLocale(this.config.locale !== undefined ? this.config.locale : cs);
+    setLocale(this.config.locale !== undefined ? this.config.locale : en);
     this.player = new MediaPlayer(
       this.config.media,
       this.config.showSpeakers ?? true,

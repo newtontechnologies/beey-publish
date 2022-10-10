@@ -35,7 +35,7 @@ export const minifyCss = () => gulp
 export const buildStyles = gulp.series(processSass, minifyCss);
 
 export const copyLocale = () => gulp
-  .src('./src/I18n/locale/*.json')
+  .src(['./src/I18n/locale/*.json', '!./src/I18n/locale/en-US.json'])
   .pipe(gulp.dest('./dist/locale/'));
 
 export default () => gulp.watch(
