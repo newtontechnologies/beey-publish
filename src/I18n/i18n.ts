@@ -1,4 +1,4 @@
-import en from './locale/en-US.json';
+import en from './en-US.json';
 
 export interface Translations {
   [Key: string]: string

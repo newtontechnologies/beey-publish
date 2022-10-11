@@ -4,7 +4,7 @@ import { MediaPlayer, MediaConfig } from './components/MediaPlayer';
 import { TrsxFile, TrsxSource } from './trsx-file';
 import { Transcript, TranscriptConfig } from './components/Transcript';
 import { setLocale, Translations } from './I18n/i18n';
-import en from './I18n/locale/cs-CZ.json';
+import en from './I18n/en-US.json';
 
 export interface BeeyPublishConfig {
   media: MediaConfig;
