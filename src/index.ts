@@ -3,11 +3,14 @@ import { Keyword, Trsx, attachKeywords } from './trsx';
 import { MediaPlayer, MediaConfig } from './components/MediaPlayer';
 import { TrsxFile, TrsxSource } from './trsx-file';
 import { Transcript, TranscriptConfig } from './components/Transcript';
+import { setLocale, Translations } from './I18n/i18n';
+import en from './I18n/en-US.json';
 
 export interface BeeyPublishConfig {
   media: MediaConfig;
   transcript?: TranscriptConfig;
   subtitlesUrl?: string;
+  locale?: Translations;
   showSpeakers?: boolean;
 }
 
@@ -23,10 +26,12 @@ class BeeyPublish {
   private transcript: Transcript;
   private config: BeeyPublishConfig;
   private trsx: Trsx | null = null;
+  private locale: Translations | undefined;
 
   public constructor(slot: PublishSlot, config: BeeyPublishConfig) {
     this.slot = slot;
     this.config = config;
+    setLocale(this.config.locale !== undefined ? this.config.locale : en);
     this.player = new MediaPlayer(
       this.config.media,
       this.config.showSpeakers ?? true,

@@ -5,7 +5,6 @@ import { PlayTooltip } from './PlayTooltip';
 
 const PHRASE_KW_PREFIX = 'pkw';
 
-const playTooltip: PlayTooltip = new PlayTooltip();
 export class PhraseElement implements RedomComponent {
   public el: HTMLElement;
 
@@ -55,6 +54,7 @@ export class PhraseElement implements RedomComponent {
   };
 
   private handleClick = (e: MouseEvent) => {
+    const playTooltip: PlayTooltip = new PlayTooltip();
     e.stopPropagation();
     const containerCoordinates = (this.el.parentElement as HTMLElement)
       .getBoundingClientRect();

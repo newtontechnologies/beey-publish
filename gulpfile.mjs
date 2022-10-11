@@ -34,6 +34,10 @@ export const minifyCss = () => gulp
 
 export const buildStyles = gulp.series(processSass, minifyCss);
 
+export const copyLocale = () => gulp
+  .src('./src/I18n/locale/*.json')
+  .pipe(gulp.dest('./dist/locale/'));
+
 export default () => gulp.watch(
   './src/**/*.scss',
   { ignoreInitial: false },

@@ -1,5 +1,6 @@
 import { h, RedomComponent, setChildren } from 'redom';
 import { Speakers } from '../../trsx';
+import { txt } from '../../I18n/i18n';
 
 export const colorCode = (id : string) => (Number(id) <= 16 ? id : String(Number(id) % 16));
 
@@ -53,7 +54,7 @@ export class SpeakersSelect implements RedomComponent {
             checked: true,
             onchange: this.handleSelectAll,
           }),
-          'Vybrat všechny',
+          txt('selectAll'),
         ),
         Object.values(speakers.speakerMap).map((coloredSpeaker) => h(
           'label',
@@ -84,7 +85,7 @@ export class SpeakersSelect implements RedomComponent {
   private render(): HTMLElement {
     return h(
       'div.speaker-dropdown',
-      h('span.speaker-dropdown__anchor', 'Vyznačit mluvčí: ', {
+      h('span.speaker-dropdown__anchor', `${txt('markSpeakers')}:`, {
         onclick: this.handleDropdown,
       }),
       h('div.speaker-dropdown__items'),
