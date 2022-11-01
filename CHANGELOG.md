@@ -1,3 +1,5 @@
+## 1.8.6 (2022-11-01)
+- ✨ Feature: Add Czech, Polish and Slovak localization. English set as default.
 ## 1.8.5 (2022-10-03)
 - 🐞 Fix: fix non-functional autoscrolling and prevent autoscrolling when played from text
 ## 1.8.4 (2022-09-19)
