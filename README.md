@@ -133,7 +133,7 @@ Example of keywords JSON, CSS styles to be added according to id with prefix pkw
 ```
 To style a keyword group with id entity-person, create a CSS class pkw-entity-person and apply CSS accordingly:
 ```css
-pkw-entity-person {
+.pkw-entity-person {
   color: blue;
   background-color: yellow;
 }
