@@ -82,7 +82,7 @@ const publish = new BeeyPublish(
   },
 );
 ```
-
+### Media player control
 Accessing the media player for programmatic control.
 
 E.g. change volume programmatically (number in unit interval [0,1]):
@@ -90,6 +90,7 @@ E.g. change volume programmatically (number in unit interval [0,1]):
 ```js
 publish.mediaPlayer.volume = 0.3
 ```
+### Styling keywords
 
 Adding keywords for highlighting in CSS:
 
@@ -109,7 +110,7 @@ Example of keywords JSON, CSS styles to be added according to id with prefix pkw
     "text": "Tom Cruise",
     "group": {
       "id": "entity-person",
-      "label": "Osoba"
+      "label": "Person"
     },
     "mentions": [
       { "indices": [31, 32] },
@@ -121,7 +122,7 @@ Example of keywords JSON, CSS styles to be added according to id with prefix pkw
     "text": "Top Gun",
     "group": {
       "id": "entity-movie",
-      "label": "Film"
+      "label": "Movie"
     },
     "mentions": [
       { "indices": [17, 18] },
@@ -130,6 +131,14 @@ Example of keywords JSON, CSS styles to be added according to id with prefix pkw
   }
 ]
 ```
+To style a keyword group with id entity-person, create a CSS class pkw-entity-person and apply CSS accordingly:
+```css
+pkw-entity-person {
+  color: blue;
+  background-color: yellow;
+}
+```
+### Localization
 
 Changing localization (to Czech, Polish or Slovak):
 
