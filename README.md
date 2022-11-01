@@ -144,7 +144,7 @@ Changing localization (to Czech, Polish or Slovak):
 
 ```html
 <script type="module">
-import cz from 'https://unpkg.com/@beey/publish@latest/dist/cs-CZ.json';
+import cz from 'https://unpkg.com/@beey/publish@latest/dist/locale/cs-CZ.json';
 const publish = new BeeyPublish(container, {
   media: {
     url: '<url of audio/video file>',
