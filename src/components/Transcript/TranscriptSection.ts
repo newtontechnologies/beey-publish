@@ -102,7 +102,7 @@ export class TranscriptSection implements RedomComponent {
 
     const keywordClassNames = extractKeywordsClassNames(
       SPEAKER_KW_PREFIX,
-      speaker.keywordInstances,
+      this.paragraph.speakerKeywordInstances,
     );
 
     return h(
