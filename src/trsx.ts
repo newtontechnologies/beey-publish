@@ -136,6 +136,4 @@ export const attachKeywords = (keywords: Keyword[], trsx: Trsx) => {
       }
     });
   });
-
-  console.log('inst', trsx.keywordInstances);
 };
