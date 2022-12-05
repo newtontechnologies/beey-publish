@@ -3,7 +3,7 @@ export interface PhraseMention {
 }
 
 export interface SpeakerMention {
-  speakerId: number | number[];
+  speakerId: number | string;
   query: string;
 }
 
@@ -103,13 +103,9 @@ export const attachKeywords = (keywords: Keyword[], trsx: Trsx) => {
   keywords.forEach((keyword: Keyword) => {
     keyword.mentions.forEach((mention) => {
       if (isSpeakerMention(mention)) {
-        const speakerIds: number[] = Array.isArray(mention.speakerId)
-          ? mention.speakerId
-          : [mention.speakerId];
-
         paragraphs.forEach((paragraph) => {
           const { speaker } = paragraph;
-          if (speakerIds.includes(Number(speaker.id))) {
+          if (Number(mention.speakerId) === Number(speaker.id)) {
             const instance = {
               keyword,
               begin: paragraph.begin,
