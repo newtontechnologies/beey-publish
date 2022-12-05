@@ -128,16 +128,39 @@ Example of keywords JSON, CSS styles to be added according to id with prefix pkw
       { "indices": [17, 18] },
       { "indices": [66, 67] }
     ]
+  },
+  {
+    "text": "Václav Rybář",
+    "group": {
+      "id": "entity-guest",
+      "label": "Host"
+    },
+    "mentions": [
+      { "indices": [51, 52] },
+      { "speakerId": 1 }
+    ]
   }
 ]
 ```
-To style a keyword group with id entity-person, create a CSS class pkw-entity-person and apply CSS accordingly:
+
+To style a keyword group with id `entity-person` in phrases, create a CSS class `pkw-entity-person` and apply CSS accordingly:
+
 ```css
 .pkw-entity-person {
   color: blue;
   background-color: yellow;
 }
 ```
+
+To style a keyword group with id `entity-guest` in a speaker, create a CSS class `skw-entity-guest` and apply CSS accordingly:
+
+```css
+.skw-entity-person {
+  color: white;
+  background-color: orange;
+}
+```
+
 ### Localization
 
 Changing localization (to Czech, Polish or Slovak):
