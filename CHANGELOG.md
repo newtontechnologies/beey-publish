@@ -1,3 +1,5 @@
+## 1.8.7 (2022-12-06)
+- 🐞 Fix: speaker keyword CSS classes are now attached correctly
 ## 1.8.6 (2022-11-01)
 - ✨ Feature: Add Czech, Polish and Slovak localization. English set as default.
 ## 1.8.5 (2022-10-03)
