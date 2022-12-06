@@ -3,7 +3,7 @@ export interface PhraseMention {
 }
 
 export interface SpeakerMention {
-  speakerId: number;
+  speakerId: number | string;
   query: string;
 }
 
@@ -37,13 +37,13 @@ export interface Speaker {
   surname: string;
   unknown: boolean;
   id: string;
-  keywordInstances: KeywordInstance[],
 }
 export interface Paragraph {
   speaker: Speaker;
   begin: number;
   end: number;
   phrases: Phrase[];
+  speakerKeywordInstances: KeywordInstance[],
 }
 
 export type SpeakerMap = { [id: string]: Speaker };
@@ -66,8 +66,8 @@ const isSpeakerMention = (mention: Mention): mention is SpeakerMention => 'speak
 const clearKeywords = (paragraphs: Paragraph[]): void => paragraphs.forEach(
   (paragraph) => {
     const { phrases } = paragraph;
-    const { speaker } = paragraph;
-    speaker.keywordInstances = [];
+    // eslint-disable-next-line no-param-reassign
+    paragraph.speakerKeywordInstances = [];
 
     for (let i = 0; i < phrases.length; i += 1) {
       const phrase = phrases[i] as Phrase;
@@ -105,13 +105,13 @@ export const attachKeywords = (keywords: Keyword[], trsx: Trsx) => {
       if (isSpeakerMention(mention)) {
         paragraphs.forEach((paragraph) => {
           const { speaker } = paragraph;
-          if (Number(speaker.id) === mention.speakerId) {
+          if (Number(mention.speakerId) === Number(speaker.id)) {
             const instance = {
               keyword,
               begin: paragraph.begin,
             };
             trsx.keywordInstances.push(instance);
-            speaker.keywordInstances.push(instance);
+            paragraph.speakerKeywordInstances.push(instance);
           }
         });
       } else {

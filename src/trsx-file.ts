@@ -64,7 +64,6 @@ const extractSpeakers = (xmlDoc: XMLDocument): Speakers => {
       firstname: speakerElement.getAttribute('firstname') as string,
       surname: speakerElement.getAttribute('surname') as string,
       unknown: isSpeakerUknown(speakerElement),
-      keywordInstances: [],
     };
   });
   const isMachineSpeakers = Object.values(speakerMap).some((speaker) => speaker.firstname === '' && speaker.surname.startsWith('S0'));
@@ -101,6 +100,7 @@ const extractParagraphs = (
       begin: parseTimeStamp(element.getAttribute('b')),
       end,
       phrases,
+      speakerKeywordInstances: [],
     };
     paragraphs.push(lastParagraph);
   });
