@@ -155,7 +155,7 @@ To style a keyword group with id `entity-person` in phrases, create a CSS class 
 To style a keyword group with id `entity-guest` in a speaker, create a CSS class `skw-entity-guest` and apply CSS accordingly:
 
 ```css
-.skw-entity-person {
+.skw-entity-quest {
   color: white;
   background-color: orange;
 }
