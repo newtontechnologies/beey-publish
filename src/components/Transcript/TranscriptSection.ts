@@ -126,7 +126,10 @@ export class TranscriptSection implements RedomComponent {
           ? h(
             'div.transcript-speaker',
             h(
-              `span.transcript-speaker__name ${SPEAKER_KW_PREFIX} ${keywordClassNames.join(' ')}`,
+              'span',
+              {
+                className: `transcript-speaker__name ${SPEAKER_KW_PREFIX} ${keywordClassNames.join(' ')}`,
+              },
               speakerName,
             ),
             h(`div.speaker-color${colorCode(speaker.id)}.transcript-speaker__color`),
