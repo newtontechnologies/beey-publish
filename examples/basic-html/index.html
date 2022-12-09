@@ -8,16 +8,18 @@
   <title>Basic HTML</title>
 </head>
 <body>
-  <div id="pubish-container" class="container"></div>
+  <div id="publish-container" class="container"></div>
 
   <script type="module">
     import BeeyPublish from 'https://unpkg.com/@beey/publish@latest/dist/beey-publish.min.js';
+    import cz from 'https://unpkg.com/@beey/publish@latest/dist/locale/cs-CZ.json' assert {type: 'json'};
     
-    const container = document.querySelector('#pubish-container');
+    const container = document.querySelector('#publish-container');
     const publish = new BeeyPublish(container, {
       media: {
         url: 'https://www.beey.io/wp-content/uploads/2022/07/job-interview.mp4',
       },
+      locale: cz
     });
 
     await publish.loadTrsx({

@@ -58,11 +58,13 @@ const extractSpeakers = (xmlDoc: XMLDocument): Speakers => {
   const trsxSpeakers = xmlDoc.querySelectorAll('sp s');
   trsxSpeakers.forEach((speakerElement) => {
     const id = speakerElement.getAttribute('id') as string;
+    const role = speakerElement.querySelector('[name="role"]')?.textContent as string;
 
     speakerMap[id] = {
       id,
       firstname: speakerElement.getAttribute('firstname') as string,
       surname: speakerElement.getAttribute('surname') as string,
+      role,
       unknown: isSpeakerUknown(speakerElement),
     };
   });

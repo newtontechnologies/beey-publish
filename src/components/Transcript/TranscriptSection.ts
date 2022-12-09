@@ -96,14 +96,17 @@ export class TranscriptSection implements RedomComponent {
       );
 
     const { speaker } = this.paragraph;
-    const speakerName = speaker.unknown
-      ? 'Mluvčí'
-      : `${speaker.firstname ?? ''} ${speaker.surname}`;
+    const speakerFirstName = speaker.unknown ? 'Mluvčí' : `${speaker.firstname ?? ''}`;
+    const speakerSurname = speaker.unknown ? '' : speaker.surname;
+    const speakerRole = speaker.unknown || speaker.role === undefined ? '' : speaker.role;
 
     const keywordClassNames = extractKeywordsClassNames(
       SPEAKER_KW_PREFIX,
       this.paragraph.speakerKeywordInstances,
     );
+    const isHighlighted = (speakerPart: string) => this.paragraph
+      .speakerKeywordInstances[0]?.keyword.mentions[1]?.accent.includes(speakerPart)
+      || this.paragraph.speakerKeywordInstances[0]?.keyword.mentions[1]?.accent === speakerPart;
 
     return h(
       'div.transcript-section',
@@ -128,9 +131,23 @@ export class TranscriptSection implements RedomComponent {
             h(
               'span',
               {
-                className: `transcript-speaker__name ${SPEAKER_KW_PREFIX} ${keywordClassNames.join(' ')}`,
+                className: `transcript-speaker__name ${SPEAKER_KW_PREFIX} ${isHighlighted('firstname') ? keywordClassNames.join(' ') : ''}`,
               },
-              speakerName,
+              speakerFirstName,
+            ),
+            h(
+              'span',
+              {
+                className: `transcript-speaker__name ${SPEAKER_KW_PREFIX} ${isHighlighted('surname') ? keywordClassNames.join(' ') : ''}`,
+              },
+              speakerSurname,
+            ),
+            h(
+              'span',
+              {
+                className: `transcript-speaker__name ${SPEAKER_KW_PREFIX} ${isHighlighted('role') ? keywordClassNames.join(' ') : ''}`,
+              },
+              `, ${speakerRole}`,
             ),
             h(`div.speaker-color${colorCode(speaker.id)}.transcript-speaker__color`),
           )
