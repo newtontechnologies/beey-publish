@@ -4,6 +4,7 @@ export interface PhraseMention {
 
 export interface SpeakerMention {
   speakerId: number | string;
+  accent?: string [] | string;
   query: string;
 }
 
@@ -35,6 +36,7 @@ export interface Phrase {
 export interface Speaker {
   firstname: string | null;
   surname: string;
+  role: string;
   unknown: boolean;
   id: string;
 }
