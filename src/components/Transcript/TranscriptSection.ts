@@ -99,7 +99,7 @@ export class TranscriptSection implements RedomComponent {
       { name: 'surname', className: '', text: surname },
       { name: 'role', className: '', text: role },
     ];
-    this.paragraph.speakerKeywordInstances.map((instance) => {
+    this.paragraph.speakerKeywordInstances.forEach((instance) => {
       const className = extractKeywordsClassNames(
         SPEAKER_KW_PREFIX,
         [instance],
@@ -108,7 +108,7 @@ export class TranscriptSection implements RedomComponent {
       const speakerMentions = mentions.filter((mention) => mention.speakerId
         !== undefined) as SpeakerMention[];
 
-      return speakerElements.forEach((element, index) => {
+      speakerElements.forEach((element, index) => {
         speakerMentions.forEach((mention) => {
           if (mention.accent?.includes(element.name)
           || mention.accent === element.name) {
