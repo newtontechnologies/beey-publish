@@ -105,14 +105,17 @@ export class TranscriptSection implements RedomComponent {
         [instance],
       );
       const { mentions } = instance.keyword;
-      const speakerMention = mentions[1] as SpeakerMention;
+      const speakerMentions = mentions.filter((mention) => mention.speakerId
+        !== undefined) as SpeakerMention[];
 
       return speakerElements.forEach((element, index) => {
-        if (speakerMention?.accent?.includes(element.name)
-        || speakerMention?.accent === element.name) {
-          const newElementWithClass = { ...element, className: className.join(' ') };
-          speakerElements[index] = newElementWithClass;
-        }
+        speakerMentions.forEach((mention) => {
+          if (mention.accent?.includes(element.name)
+          || mention.accent === element.name) {
+            const newElementWithClass = { ...element, className: className.join(' ') };
+            speakerElements[index] = newElementWithClass;
+          }
+        });
       });
     });
     return speakerElements;
