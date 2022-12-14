@@ -1,6 +1,8 @@
 import { h, RedomComponent } from 'redom';
 import type { TranscriptConfig } from '.';
-import { extractKeywordsClassNames, Paragraph } from '../../trsx';
+import {
+  extractKeywordsClassNames, Paragraph, SpeakerMention,
+} from '../../trsx';
 import { PhraseElement } from './PhraseElm';
 import { colorCode } from '../SpeakersSelect';
 
@@ -12,7 +14,6 @@ const secondsToTime = (seconds: number): string => {
 };
 
 const SPEAKER_KW_PREFIX = 'skw';
-
 export class TranscriptSection implements RedomComponent {
   public el: HTMLElement;
 
@@ -88,26 +89,42 @@ export class TranscriptSection implements RedomComponent {
     }
   };
 
+  private createSpeakerElements = () => {
+    const { speaker } = this.paragraph;
+    const firstname = speaker.unknown ? 'Mluvčí' : `${speaker.firstname ?? ''}` as string;
+    const surname = speaker.unknown ? '' : speaker.surname as string;
+    const role = speaker.unknown || speaker.role === undefined ? '' : speaker.role as string;
+    const speakerElements = [
+      { name: 'firstname', className: '', text: firstname },
+      { name: 'surname', className: '', text: surname },
+      { name: 'role', className: '', text: role },
+    ];
+    this.paragraph.speakerKeywordInstances.map((instance) => {
+      const className = extractKeywordsClassNames(
+        SPEAKER_KW_PREFIX,
+        [instance],
+      );
+      const { mentions } = instance.keyword;
+      const speakerMention = mentions[1] as SpeakerMention;
+
+      return speakerElements.forEach((element, index) => {
+        if (speakerMention?.accent?.includes(element.name)
+        || speakerMention?.accent === element.name) {
+          const newElementWithClass = { ...element, className: className.join(' ') };
+          speakerElements[index] = newElementWithClass;
+        }
+      });
+    });
+    return speakerElements;
+  };
+
   private render(): HTMLElement {
     this.phraseElements = this.paragraph.phrases
       .filter((phrase) => phrase.text !== '')
       .map(
         (phrase) => new PhraseElement(phrase, this.trancriptConfig, this.onPlayFrom),
       );
-
-    const { speaker } = this.paragraph;
-    const speakerFirstName = speaker.unknown ? 'Mluvčí' : `${speaker.firstname ?? ''}`;
-    const speakerSurname = speaker.unknown ? '' : speaker.surname;
-    const speakerRole = speaker.unknown || speaker.role === undefined ? '' : speaker.role;
-
-    const keywordClassNames = extractKeywordsClassNames(
-      SPEAKER_KW_PREFIX,
-      this.paragraph.speakerKeywordInstances,
-    );
-    const isHighlighted = (speakerPart: string) => this.paragraph
-      .speakerKeywordInstances[0]?.keyword.mentions[1]?.accent.includes(speakerPart)
-      || this.paragraph.speakerKeywordInstances[0]?.keyword.mentions[1]?.accent === speakerPart;
-
+    const speakerSpans = this.createSpeakerElements();
     return h(
       'div.transcript-section',
       h(
@@ -128,30 +145,23 @@ export class TranscriptSection implements RedomComponent {
         this.showSpeakers || this.showSpeakers === undefined
           ? h(
             'div.transcript-speaker',
-            h(
-              'span',
-              {
-                className: `transcript-speaker__name ${SPEAKER_KW_PREFIX} ${isHighlighted('firstname') ? keywordClassNames.join(' ') : ''}`,
-              },
-              speakerFirstName,
+            speakerSpans.map(
+              (span) => (
+                h(
+                  'span',
+                  {
+                    className: `transcript-speaker__name ${span.className}`,
+                  },
+                  span.text,
+                  span.name === 'surname' ? h(
+                    'span',
+                    ',',
+                  ) : '',
+                )
+              ),
+              h(`div.speaker-color${colorCode(this.paragraph.speaker.id)}.transcript-speaker__color`),
             ),
-            h(
-              'span',
-              {
-                className: `transcript-speaker__name ${SPEAKER_KW_PREFIX} ${isHighlighted('surname') ? keywordClassNames.join(' ') : ''}`,
-              },
-              speakerSurname,
-            ),
-            h(
-              'span',
-              {
-                className: `transcript-speaker__name ${SPEAKER_KW_PREFIX} ${isHighlighted('role') ? keywordClassNames.join(' ') : ''}`,
-              },
-              `, ${speakerRole}`,
-            ),
-            h(`div.speaker-color${colorCode(speaker.id)}.transcript-speaker__color`),
-          )
-          : '',
+          ) : '',
         h('p', this.phraseElements),
       ),
     );
