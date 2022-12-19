@@ -21,12 +21,16 @@ export interface Keyword {
   group?: KeywordGroup | KeywordGroup[],
 }
 
-export interface KeywordOccurence {
+export interface BaseKeywordOccurence {
   group?: KeywordGroup | KeywordGroup[],
   begin: number;
 }
 
-export interface SpeakerKeywordOccurence extends KeywordOccurence {
+export interface PhraseKeywordOccurence extends BaseKeywordOccurence{
+  text: string;
+}
+
+export interface SpeakerKeywordOccurence extends BaseKeywordOccurence {
   accent?: string [] | string;
 }
 
@@ -35,7 +39,7 @@ export interface Phrase {
   begin: number;
   end: number;
   text: string;
-  keywordOccurences: KeywordOccurence[],
+  phraseKeywordOccurences: PhraseKeywordOccurence[],
 }
 export interface Speaker {
   firstname: string | null;
@@ -64,7 +68,8 @@ export interface Trsx {
   phrases: Phrase[],
   paragraphs: Paragraph[];
   recordingDuration: number;
-  keywordOccurences: KeywordOccurence[];
+  phraseKeywordOccurences: PhraseKeywordOccurence[];
+  speakerKeywordOccurences: SpeakerKeywordOccurence[],
 }
 
 const isSpeakerMention = (mention: Mention): mention is SpeakerMention => 'speakerId' in mention;
@@ -77,8 +82,8 @@ const clearKeywords = (paragraphs: Paragraph[]): void => paragraphs.forEach(
 
     for (let i = 0; i < phrases.length; i += 1) {
       const phrase = phrases[i] as Phrase;
-      if (phrase.keywordOccurences.length > 0) {
-        phrase.keywordOccurences = [];
+      if (phrase.phraseKeywordOccurences.length > 0) {
+        phrase.phraseKeywordOccurences = [];
       }
     }
   },
@@ -86,7 +91,7 @@ const clearKeywords = (paragraphs: Paragraph[]): void => paragraphs.forEach(
 
 export const extractKeywordsClassNames = (
   prefix: string,
-  occurences: KeywordOccurence[],
+  occurences: BaseKeywordOccurence[],
 ): string[] => occurences.flatMap(({ group }): string[] => {
   if (Array.isArray(group)) {
     return group.map((g) => `${prefix}-${g.id}`);
@@ -115,14 +120,15 @@ export const attachKeywords = (keywords: Keyword[], trsx: Trsx) => {
               begin: paragraph.begin,
               accent: mention.accent,
             };
-            trsx.keywordOccurences.push(occurence);
+            trsx.speakerKeywordOccurences.push(occurence);
             paragraph.speakerKeywordOccurences.push(occurence);
           }
         });
       } else {
-        const occurence: KeywordOccurence = {
+        const occurence: PhraseKeywordOccurence = {
           group: keyword.group,
           begin: -1,
+          text: keyword.text,
         };
 
         mention.indices.forEach((phraseIndex) => {
@@ -130,10 +136,10 @@ export const attachKeywords = (keywords: Keyword[], trsx: Trsx) => {
           if (occurence.begin === -1) {
             occurence.begin = phrase.begin;
           }
-          phrase.keywordOccurences.push(occurence);
+          phrase.phraseKeywordOccurences.push(occurence);
         });
 
-        trsx.keywordOccurences.push(occurence);
+        trsx.phraseKeywordOccurences.push(occurence);
       }
     });
   });

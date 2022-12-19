@@ -48,7 +48,7 @@ const extractPhrases = (paragraphElement: Element, offset: number): Phrase[] => 
         begin: parseTimeStamp(phraseElement.getAttribute('b')),
         end: parseTimeStamp(phraseElement.getAttribute('e')),
         text: (phraseElement.textContent ?? '').replace(/\[\S*::\S*\]/g, ''),
-        keywordInstances: [],
+        phraseKeywordOccurences: [],
       }))
   );
 };
@@ -102,7 +102,7 @@ const extractParagraphs = (
       begin: parseTimeStamp(element.getAttribute('b')),
       end,
       phrases,
-      speakerKeywordInstances: [],
+      speakerKeywordOccurences: [],
     };
     paragraphs.push(lastParagraph);
   });
@@ -129,7 +129,12 @@ export class TrsxFile {
     const phrases = paragraphs.flatMap((paragraph) => paragraph.phrases);
 
     return {
-      speakers, phrases, paragraphs, recordingDuration, keywordInstances: [],
+      speakers,
+      phrases,
+      paragraphs,
+      recordingDuration,
+      phraseKeywordOccurences: [],
+      speakerKeywordOccurences: [],
     };
   }
 }
