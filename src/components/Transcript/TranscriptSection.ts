@@ -1,8 +1,6 @@
 import { h, RedomComponent } from 'redom';
 import type { TranscriptConfig } from '.';
-import {
-  extractKeywordsClassNames, Paragraph, SpeakerMention,
-} from '../../trsx';
+import { extractKeywordsClassNames, Paragraph } from '../../trsx';
 import { PhraseElement } from './PhraseElm';
 import { colorCode } from '../SpeakersSelect';
 
@@ -99,23 +97,20 @@ export class TranscriptSection implements RedomComponent {
       { name: 'surname', className: '', text: surname },
       { name: 'role', className: '', text: role },
     ];
-    this.paragraph.speakerKeywordInstances.forEach((instance) => {
+    this.paragraph.speakerKeywordOccurences.forEach((occurence) => {
       const className = extractKeywordsClassNames(
         SPEAKER_KW_PREFIX,
-        [instance],
+        [occurence],
       );
-      const { mentions } = instance.keyword;
-      const speakerMentions = mentions.filter((mention) => mention.speakerId
-        !== undefined) as SpeakerMention[];
 
       speakerElements.forEach((element, index) => {
-        speakerMentions.forEach((mention) => {
-          if (mention.accent?.includes(element.name)
-          || mention.accent === element.name) {
-            const newElementWithClass = { ...element, className: className.join(' ') };
-            speakerElements[index] = newElementWithClass;
-          }
-        });
+        if (
+          occurence.accent?.includes(element.name)
+          || occurence.accent === element.name
+        ) {
+          const newElementWithClass = { ...element, className: className.join(' ') };
+          speakerElements[index] = newElementWithClass;
+        }
       });
     });
     return speakerElements;

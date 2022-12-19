@@ -21,9 +21,13 @@ export interface Keyword {
   group?: KeywordGroup | KeywordGroup[],
 }
 
-export interface KeywordInstance {
-  keyword: Keyword;
+export interface KeywordOccurence {
+  group?: KeywordGroup | KeywordGroup[],
   begin: number;
+}
+
+export interface SpeakerKeywordOccurence extends KeywordOccurence {
+  accent?: string [] | string;
 }
 
 export interface Phrase {
@@ -31,7 +35,7 @@ export interface Phrase {
   begin: number;
   end: number;
   text: string;
-  keywordInstances: KeywordInstance[],
+  keywordOccurences: KeywordOccurence[],
 }
 export interface Speaker {
   firstname: string | null;
@@ -45,7 +49,7 @@ export interface Paragraph {
   begin: number;
   end: number;
   phrases: Phrase[];
-  speakerKeywordInstances: KeywordInstance[],
+  speakerKeywordOccurences: SpeakerKeywordOccurence[],
 }
 
 export type SpeakerMap = { [id: string]: Speaker };
@@ -60,7 +64,7 @@ export interface Trsx {
   phrases: Phrase[],
   paragraphs: Paragraph[];
   recordingDuration: number;
-  keywordInstances: KeywordInstance[];
+  keywordOccurences: KeywordOccurence[];
 }
 
 const isSpeakerMention = (mention: Mention): mention is SpeakerMention => 'speakerId' in mention;
@@ -69,12 +73,12 @@ const clearKeywords = (paragraphs: Paragraph[]): void => paragraphs.forEach(
   (paragraph) => {
     const { phrases } = paragraph;
     // eslint-disable-next-line no-param-reassign
-    paragraph.speakerKeywordInstances = [];
+    paragraph.speakerKeywordOccurences = [];
 
     for (let i = 0; i < phrases.length; i += 1) {
       const phrase = phrases[i] as Phrase;
-      if (phrase.keywordInstances.length > 0) {
-        phrase.keywordInstances = [];
+      if (phrase.keywordOccurences.length > 0) {
+        phrase.keywordOccurences = [];
       }
     }
   },
@@ -82,10 +86,8 @@ const clearKeywords = (paragraphs: Paragraph[]): void => paragraphs.forEach(
 
 export const extractKeywordsClassNames = (
   prefix: string,
-  instances: KeywordInstance[],
-): string[] => instances.flatMap((instance): string[] => {
-  const { group } = instance.keyword;
-
+  occurences: KeywordOccurence[],
+): string[] => occurences.flatMap(({ group }): string[] => {
   if (Array.isArray(group)) {
     return group.map((g) => `${prefix}-${g.id}`);
   }
@@ -108,29 +110,30 @@ export const attachKeywords = (keywords: Keyword[], trsx: Trsx) => {
         paragraphs.forEach((paragraph) => {
           const { speaker } = paragraph;
           if (Number(mention.speakerId) === Number(speaker.id)) {
-            const instance = {
-              keyword,
+            const occurence: SpeakerKeywordOccurence = {
+              group: keyword.group,
               begin: paragraph.begin,
+              accent: mention.accent,
             };
-            trsx.keywordInstances.push(instance);
-            paragraph.speakerKeywordInstances.push(instance);
+            trsx.keywordOccurences.push(occurence);
+            paragraph.speakerKeywordOccurences.push(occurence);
           }
         });
       } else {
-        const instance = {
-          keyword,
+        const occurence: KeywordOccurence = {
+          group: keyword.group,
           begin: -1,
         };
 
         mention.indices.forEach((phraseIndex) => {
           const phrase = trsx.phrases[phraseIndex];
-          if (instance.begin === -1) {
-            instance.begin = phrase.begin;
+          if (occurence.begin === -1) {
+            occurence.begin = phrase.begin;
           }
-          phrase.keywordInstances.push(instance);
+          phrase.keywordOccurences.push(occurence);
         });
 
-        trsx.keywordInstances.push(instance);
+        trsx.keywordOccurences.push(occurence);
       }
     });
   });
