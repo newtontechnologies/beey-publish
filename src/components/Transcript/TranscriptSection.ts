@@ -89,9 +89,9 @@ export class TranscriptSection implements RedomComponent {
 
   private createSpeakerElements = () => {
     const { speaker } = this.paragraph;
-    const firstname = speaker.unknown ? 'Mluvčí' : `${speaker.firstname ?? ''}` as string;
-    const surname = speaker.unknown ? '' : speaker.surname as string;
-    const role = speaker.unknown || speaker.role === undefined ? '' : speaker.role as string;
+    const firstname = speaker.unknown ? 'Mluvčí' : `${speaker.firstname ?? ''}`;
+    const surname = speaker.unknown ? '' : speaker.surname;
+    const role = speaker.unknown || speaker.role === undefined ? '' : speaker.role;
     const speakerElements: SpeakerElements = {
       firstname: {
         className: '',
