@@ -2,10 +2,21 @@ export interface PhraseMention {
   indices: number[];
 }
 
+type SpeakerElement = 'firstname' | 'surname' | 'role';
+
 export interface SpeakerMention {
   speakerId: number | string;
-  accent?: string [] | string;
+  accent?: SpeakerElement [] | SpeakerElement;
   query: string;
+}
+
+export interface SpeakerElementAttributes {
+  className: string,
+  text: string,
+}
+
+export interface SpeakerElements {
+  [key: string]: SpeakerElementAttributes
 }
 
 type Mention = PhraseMention | SpeakerMention;
