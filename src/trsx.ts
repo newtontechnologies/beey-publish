@@ -40,7 +40,7 @@ export interface PhraseKeywordOccurence extends BaseKeywordOccurence{
 }
 
 export interface SpeakerKeywordOccurence extends PhraseKeywordOccurence {
-  accent?: string [] | string;
+  accent?: SpeakerPartKey[] | SpeakerPartKey;
 }
 
 export interface Phrase {
