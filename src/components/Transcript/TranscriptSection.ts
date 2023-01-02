@@ -1,6 +1,6 @@
 import { h, RedomComponent } from 'redom';
 import type { TranscriptConfig } from '.';
-import { extractKeywordsClassNames, Paragraph, SpeakerElements } from '../../trsx';
+import { extractKeywordsClassNames, Paragraph, SpeakerParts } from '../../trsx';
 import { PhraseElement } from './PhraseElm';
 import { colorCode } from '../SpeakersSelect';
 
@@ -87,12 +87,15 @@ export class TranscriptSection implements RedomComponent {
     }
   };
 
-  private createSpeakerElements = () => {
+  private createSpeakerParts = (): SpeakerParts | null => {
     const { speaker } = this.paragraph;
+    if (speaker === null) {
+      return null;
+    }
     const firstname = speaker.unknown ? 'Mluvčí' : `${speaker.firstname ?? ''}`;
-    const surname = speaker.unknown ? '' : speaker.surname;
-    const role = speaker.unknown || speaker.role === undefined ? '' : speaker.role;
-    const speakerElements: SpeakerElements = {
+    const surname = speaker.unknown ? '' : `${speaker.surname ?? ''}`;
+    const role = speaker.unknown || speaker.role === undefined ? '' : `${speaker.role ?? ''}`;
+    const speakerParts: SpeakerParts = {
       firstname: {
         className: '',
         text: firstname,
@@ -107,23 +110,20 @@ export class TranscriptSection implements RedomComponent {
       },
     };
     this.paragraph.speakerKeywordOccurences.forEach((occurence) => {
-      const className = extractKeywordsClassNames(
+      const classNames = extractKeywordsClassNames(
         SPEAKER_KW_PREFIX,
         [occurence],
       );
 
-      const accent = typeof occurence.accent === 'string' ? [occurence.accent] : occurence.accent;
+      const accents = typeof occurence.accent === 'string'
+        ? [occurence.accent]
+        : occurence.accent ?? Object.keys(speakerParts);
 
-      accent?.forEach((acc) => {
-        speakerElements[acc].className = className.join(' ');
+      accents.forEach((acc) => {
+        speakerParts[acc].className = classNames.join(' ');
       });
-      if (accent === undefined) {
-        Object.keys(speakerElements).forEach((key) => {
-          speakerElements[key].className = className.join(' ');
-        });
-      }
     });
-    return speakerElements;
+    return speakerParts;
   };
 
   private render(): HTMLElement {
@@ -132,7 +132,7 @@ export class TranscriptSection implements RedomComponent {
       .map(
         (phrase) => new PhraseElement(phrase, this.trancriptConfig, this.onPlayFrom),
       );
-    const speakerParts = this.createSpeakerElements();
+    const speakerParts = this.createSpeakerParts();
     return h(
       'div.transcript-section',
       h(
@@ -150,7 +150,7 @@ export class TranscriptSection implements RedomComponent {
       ),
       h(
         'div.transcript-section__text',
-        this.showSpeakers || this.showSpeakers === undefined
+        (this.showSpeakers || this.showSpeakers === undefined) && speakerParts !== null
           ? h(
             'div.transcript-speaker',
             Object.keys(speakerParts).map(
@@ -167,7 +167,7 @@ export class TranscriptSection implements RedomComponent {
                   ) : '',
                 )
               ),
-              h(`div.speaker-color${colorCode(this.paragraph.speaker.id)}.transcript-speaker__color`),
+              h(`div.speaker-color${this.paragraph.speaker === null ? '' : colorCode(this.paragraph.speaker.id)}.transcript-speaker__color`),
             ),
           ) : '',
         h('p', this.phraseElements),

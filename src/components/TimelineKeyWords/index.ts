@@ -17,7 +17,7 @@ export class TimelineKeyWords implements RedomComponent {
 
   private render(): HTMLElement {
     const { recordingDuration } = this.trsx;
-    const keyWordsArray = this.trsx.phraseKeywordOccurences.map((occurence) => {
+    const keyWordsArray = this.trsx.keywordOccurences.map((occurence) => {
       const wordPosition = (occurence.begin / recordingDuration) * 100;
       const kwClassNames = extractKeywordsClassNames(TIMELINE_KW_PREFIX, [occurence]);
 

@@ -2,21 +2,19 @@ export interface PhraseMention {
   indices: number[];
 }
 
-type SpeakerElement = 'firstname' | 'surname' | 'role';
+type SpeakerPartKey = 'firstname' | 'surname' | 'role';
 
 export interface SpeakerMention {
   speakerId: number | string;
-  accent?: SpeakerElement [] | SpeakerElement;
+  accent?: SpeakerPartKey[] | SpeakerPartKey;
   query: string;
 }
 
-export interface SpeakerElementAttributes {
-  className: string,
-  text: string,
-}
-
-export interface SpeakerElements {
-  [key: string]: SpeakerElementAttributes
+export type SpeakerParts = {
+  [Key in SpeakerPartKey as string]: {
+    className: string,
+    text: string,
+  }
 }
 
 type Mention = PhraseMention | SpeakerMention;
@@ -41,7 +39,7 @@ export interface PhraseKeywordOccurence extends BaseKeywordOccurence{
   text: string;
 }
 
-export interface SpeakerKeywordOccurence extends BaseKeywordOccurence {
+export interface SpeakerKeywordOccurence extends PhraseKeywordOccurence {
   accent?: string [] | string;
 }
 
@@ -50,17 +48,17 @@ export interface Phrase {
   begin: number;
   end: number;
   text: string;
-  phraseKeywordOccurences: PhraseKeywordOccurence[],
+  keywordOccurences: PhraseKeywordOccurence[],
 }
 export interface Speaker {
   firstname: string | null;
   surname: string;
-  role: string;
+  role?: string | null;
   unknown: boolean;
   id: string;
 }
 export interface Paragraph {
-  speaker: Speaker;
+  speaker: Speaker | null;
   begin: number;
   end: number;
   phrases: Phrase[];
@@ -79,8 +77,7 @@ export interface Trsx {
   phrases: Phrase[],
   paragraphs: Paragraph[];
   recordingDuration: number;
-  phraseKeywordOccurences: PhraseKeywordOccurence[];
-  speakerKeywordOccurences: SpeakerKeywordOccurence[],
+  keywordOccurences: PhraseKeywordOccurence[];
 }
 
 const isSpeakerMention = (mention: Mention): mention is SpeakerMention => 'speakerId' in mention;
@@ -93,8 +90,8 @@ const clearKeywords = (paragraphs: Paragraph[]): void => paragraphs.forEach(
 
     for (let i = 0; i < phrases.length; i += 1) {
       const phrase = phrases[i] as Phrase;
-      if (phrase.phraseKeywordOccurences.length > 0) {
-        phrase.phraseKeywordOccurences = [];
+      if (phrase.keywordOccurences.length > 0) {
+        phrase.keywordOccurences = [];
       }
     }
   },
@@ -125,13 +122,14 @@ export const attachKeywords = (keywords: Keyword[], trsx: Trsx) => {
       if (isSpeakerMention(mention)) {
         paragraphs.forEach((paragraph) => {
           const { speaker } = paragraph;
-          if (Number(mention.speakerId) === Number(speaker.id)) {
+          if (Number(mention.speakerId) === Number(speaker?.id)) {
             const occurence: SpeakerKeywordOccurence = {
               group: keyword.group,
               begin: paragraph.begin,
               accent: mention.accent,
+              text: keyword.text,
             };
-            trsx.speakerKeywordOccurences.push(occurence);
+            trsx.keywordOccurences.push(occurence);
             paragraph.speakerKeywordOccurences.push(occurence);
           }
         });
@@ -147,10 +145,10 @@ export const attachKeywords = (keywords: Keyword[], trsx: Trsx) => {
           if (occurence.begin === -1) {
             occurence.begin = phrase.begin;
           }
-          phrase.phraseKeywordOccurences.push(occurence);
+          phrase.keywordOccurences.push(occurence);
         });
 
-        trsx.phraseKeywordOccurences.push(occurence);
+        trsx.keywordOccurences.push(occurence);
       }
     });
   });

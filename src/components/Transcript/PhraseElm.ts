@@ -78,7 +78,7 @@ export class PhraseElement implements RedomComponent {
 
     const classNames = extractKeywordsClassNames(
       PHRASE_KW_PREFIX,
-      this.phrase.phraseKeywordOccurences,
+      this.phrase.keywordOccurences,
     );
     if (classNames.length > 0) {
       attributes.className += ` ${PHRASE_KW_PREFIX} ${classNames.join(' ')}`;
