@@ -55,13 +55,12 @@ export class SpeakersSlider implements RedomComponent {
       const { speaker, begin, end } = paragraph;
       const chunkPosition = (begin / recordingDuration) * 100;
       const chunkLength = (end - begin) / (recordingDuration / 100);
-      const speakerName = `${speaker?.firstname} ${speaker?.surname}`;
+      const speakerName = speaker !== null ? `${speaker.firstname} ${speaker.surname}` : '';
       tooltips.push(
         h(
           'span.tooltip',
           {
-            style: `left:${chunkPosition}%; 
-          width: ${chunkLength}%`,
+            style: `left:${chunkPosition}%; width: ${chunkLength}%`,
             'data-speakerId': speaker?.id,
             'data-index': index,
           },
@@ -71,7 +70,7 @@ export class SpeakersSlider implements RedomComponent {
               'div.tooltip__time',
               h('div', `${formatTime(begin)} - ${formatTime(end)}`),
               h(
-                `div.material-icons.speaker-icon.speaker-color${speaker === null ? '' : colorCode(speaker.id)}`,
+                `div.material-icons.speaker-icon.${speaker === null ? '' : `speaker-color${colorCode(speaker.id)}`}`,
                 'record_voice_over',
               ),
             ),
@@ -82,7 +81,7 @@ export class SpeakersSlider implements RedomComponent {
 
       speakerSpans.push(
         h(
-          `span.speaker-color${speaker === null ? '' : colorCode(speaker.id)} tooltip`,
+          `span.${speaker === null ? '' : `speaker-color${colorCode(speaker.id)}`} tooltip`,
           {
             style: `left:${chunkPosition}%; 
             width: ${chunkLength}%`,
