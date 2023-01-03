@@ -88,10 +88,10 @@ const extractParagraphs = (
     }
     phrasesOffset += phrases.length;
 
-    const speakerId = element.getAttribute('s') as string;
+    const speakerId = element.getAttribute('s');
     const end = parseTimeStamp(element.getAttribute('e'));
 
-    if (lastParagraph !== null && lastParagraph.speaker?.id === speakerId) {
+    if (lastParagraph !== null && (lastParagraph.speaker?.id ?? null) === speakerId) {
       lastParagraph.phrases.push(...phrases);
       lastParagraph.end = end;
       return;

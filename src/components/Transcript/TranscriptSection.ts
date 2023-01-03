@@ -133,6 +133,7 @@ export class TranscriptSection implements RedomComponent {
         (phrase) => new PhraseElement(phrase, this.trancriptConfig, this.onPlayFrom),
       );
     const speakerParts = this.createSpeakerParts();
+
     return h(
       'div.transcript-section',
       h(
@@ -150,7 +151,7 @@ export class TranscriptSection implements RedomComponent {
       ),
       h(
         'div.transcript-section__text',
-        (this.showSpeakers || this.showSpeakers === undefined) && speakerParts !== null
+        (this.showSpeakers ?? true) && speakerParts !== null
           ? h(
             'div.transcript-speaker',
             Object.keys(speakerParts).map(
