@@ -115,7 +115,10 @@ Example of keywords JSON, CSS styles to be added according to id with prefix pkw
     "mentions": [
       { "indices": [31, 32] },
       { "indices": [138, 139] },
-      { "indices": [461, 462] }
+      { "indices": [461, 462] },
+      { "speakerId": 2,
+        "accent" ["role", "surname"]
+      }
     ]
   },
   {
@@ -126,7 +129,10 @@ Example of keywords JSON, CSS styles to be added according to id with prefix pkw
     },
     "mentions": [
       { "indices": [17, 18] },
-      { "indices": [66, 67] }
+      { "indices": [66, 67] },
+      { "speakerId": 1,
+        "accent": "firstname"
+      }
     ]
   },
   {
@@ -139,9 +145,31 @@ Example of keywords JSON, CSS styles to be added according to id with prefix pkw
       { "indices": [51, 52] },
       { "speakerId": 1 }
     ]
-  }
+  },
+   {
+    "text": "republika",
+    "group": [
+      {
+        "id": "#E0id1",
+        "label": "Česko"
+      },
+      {
+        "id": "#E0M",
+        "label": "Česko"
+      }
+    ],
+    "mentions": [
+      {
+        "indices": [294, 295]
+      },
+      {
+        "indices": [498]
+      }
+    ]
+  },
 ]
 ```
+It is possible to style speaker's parts (first name, surname and role) separately. If needed, add "accent" property to keyword JSON as showed above. Accent can be either array of strings or string ("firstname", "surname" or "role"). If accent is not present, all three speaker's parts will get the CSS class.
 
 To style a keyword group with id `entity-person` in phrases, create a CSS class `pkw-entity-person` and apply CSS accordingly:
 
