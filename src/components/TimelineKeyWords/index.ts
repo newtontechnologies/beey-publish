@@ -17,24 +17,24 @@ export class TimelineKeyWords implements RedomComponent {
 
   private render(): HTMLElement {
     const { recordingDuration } = this.trsx;
-    const keyWordsArray = this.trsx.keywordInstances.map((instance) => {
-      const wordPosition = (instance.begin / recordingDuration) * 100;
-      const kwClassNames = extractKeywordsClassNames(TIMELINE_KW_PREFIX, [instance]);
+    const keyWordsArray = this.trsx.keywordOccurences.map((occurence) => {
+      const wordPosition = (occurence.begin / recordingDuration) * 100;
+      const kwClassNames = extractKeywordsClassNames(TIMELINE_KW_PREFIX, [occurence]);
 
       return h(
         'div.key-words__mark.tooltip',
         {
           style: `left:${wordPosition}%`,
-          onclick: () => this.onSeek(instance.begin),
+          onclick: () => this.onSeek(occurence.begin),
         },
         h('div', { className: `wedge ${TIMELINE_KW_PREFIX} ${kwClassNames.join(' ')}` }),
         h(
           'div.tooltip__text',
           h(
             'div.tooltip__time',
-            h('div', `${formatTime(instance.begin)}`),
+            h('div', `${formatTime(occurence.begin)}`),
           ),
-          h('div.tooltip__word', `${instance.keyword.text}`),
+          h('div.tooltip__word', `${occurence.text}`),
         ),
       );
     });

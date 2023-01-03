@@ -73,7 +73,7 @@ class BeeyPublish {
     if (this.trsx === null) {
       return;
     }
-    this.trsx.keywordInstances = [];
+    this.trsx.keywordOccurences = [];
     attachKeywords(keywords, this.trsx);
     this.transcript.updateTrsx(this.trsx);
     this.player.displayKeywords(this.trsx);

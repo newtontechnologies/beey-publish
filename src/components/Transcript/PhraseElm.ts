@@ -76,7 +76,10 @@ export class PhraseElement implements RedomComponent {
       'data-idx': this.phrase.index,
     };
 
-    const classNames = extractKeywordsClassNames(PHRASE_KW_PREFIX, this.phrase.keywordInstances);
+    const classNames = extractKeywordsClassNames(
+      PHRASE_KW_PREFIX,
+      this.phrase.keywordOccurences,
+    );
     if (classNames.length > 0) {
       attributes.className += ` ${PHRASE_KW_PREFIX} ${classNames.join(' ')}`;
     }

@@ -153,14 +153,13 @@ span.played {
 .transcript-speaker{
   display: flex;
   align-items: center;
-  &__name {
-    display: flex;
-    align-items: center;
+  &__part {
     height: 1rem;
     color: black;
     font-weight: 600;
     width: fit-content;
-    background-color: none;
+    background-color: transparent;
+    margin-right: 3px;
   }
   &__color {
     border-radius: 50%;

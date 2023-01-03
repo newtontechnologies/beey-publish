@@ -1,5 +1,5 @@
 import {
-  Phrase, Paragraph, Trsx, SpeakerMap, Speaker, Speakers,
+  Phrase, Paragraph, Trsx, SpeakerMap, Speakers,
 } from './trsx';
 
 export interface UrlTrsxSource {
@@ -48,7 +48,7 @@ const extractPhrases = (paragraphElement: Element, offset: number): Phrase[] => 
         begin: parseTimeStamp(phraseElement.getAttribute('b')),
         end: parseTimeStamp(phraseElement.getAttribute('e')),
         text: (phraseElement.textContent ?? '').replace(/\[\S*::\S*\]/g, ''),
-        keywordInstances: [],
+        keywordOccurences: [],
       }))
   );
 };
@@ -58,11 +58,13 @@ const extractSpeakers = (xmlDoc: XMLDocument): Speakers => {
   const trsxSpeakers = xmlDoc.querySelectorAll('sp s');
   trsxSpeakers.forEach((speakerElement) => {
     const id = speakerElement.getAttribute('id') as string;
+    const role = speakerElement.querySelector('[name="role"]')?.textContent;
 
     speakerMap[id] = {
       id,
       firstname: speakerElement.getAttribute('firstname') as string,
       surname: speakerElement.getAttribute('surname') as string,
+      role,
       unknown: isSpeakerUknown(speakerElement),
     };
   });
@@ -86,21 +88,22 @@ const extractParagraphs = (
     }
     phrasesOffset += phrases.length;
 
-    const speakerId = element.getAttribute('s') as string;
+    const speakerId = element.getAttribute('s');
     const end = parseTimeStamp(element.getAttribute('e'));
 
-    if (lastParagraph !== null && lastParagraph.speaker.id === speakerId) {
+    if (lastParagraph !== null && (lastParagraph.speaker?.id ?? null) === speakerId) {
       lastParagraph.phrases.push(...phrases);
       lastParagraph.end = end;
       return;
     }
 
     lastParagraph = {
-      speaker: speakers[speakerId] as Speaker,
+      // trsx can contain paragraph with no speaker, thus speakerId can be null
+      speaker: speakerId === null ? null : speakers[speakerId],
       begin: parseTimeStamp(element.getAttribute('b')),
       end,
       phrases,
-      speakerKeywordInstances: [],
+      speakerKeywordOccurences: [],
     };
     paragraphs.push(lastParagraph);
   });
@@ -127,7 +130,11 @@ export class TrsxFile {
     const phrases = paragraphs.flatMap((paragraph) => paragraph.phrases);
 
     return {
-      speakers, phrases, paragraphs, recordingDuration, keywordInstances: [],
+      speakers,
+      phrases,
+      paragraphs,
+      recordingDuration,
+      keywordOccurences: [],
     };
   }
 }

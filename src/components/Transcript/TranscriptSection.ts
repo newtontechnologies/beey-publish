@@ -1,6 +1,6 @@
 import { h, RedomComponent } from 'redom';
 import type { TranscriptConfig } from '.';
-import { extractKeywordsClassNames, Paragraph } from '../../trsx';
+import { extractKeywordsClassNames, Paragraph, SpeakerParts } from '../../trsx';
 import { PhraseElement } from './PhraseElm';
 import { colorCode } from '../SpeakersSelect';
 
@@ -12,7 +12,6 @@ const secondsToTime = (seconds: number): string => {
 };
 
 const SPEAKER_KW_PREFIX = 'skw';
-
 export class TranscriptSection implements RedomComponent {
   public el: HTMLElement;
 
@@ -88,22 +87,52 @@ export class TranscriptSection implements RedomComponent {
     }
   };
 
+  private createSpeakerParts = (): SpeakerParts | null => {
+    const { speaker } = this.paragraph;
+    if (speaker === null) {
+      return null;
+    }
+    const firstname = speaker.unknown ? 'Mluvčí' : `${speaker.firstname ?? ''}`;
+    const surname = speaker.unknown ? '' : `${speaker.surname ?? ''}`;
+    const role = speaker.unknown || speaker.role === undefined ? '' : `${speaker.role ?? ''}`;
+    const speakerParts: SpeakerParts = {
+      firstname: {
+        className: '',
+        text: firstname,
+      },
+      surname: {
+        className: '',
+        text: surname,
+      },
+      role: {
+        className: '',
+        text: role,
+      },
+    };
+    this.paragraph.speakerKeywordOccurences.forEach((occurence) => {
+      const classNames = extractKeywordsClassNames(
+        SPEAKER_KW_PREFIX,
+        [occurence],
+      );
+
+      const accents = typeof occurence.accent === 'string'
+        ? [occurence.accent]
+        : occurence.accent ?? Object.keys(speakerParts);
+
+      accents.forEach((acc) => {
+        speakerParts[acc].className = classNames.join(' ');
+      });
+    });
+    return speakerParts;
+  };
+
   private render(): HTMLElement {
     this.phraseElements = this.paragraph.phrases
       .filter((phrase) => phrase.text !== '')
       .map(
         (phrase) => new PhraseElement(phrase, this.trancriptConfig, this.onPlayFrom),
       );
-
-    const { speaker } = this.paragraph;
-    const speakerName = speaker.unknown
-      ? 'Mluvčí'
-      : `${speaker.firstname ?? ''} ${speaker.surname}`;
-
-    const keywordClassNames = extractKeywordsClassNames(
-      SPEAKER_KW_PREFIX,
-      this.paragraph.speakerKeywordInstances,
-    );
+    const speakerParts = this.createSpeakerParts();
 
     return h(
       'div.transcript-section',
@@ -122,19 +151,26 @@ export class TranscriptSection implements RedomComponent {
       ),
       h(
         'div.transcript-section__text',
-        this.showSpeakers || this.showSpeakers === undefined
+        (this.showSpeakers ?? true) && speakerParts !== null
           ? h(
             'div.transcript-speaker',
-            h(
-              'span',
-              {
-                className: `transcript-speaker__name ${SPEAKER_KW_PREFIX} ${keywordClassNames.join(' ')}`,
-              },
-              speakerName,
+            Object.keys(speakerParts).map(
+              (key) => (
+                h(
+                  'span',
+                  {
+                    className: `transcript-speaker__part ${speakerParts[key].className}`,
+                  },
+                  speakerParts[key].text,
+                  key === 'surname' ? h(
+                    'span',
+                    ',',
+                  ) : '',
+                )
+              ),
+              h(`div.speaker-color${this.paragraph.speaker === null ? '' : colorCode(this.paragraph.speaker.id)}.transcript-speaker__color`),
             ),
-            h(`div.speaker-color${colorCode(speaker.id)}.transcript-speaker__color`),
-          )
-          : '',
+          ) : '',
         h('p', this.phraseElements),
       ),
     );
