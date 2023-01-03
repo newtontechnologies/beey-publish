@@ -159,12 +159,8 @@ Example of keywords JSON, CSS styles to be added according to id with prefix pkw
       }
     ],
     "mentions": [
-      {
-        "indices": [294, 295]
-      },
-      {
-        "indices": [498]
-      }
+      { "indices": [294, 295] },
+      { "indices": [498] }
     ]
   },
 ]
