@@ -1,4 +1,4 @@
-## 1.8.8 (2022-01-03)
+## 1.8.8 (2023-01-03)
 - ✨ Feature: enable separate highlighting of first name, surname and role of speaker
 - 🐞 Fix: handle missing speaker in paragraph in trsx 
 
