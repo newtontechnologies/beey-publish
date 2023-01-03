@@ -1,3 +1,7 @@
+## 1.8.8 (2022-01-03)
+- ✨ Feature: enable separate highlighting of first name, surname and role of speaker
+- 🐞 Fix: handle missing speaker in paragraph in trsx 
+
 ## 1.8.7 (2022-12-06)
 - 🐞 Fix: speaker keyword CSS classes are now attached correctly
 ## 1.8.6 (2022-11-01)
