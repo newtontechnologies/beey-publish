@@ -98,8 +98,9 @@ const extractParagraphs = (
     }
 
     lastParagraph = {
-      // trsx can contain paragraph with no speaker, thus speakerId can be null
-      speaker: speakerId === null ? null : speakers[speakerId],
+      // trsx can contain paragraph with no speaker, thus speakerId can be null;
+      // it can also contain paragraph with speakerId -1
+      speaker: (speakerId === null || speakerId === '-1') ? null : speakers[speakerId],
       begin: parseTimeStamp(element.getAttribute('b')),
       end,
       phrases,
