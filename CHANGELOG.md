@@ -1,3 +1,7 @@
+## 1.8.9 (2023-04-04)
+- 🐞 Fix: fix typo in Made in claim
+- 🐞 Fix: handle undefined speaker in trsx
+
 ## 1.8.8 (2023-01-03)
 - ✨ Feature: enable separate highlighting of first name, surname and role of speaker
 - 🐞 Fix: handle missing speaker in paragraph in trsx 
