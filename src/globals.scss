@@ -4,3 +4,13 @@ $light-gray: rgb(164, 164, 164);
 $light-gray-lighten: rgb(187 187 187);
 $bg-gray: rgba(233, 233, 233, 0.93);
 $dark-gray: #3b3b3b;
+
+// Better scoping
+:root {
+  --primary-color: #{$primary-color};
+  --primary-color-darken: #{$primary-color-darken};
+  --light-gray: #{$light-gray};
+  --light-gray-lighten: #{$light-gray-lighten};
+  --bg-gray: #{$bg-gray};
+  --dark-gray: #{$dark-gray};
+}

@@ -14,6 +14,15 @@ export interface BeeyPublishConfig {
   showSpeakers?: boolean;
 }
 
+export interface StyleConfig {
+  primaryColor: string;
+  primaryColorDarken: string;
+  lightGray: string;
+  lightGrayLighten: string;
+  bgGray: string;
+  darkGray: string;
+}
+
 export interface PublishSplitSlot {
   playerParent: HTMLElement,
   transcriptParent: HTMLElement,
@@ -77,6 +86,18 @@ class BeeyPublish {
     attachKeywords(keywords, this.trsx);
     this.transcript.updateTrsx(this.trsx);
     this.player.displayKeywords(this.trsx);
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  public setStyle(styleConfig: StyleConfig) {
+    const root = document.documentElement;
+
+    root.style.setProperty('--primary-color', styleConfig.primaryColor);
+    root.style.setProperty('--primary-color-darken', styleConfig.primaryColorDarken);
+    root.style.setProperty('--light-gray', styleConfig.lightGray);
+    root.style.setProperty('--light-gray-lighten', styleConfig.lightGrayLighten);
+    root.style.setProperty('--bg-gray', styleConfig.bgGray);
+    root.style.setProperty('--dark-gray', styleConfig.darkGray);
   }
 
   private handleSelectedSpeakers = (speakerIds: string[]) => {

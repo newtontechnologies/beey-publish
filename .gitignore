@@ -2,3 +2,12 @@ node_modules
 dist
 cjs
 .idea/
+
+# Ingore generated WebStorm styles by watcher
+globals.css
+globals.css.map
+index.css
+index.css.map
+/src/components/MediaPlayer/style.css
+/src/components/MediaPlayer/style.css.map
+/yarn.lock

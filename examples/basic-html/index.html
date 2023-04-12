@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="https://unpkg.com/@beey/publish@latest/dist/beey-publish.min.css" />
+  <link rel="stylesheet" href="../../dist/beey-publish.css" />
   <link rel="stylesheet" href="style.css" />
   <title>Basic HTML</title>
 </head>
@@ -11,7 +11,7 @@
   <div id="publish-container" class="container"></div>
 
   <script type="module">
-    import BeeyPublish from 'https://unpkg.com/@beey/publish@latest/dist/beey-publish.min.js';
+    import BeeyPublish from '../../dist/beey-publish.min.js';
     const jsonCZ = await fetch('https://unpkg.com/@beey/publish@latest/dist/locale/cs-CZ.json');
     const cz = await jsonCZ.json();
     console.log(cz)
@@ -23,6 +23,15 @@
       },
       locale: cz
     });
+
+    publish.setStyle({
+      primaryColor: '#ff0000',
+      primaryColorDarken: '#ff0099',
+      lightGray: '#660973',
+      lightGrayLighten: '#0fcea0',
+      bgGray: '#0a1c70',
+      darkGray: '#3da002',
+    })
 
     await publish.loadTrsx({
       url: 'https://www.beey.io/wp-content/uploads/2022/07/job-interview.trsx',
