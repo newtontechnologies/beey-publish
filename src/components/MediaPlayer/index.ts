@@ -104,6 +104,8 @@ export class MediaPlayer implements RedomComponent {
 
   public updateTrsx = (trsx: Trsx) => {
     const sliders = this.el.querySelector('.sliders') as HTMLElement;
+    const duration = this.el.querySelector('.player-time__duration') as HTMLElement;
+    duration.textContent = formatTime(trsx.recordingDuration);
     this.speakersSlider = new SpeakersSlider(
       trsx,
       this.handlePlaySpeaker,
