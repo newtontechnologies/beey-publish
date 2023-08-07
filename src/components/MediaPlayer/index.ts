@@ -104,8 +104,6 @@ export class MediaPlayer implements RedomComponent {
 
   public updateTrsx = (trsx: Trsx) => {
     const sliders = this.el.querySelector('.sliders') as HTMLElement;
-    const duration = this.el.querySelector('.player-time__duration') as HTMLElement;
-    duration.textContent = formatTime(trsx.recordingDuration);
     this.speakersSlider = new SpeakersSlider(
       trsx,
       this.handlePlaySpeaker,
@@ -176,6 +174,8 @@ export class MediaPlayer implements RedomComponent {
 
   private handleLoadedMetadata = () => {
     const mediaPlayer = document.querySelector('.media-player') as HTMLElement;
+    const duration = this.el.querySelector('.player-time__duration') as HTMLElement;
+    duration.textContent = formatTime(this.duration);
     if (this.nativePlayerElement.videoHeight > 0) {
       mediaPlayer.classList.add('media-player__video');
     }
