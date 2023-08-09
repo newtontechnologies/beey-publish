@@ -44,7 +44,6 @@ export class MediaPlayer implements RedomComponent {
     this.hasSubtitles = hasSubtitles;
     this.showSpeakers = showSpeakers;
     this.draggingKnob = false;
-    this.url = mediaConfig.url;
     this.downloadMedia = downloadMedia;
     this.el = this.render();
     this.speedSlider = this.el.querySelector('.speed-slider') as HTMLElement;
