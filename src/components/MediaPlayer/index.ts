@@ -28,6 +28,7 @@ export class MediaPlayer implements RedomComponent {
   private volumeSlider: HTMLElement;
   private url: string;
   private showVideo: boolean;
+  private downloadMedia: boolean;
   private hasSubtitles: boolean;
   private draggingKnob: boolean;
   private showSpeakers: boolean;
@@ -36,12 +37,14 @@ export class MediaPlayer implements RedomComponent {
     mediaConfig: MediaConfig,
     showSpeakers: boolean,
     hasSubtitles: boolean,
+    downloadMedia: boolean,
   ) {
     this.url = mediaConfig.url;
     this.showVideo = mediaConfig.showVideo ?? true;
     this.hasSubtitles = hasSubtitles;
     this.showSpeakers = showSpeakers;
     this.draggingKnob = false;
+    this.downloadMedia = downloadMedia;
     this.el = this.render();
     this.speedSlider = this.el.querySelector('.speed-slider') as HTMLElement;
     this.volumeSlider = this.el.querySelector('.volume-slider') as HTMLElement;
@@ -273,6 +276,15 @@ export class MediaPlayer implements RedomComponent {
     hiddenToolbar.classList.remove('player-toolbar__other-controls--show');
   };
 
+  private downloadFile = () => {
+    const a = document.createElement('a');
+    a.href = this.url;
+    a.download = '';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  };
+
   private render(): HTMLElement {
     const savedSpeed = window.localStorage.getItem(PLAYER_SPEED);
     return h(
@@ -379,6 +391,9 @@ export class MediaPlayer implements RedomComponent {
               h(`i.subtitlesButton.material-icons.icon ${(this.hasSubtitles && this.showVideo) ? 'visible' : 'hidden'}`, 'subtitles_off', {
                 onclick: this.toggleSubtitles,
                 onmouseenter: this.hideSpeedSlider,
+              }),
+              h(`i.file_download.material-icons.icon ${(this.downloadMedia) ? 'visible' : 'hidden'}`, 'file_download', {
+                onclick: this.downloadFile,
               }),
             ),
           ),

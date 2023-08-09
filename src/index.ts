@@ -12,6 +12,7 @@ export interface BeeyPublishConfig {
   subtitlesUrl?: string;
   locale?: Translations;
   showSpeakers?: boolean;
+  downloadMedia?: boolean;
 }
 
 export interface PublishSplitSlot {
@@ -36,6 +37,7 @@ class BeeyPublish {
       this.config.media,
       this.config.showSpeakers ?? true,
       this.config.subtitlesUrl !== undefined,
+      this.config.downloadMedia ?? false,
     );
     this.transcript = new Transcript(
       this.player,
