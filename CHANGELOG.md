@@ -1,3 +1,6 @@
+## 1.9.0 (2023-08-11)
+- ✨ Feature: add button for media file download
+- 🐞 Fix: display recording length right after upload of trsx
 ## 1.8.9 (2023-04-04)
 - 🐞 Fix: fix typo in Made in claim
 - 🐞 Fix: handle undefined speaker in trsx
